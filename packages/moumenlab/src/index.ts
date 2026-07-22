@@ -11,14 +11,20 @@ function help(): void {
 moumenlab — interaction components you can copy or install.
 
 Usage
-  npx moumenlab add <component...>   Install one or more components
-  npx moumenlab list                 List every available component
-  npx moumenlab --help               Show this help
-  npx moumenlab --version            Show the version
+  npx moumenlab add <component...> [options]   Install one or more components
+  npx moumenlab list                           List every available component
+  npx moumenlab --help                         Show this help
+  npx moumenlab --version                      Show the version
+
+Options (forwarded to shadcn)
+  -c, --cwd <path>   App directory in a monorepo (e.g. apps/web)
+  -y, --yes          Skip confirmation prompt
+  -o, --overwrite    Overwrite existing files
 
 Examples
   npx moumenlab add otp-segmented-input
   npx moumenlab add hover-expand-icon-strip drag-to-reorder-list
+  npx moumenlab add schedule-builder -c apps/web
 
 Browse them all at https://lab.moumen.dev
 `);

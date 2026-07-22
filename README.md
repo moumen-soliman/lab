@@ -37,6 +37,7 @@
 
 ```bash
 npx moumenlab add hover-expand-icon-strip
+npx moumenlab add schedule-builder -c apps/web   # monorepo: target the app workspace
 npx moumenlab list
 ```
 

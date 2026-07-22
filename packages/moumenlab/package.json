@@ -1,6 +1,6 @@
 {
   "name": "moumenlab",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Install moumenlab components into your app — npx moumenlab add <component>",
   "type": "module",
   "bin": {
