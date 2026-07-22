@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+/* Tailwind must scan the installable component sources for utility classes. */
+@source "../registry";
+@source "../src";
+
+/* ── Design tokens ─────────────────────────────────────────────────────────
+   The ONLY sanctioned place for shared values and keyframes. Everything else in
+   this repo is expressed as Tailwind utilities in JSX — there are no custom CSS
+   classes anywhere. These tokens are also what the `lab-theme` registry item
+   ships to consumers, so an installed component keeps the same easings, shadows
+   and keyframes it had here. */
+@theme {
+  /* Fonts — Geist, provided by next/font via the `geist` package's CSS vars.
+     Drives preflight (html → --font-sans, code/pre → --font-mono). */
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* Easings */
+  --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1); /* open + close, resize */
+  --ease-icon: cubic-bezier(0.2, 0, 0, 1); /* contextual icon cross-fade */
+
+  /* Shadow-as-border: a layered ring in place of a solid 1px border. */
+  --shadow-border:
+    0px 0px 0px 1px oklch(0 0 0 / 0.06),
+    0px 1px 2px -1px oklch(0 0 0 / 0.06),
+    0px 2px 4px 0px oklch(0 0 0 / 0.04);
+  --shadow-border-hover:
+    0px 0px 0px 1px oklch(0 0 0 / 0.08),
+    0px 1px 2px -1px oklch(0 0 0 / 0.08),
+    0px 2px 4px 0px oklch(0 0 0 / 0.06);
+  --shadow-lift: 0px 12px 28px -14px oklch(0.178 0 0 / 0.16);
+
+  /* Named animations → `animate-*` utilities. Site-chrome only — the lab
+     components animate via motion/react, not keyframes. */
+  --animate-fade-in: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+  @keyframes shimmer {
+    to {
+      background-position: -200% 0;
+    }
+  }
+}
+
+/* ── Base layer: element resets only, never class selectors ───────────────── */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    /* Missing weights/styles should fail visibly, never render browser-faked. */
+    font-synthesis: none;
+  }
+
+  body {
+    background-color: #fff;
+    color: #111;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  /* Global focus ring, matching the source site's ink outline. */
+  :focus-visible {
+    outline: 2px solid #111;
+    outline-offset: 2px;
+  }
+}

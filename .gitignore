@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.turbo/
+.next/
+.next-dev/
+out/
+next-env.d.ts
+*.log
+.DS_Store
+.vercel/
+
+# Registry output is generated on build from registry.json + registry/**
+apps/web/public/r/

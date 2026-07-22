@@ -1,0 +1,32 @@
+{
+  "name": "moumenlab",
+  "version": "0.1.0",
+  "description": "Install moumenlab components into your app — npx moumenlab add <component>",
+  "type": "module",
+  "bin": {
+    "moumenlab": "dist/index.js"
+  },
+  "files": ["dist"],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["shadcn", "registry", "react", "tailwind", "components", "ui"],
+  "license": "MIT",
+  "author": "Moumen Soliman",
+  "homepage": "https://lab.moumen.dev",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moumen-soliman/lab.git",
+    "directory": "packages/moumenlab"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.7.0"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "registry:build": {
+      "inputs": ["registry.json", "registry/**"],
+      "outputs": ["public/r/**"]
+    },
+    "build": {
+      "dependsOn": ["^build", "registry:build"],
+      "outputs": ["dist/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^build"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "registry:build": "node scripts/build-registry.mjs",
+    "predev": "node scripts/build-registry.mjs",
+    "dev": "NEXT_DIST_DIR=.next-dev next dev --port 3001",
+    "prebuild": "node scripts/build-registry.mjs",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
+    "new:component": "node scripts/new-component.mjs",
+    "blurs": "node scripts/generate-blurs.mjs"
+  },
+  "dependencies": {
+    "geist": "^1.3.1",
+    "motion": "^12.42.2",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "shiki": "^1.24.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.3.1",
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "tailwindcss": "^4.3.1",
+    "typescript": "^5.7.0"
+  }
+}
