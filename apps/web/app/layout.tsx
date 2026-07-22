@@ -3,25 +3,44 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 
+const title = "moumenlab — Less is more";
+const description =
+  "A small lab of the components we build every day, rethought for better feel. React + Tailwind, on the shadcn registry — copy the source or install with npx moumenlab add.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://lab.moumen.dev"),
   title: {
-    default: "moumenlab — a component lab",
+    default: title,
     template: "%s | moumenlab",
   },
-  description:
-    "Open-source interaction experiments by Moumen Soliman. Copy the source or install with npx moumenlab add.",
+  description,
   authors: [{ name: "Moumen Soliman", url: "https://moumen.dev" }],
+  creator: "Moumen Soliman",
+  keywords: [
+    "moumenlab",
+    "shadcn",
+    "react components",
+    "tailwind",
+    "ui",
+    "interaction design",
+  ],
   icons: { icon: "/favicon.png" },
   openGraph: {
     type: "website",
+    locale: "en_US",
+    url: "/",
     siteName: "moumenlab",
-    images: [{ url: "/og-lab.png", width: 1200, height: 630 }],
+    title,
+    description,
+    images: [{ url: "/og-lab.png?v=2", width: 1200, height: 630, alt: "moumenlab" }],
   },
   twitter: {
     card: "summary_large_image",
     site: "@moumensoliman",
-    images: ["/og-lab.png"],
+    creator: "@moumensoliman",
+    title,
+    description,
+    images: ["/og-lab.png?v=2"],
   },
 };
 
