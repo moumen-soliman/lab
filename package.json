@@ -9,7 +9,8 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "10.x"
+      "version": "10.x",
+      "onFail": "warn"
     }
   },
   "scripts": {
