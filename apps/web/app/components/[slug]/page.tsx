@@ -37,14 +37,26 @@ export async function generateMetadata({
   const { slug } = await params;
   const component = getComponent(slug);
   if (!component) return {};
+
+  const title = `${component.title} | moumenlab`;
+  const description = component.description;
+  const ogImage = `/og?component=${slug}&v=1`;
+
   return {
     title: component.title,
-    description: component.description,
+    description,
     alternates: { canonical: `/components/${slug}` },
     openGraph: {
-      title: `${component.title} | moumenlab`,
-      description: component.description,
+      title,
+      description,
       url: `/components/${slug}`,
+      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImage],
     },
   };
 }
