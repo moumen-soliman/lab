@@ -5,7 +5,7 @@
   "scripts": {
     "registry:build": "node scripts/build-registry.mjs",
     "predev": "node scripts/build-registry.mjs",
-    "dev": "NEXT_DIST_DIR=.next-dev next dev --port 3001",
+    "dev": "NEXT_DIST_DIR=.next-dev next dev",
     "prebuild": "node scripts/build-registry.mjs",
     "build": "next build",
     "start": "next start",
