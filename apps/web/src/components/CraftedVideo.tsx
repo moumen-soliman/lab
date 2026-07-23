@@ -25,7 +25,7 @@ export interface ClipItem {
 const CLIP_REVEAL =
   "opacity-0 scale-[1.06] blur-[14px] transition-[opacity,transform,filter] duration-[400ms] ease-smooth-out will-change-[opacity,transform,filter] " +
   "data-[ready=true]:opacity-100 data-[ready=true]:scale-100 data-[ready=true]:blur-[0px] data-[ready=true]:will-change-auto " +
-  "motion-reduce:scale-100 motion-reduce:blur-none motion-reduce:transition-opacity motion-reduce:duration-[350ms] motion-reduce:ease-linear";
+  "motion-reduce:scale-100 motion-reduce:blur-none motion-reduce:transition-opacity motion-reduce:duration-[350ms] motion-reduce:ease-linear right-0 left-0";
 
 interface CraftedVideoProps {
   item: ClipItem;
