@@ -174,9 +174,6 @@
       "dependencies": [
         "motion"
       ],
-      "registryDependencies": [
-        "https://lab.moumen.dev/r/lab-theme.json"
-      ],
       "files": [
         {
           "path": "registry/lab/morphing-checkout/morphing-checkout.tsx",

@@ -24,7 +24,8 @@ import { MotionConfig, motion, useReducedMotion } from "motion/react";
 //     lands a red drawn ✕ with one shake, then eases back for another try.
 //
 // Pass `onPay` to run the real charge. Animation via motion/react; honours
-// prefers-reduced-motion. Requires the lab-theme tokens. Fully Tailwind.
+// prefers-reduced-motion. Plain Tailwind only — no theme tokens or custom
+// classes required.
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 const EASE_ICON = [0.2, 0, 0, 1] as const;
@@ -97,7 +98,7 @@ function hopSeparators(event: React.KeyboardEvent<HTMLInputElement>) {
 const reducedMotion = () => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
 const INPUT =
-  "w-full h-10 px-3 rounded-lg bg-white text-[#111] text-sm shadow-border [transition:box-shadow_200ms_ease] placeholder:text-gray-400 hover:shadow-border-hover focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-[#111] aria-[invalid=true]:shadow-[0_0_0_1px_#fca5a5,0_1px_2px_-1px_rgba(220,38,38,0.12)] aria-[invalid=true]:focus:outline-[#dc2626]";
+  "w-full h-10 px-3 rounded-lg bg-white text-[#111] text-sm shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)] [transition:box-shadow_200ms_ease] placeholder:text-gray-400 hover:shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_1px_2px_-1px_rgba(0,0,0,0.08),0_2px_4px_0_rgba(0,0,0,0.06)] focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-[#111] aria-[invalid=true]:shadow-[0_0_0_1px_#fca5a5,0_1px_2px_-1px_rgba(220,38,38,0.12)] aria-[invalid=true]:focus:outline-[#dc2626]";
 const LABEL = "text-[0.6875rem] font-medium tracking-[0.02em] text-gray-500";
 
 export default function MorphingCheckout({
@@ -139,7 +140,8 @@ export default function MorphingCheckout({
   const [status, setStatus] = useState<"idle" | "processing" | "failed" | "paid">("idle");
   const [payError, setPayError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string | null>>({});
-  const [shake, setShake] = useState(0); // bump to trigger a nav/number shake
+  const [navShake, setNavShake] = useState(false); // primary button shakes on failed validation, resets when done
+  const [numShake, setNumShake] = useState(false); // number field shakes on a failed checksum, resets when done
   const [bodyH, setBodyH] = useState<number | null>(null);
 
   const panelRef = useRef<HTMLDivElement>(null);
@@ -167,6 +169,7 @@ export default function MorphingCheckout({
     return year > now.getFullYear() || (year === now.getFullYear() && mm >= now.getMonth() + 1);
   })();
   const flipped = cvcFocus && brand !== "amex" && status === "idle";
+  const cascade = { animate, dir, reduced };
 
   const clearError = (key: string) => setErrors((prev) => (prev[key] ? { ...prev, [key]: null } : prev));
 
@@ -239,15 +242,15 @@ export default function MorphingCheckout({
 
   useEffect(() => {
     if (numberComplete && !numberValid) {
-      setErrors((prev) => ({ ...prev, number: "This number fails its Luhn checksum" }));
-      setShake((s) => s + 1);
+      setErrors((prev) => ({ ...prev, number: "This number fails" }));
+      setNumShake(true);
     }
   }, [numberComplete, numberValid]);
 
   function validateStep(current: number) {
     const errs: Record<string, string> = {};
     if (current === 0) {
-      if (!numberValid) errs.number = numberComplete ? "This number fails its Luhn checksum" : "Enter the full card number";
+      if (!numberValid) errs.number = numberComplete ? "This number fails" : "Enter the full card number";
       if (!expiryValid) errs.expiry = "Enter a valid future date";
       if (cvc.length !== spec.cvc) errs.cvc = `Enter the ${spec.cvc}-digit ${spec.cvcName}`;
     }
@@ -269,7 +272,7 @@ export default function MorphingCheckout({
     const errs = validateStep(step);
     if (Object.values(errs).some(Boolean)) {
       setErrors((prev) => ({ ...prev, ...errs }));
-      setShake((s) => s + 1);
+      setNavShake(true);
       requestAnimationFrame(() => panelRef.current?.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus({ preventScroll: true }));
       return;
     }
@@ -365,37 +368,14 @@ export default function MorphingCheckout({
     });
   }, [step, brand, numberState, flipped, status, bodyH, onStateChange]);
 
-  // Direction-aware field cascade. Motion when animating, plain otherwise.
-  function StepChild({ i, className, children }: { i: number; className?: string; children: ReactNode }) {
-    if (!animate || reduced) return <div className={className}>{children}</div>;
-    return (
-      <motion.div
-        className={className}
-        initial={{ opacity: 0, x: dir * 16, filter: "blur(3px)" }}
-        animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-        transition={{ duration: 0.38, ease: EASE, delay: i * 0.04 }}
-      >
-        {children}
-      </motion.div>
-    );
-  }
-
-  function ErrorMsg({ id, children }: { id?: string; children: ReactNode }) {
-    return (
-      <motion.p className="text-xs text-[#dc2626]" id={id} initial={{ opacity: 0, y: "-0.25rem" }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeOut" }}>
-        {children}
-      </motion.p>
-    );
-  }
-
   function renderStep(s: number, ghost = false) {
     const id = (base: string) => (ghost ? `${base}-ghost` : base);
     if (s === 0) {
       return (
         <>
-          <StepChild i={0} className="flex flex-col gap-1.5">
+          <StepChild i={0} cascade={cascade} className="flex flex-col gap-1.5">
             <label className={LABEL} htmlFor={id("mc-number")}>Card number</label>
-            <motion.div className="relative" animate={shake && !ghost ? { x: [0, -4, 4, -4, 4, 0] } : { x: 0 }} transition={{ duration: 0.32, ease: "easeInOut" }} key={`ns-${shake}`}>
+            <motion.div className="relative" animate={numShake && !ghost ? { x: [0, -4, 4, -4, 4, 0] } : { x: 0 }} transition={{ duration: 0.32, ease: "easeInOut" }} onAnimationComplete={() => { if (numShake && !ghost) setNumShake(false); }}>
               <input
                 id={id("mc-number")}
                 className={`${INPUT} tabular-nums`}
@@ -422,7 +402,7 @@ export default function MorphingCheckout({
             </motion.div>
             {errors.number && <ErrorMsg id={id("mc-number-err")}>{errors.number}</ErrorMsg>}
           </StepChild>
-          <StepChild i={1} className="grid grid-cols-2 gap-3">
+          <StepChild i={1} cascade={cascade} className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
               <label className={LABEL} htmlFor={id("mc-expiry")}>Expiry</label>
               <input id={id("mc-expiry")} className={`${INPUT} tabular-nums`} type="text" value={formatExpiry(expiry)} onChange={handleExpiryChange} onKeyDown={hopSeparators} placeholder="MM/YY" inputMode="numeric" autoComplete="cc-exp" spellCheck={false} aria-invalid={errors.expiry ? "true" : undefined} aria-describedby={errors.expiry ? id("mc-expiry-err") : undefined} />
@@ -439,7 +419,7 @@ export default function MorphingCheckout({
     }
     if (s === 1) {
       const field = (i: number, key: string, label: string, val: string, set: (v: string) => void, placeholder: string, ac: string, numeric = false) => (
-        <StepChild i={i} className="flex flex-col gap-1.5">
+        <StepChild i={i} cascade={cascade} className="flex flex-col gap-1.5">
           <label className={LABEL} htmlFor={id(`mc-${key}`)}>{label}</label>
           <input id={id(`mc-${key}`)} className={numeric ? `${INPUT} tabular-nums` : INPUT} type="text" value={val} onChange={(e) => { set(e.target.value); clearError(key); }} placeholder={placeholder} autoComplete={ac} spellCheck={false} aria-invalid={errors[key] ? "true" : undefined} />
           {errors[key] && <ErrorMsg>{errors[key]}</ErrorMsg>}
@@ -449,7 +429,7 @@ export default function MorphingCheckout({
         <>
           {field(0, "name", "Name on card", name, setName, "Ada Lovelace", "cc-name")}
           {field(1, "address", "Street address", address, setAddress, "42 Analytical Engine Way", "street-address")}
-          <StepChild i={2} className="grid grid-cols-2 gap-3">
+          <StepChild i={2} cascade={cascade} className="grid grid-cols-2 gap-3">
             <div className="flex flex-col gap-1.5">
               <label className={LABEL} htmlFor={id("mc-city")}>City</label>
               <input id={id("mc-city")} className={INPUT} type="text" value={city} onChange={(e) => { setCity(e.target.value); clearError("city"); }} placeholder="London" autoComplete="address-level2" spellCheck={false} aria-invalid={errors.city ? "true" : undefined} />
@@ -467,7 +447,7 @@ export default function MorphingCheckout({
     if (s === 2) {
       return (
         <>
-          <StepChild i={0}>
+          <StepChild i={0} cascade={cascade}>
             <dl className="flex flex-col">
               <SumRow dt="Card">{spec.label} •••• {last4}</SumRow>
               <SumRow dt="Expires"><span className="tabular-nums">{formatExpiry(expiry)}</span></SumRow>
@@ -476,19 +456,19 @@ export default function MorphingCheckout({
               <SumRow dt="Total" total><span className="tabular-nums">{price}</span></SumRow>
             </dl>
           </StepChild>
-          <StepChild i={1}><p className="text-xs text-gray-400">Demo checkout - nothing is charged.</p></StepChild>
+          <StepChild i={1} cascade={cascade}><p className="text-xs text-gray-400">Demo checkout - nothing is charged.</p></StepChild>
         </>
       );
     }
     return (
       <>
-        <StepChild i={0}>
+        <StepChild i={0} cascade={cascade}>
           <div>
             <h3 className="text-[0.9375rem] font-semibold text-[#111]">Payment complete</h3>
             <p className="mt-1.5 text-[0.8125rem] text-gray-500">Charged <span className="tabular-nums">{price}</span> to {spec.label} •••• {last4}</p>
           </div>
         </StepChild>
-        <StepChild i={1}><p className="text-xs text-gray-400">A receipt is on its way to your inbox. Probably.</p></StepChild>
+        <StepChild i={1} cascade={cascade}><p className="text-xs text-gray-400">A receipt is on its way to your inbox. Probably.</p></StepChild>
       </>
     );
   }
@@ -499,7 +479,7 @@ export default function MorphingCheckout({
   return (
     <MotionConfig reducedMotion="user">
       <div className="w-full max-w-[22rem] relative">
-        <div className="relative p-4 rounded-3xl bg-white shadow-border">
+        <div className="relative p-4 rounded-3xl bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)]">
           {/* Live preview — presentational, hidden from AT. */}
           <div className="relative [perspective:62.5rem] mb-4">
             <motion.div className="relative aspect-[1.586] [transform-style:preserve-3d]" animate={{ rotateY: flipped ? 180 : 0 }} transition={{ duration: 0.6, ease: EASE }} aria-hidden="true">
@@ -569,7 +549,7 @@ export default function MorphingCheckout({
             </nav>
           ) : (
             <nav className="relative grid grid-cols-3 p-1 mb-4 rounded-full bg-gray-100" aria-label="Checkout steps">
-              <motion.span className="absolute top-1 bottom-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-white shadow-border" aria-hidden="true" animate={{ x: `${Math.min(step, 2) * 100}%` }} transition={morph && !reduced ? { duration: 0.38, ease: EASE } : { duration: 0 }} />
+              <motion.span className="absolute top-1 bottom-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)]" aria-hidden="true" animate={{ x: `${Math.min(step, 2) * 100}%` }} transition={morph && !reduced ? { duration: 0.38, ease: EASE } : { duration: 0 }} />
               {tabs.map((label, index) => (
                 <button key={label} type="button" className={`relative z-[1] h-8 rounded-full text-xs font-medium [transition:color_200ms_ease] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1 ${step === index ? "text-[#111]" : "text-gray-500"} enabled:hover:text-[#111] disabled:cursor-default focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]`} aria-current={step === index ? "step" : undefined} disabled={index === step || index > maxStep || status !== "idle"} onClick={() => navigate(index)}>
                   {label}
@@ -598,17 +578,17 @@ export default function MorphingCheckout({
           <div className="relative flex items-center justify-between gap-3 min-h-11 mt-4">
             <button
               type="button"
-              className={`h-11 px-3.5 rounded-full text-[0.8125rem] font-medium text-gray-500 [transition:color_200ms_ease,background-color_200ms_ease,opacity_250ms_var(--ease-icon),scale_150ms_ease-out] hover:text-[#111] hover:bg-gray-100 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${step === 0 || (status !== "idle" && step !== 3) ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+              className={`h-11 px-3.5 rounded-full text-[0.8125rem] font-medium text-gray-500 [transition:color_200ms_ease,background-color_200ms_ease,opacity_250ms_cubic-bezier(0.2,0,0,1),scale_150ms_ease-out] hover:text-[#111] hover:bg-gray-100 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${step === 0 || (status !== "idle" && step !== 3) ? "opacity-0 pointer-events-none" : "opacity-100"}`}
               tabIndex={step === 0 || (status !== "idle" && step !== 3) ? -1 : 0}
               onClick={() => (step === 3 ? reset() : navigate(step - 1))}
             >
               {step === 3 ? "Start over" : "Back"}
             </button>
-            <motion.div className="ml-auto" animate={shake || status === "failed" ? { x: [0, -4, 4, -4, 4, 0] } : { x: 0 }} transition={{ duration: 0.32, ease: "easeInOut", delay: status === "failed" ? 0.2 : 0 }} key={`pshake-${shake}-${status}`}>
+            <motion.div className="ml-auto" animate={navShake || status === "failed" ? { x: [0, -4, 4, -4, 4, 0] } : { x: 0 }} transition={{ duration: 0.32, ease: "easeInOut", delay: status === "failed" ? 0.2 : 0 }} onAnimationComplete={() => setNavShake(false)}>
               <button
                 type="button"
                 ref={payRef}
-                className="relative grid place-items-center h-11 min-w-11 rounded-full overflow-hidden whitespace-nowrap bg-[#111] text-white [transition:width_420ms_var(--ease-smooth-out),background-color_300ms_ease,scale_150ms_ease-out] active:enabled:scale-[0.96] disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] data-[status=paid]:bg-[#16a34a] data-[status=failed]:bg-[#dc2626]"
+                className="relative grid place-items-center h-11 min-w-11 rounded-full overflow-hidden whitespace-nowrap bg-[#111] text-white [transition:width_420ms_cubic-bezier(0.22,1,0.36,1),background-color_300ms_ease,scale_150ms_ease-out] active:enabled:scale-[0.96] disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] data-[status=paid]:bg-[#16a34a] data-[status=failed]:bg-[#dc2626]"
                 data-status={status}
                 disabled={status !== "idle"}
                 aria-busy={status === "processing"}
@@ -644,6 +624,42 @@ export default function MorphingCheckout({
         </p>
       </div>
     </MotionConfig>
+  );
+}
+
+// Direction-aware field cascade. Motion when animating, plain otherwise.
+// Module-level so its identity is stable across renders — nesting it inside the
+// component would create a new function every keystroke, remounting the inputs
+// and stealing focus.
+function StepChild({
+  i,
+  cascade,
+  className,
+  children,
+}: {
+  i: number;
+  cascade: { animate: boolean; dir: number; reduced: boolean | null };
+  className?: string;
+  children: ReactNode;
+}) {
+  if (!cascade.animate || cascade.reduced) return <div className={className}>{children}</div>;
+  return (
+    <motion.div
+      className={className}
+      initial={{ opacity: 0, x: cascade.dir * 16, filter: "blur(3px)" }}
+      animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
+      transition={{ duration: 0.38, ease: EASE, delay: i * 0.04 }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function ErrorMsg({ id, children }: { id?: string; children: ReactNode }) {
+  return (
+    <motion.p className="text-xs text-[#dc2626]" id={id} initial={{ opacity: 0, y: "-0.25rem" }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeOut" }}>
+      {children}
+    </motion.p>
   );
 }
 
