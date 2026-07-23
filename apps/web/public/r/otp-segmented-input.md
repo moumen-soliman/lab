@@ -282,21 +282,26 @@ export default function OtpInput({
                 // the success cascade retimes the tint with a per-cell delay
                 state === "success"
                   ? "shadow-[var(--shadow-border),0_0_0_1.5px_#16a34a] bg-[#f0fdf4] text-[#15803d]"
-                  : cell.selected
-                    ? "bg-gray-200 text-[#111] shadow-border" // a selection RANGE maps to a cell range — one input
-                    : cell.active
-                      ? "bg-white text-[#111] shadow-[var(--shadow-border),0_0_0_2px_#111]"
-                      : state === "error"
-                        ? "bg-white text-[#dc2626] shadow-border"
-                        : "bg-white text-[#111] shadow-border",
+                  : cell.active
+                    ? "bg-white text-[#111] shadow-[var(--shadow-border),0_0_0_2px_#111]"
+                    : state === "error"
+                      ? "bg-white text-[#dc2626] shadow-border"
+                      : "bg-white text-[#111] shadow-border",
                 inspect ? "outline outline-[1.5px] outline-dashed outline-[#3b82f6] -outline-offset-2" : "",
               ].join(" ")}
               style={state === "success" ? { transitionDelay: `${cell.index * FILL_S * 1000}ms` } : undefined}
               aria-hidden="true"
             >
               {cell.char && (
+                // A selection RANGE maps to a cell range — one input. The
+                // highlight hugs the digit like native text selection paints
+                // the glyph's line box, instead of tinting the whole slot.
+                // Padding is offset by negative margins so toggling it never
+                // shifts the centered glyph.
                 <motion.span
-                  className="inline-block"
+                  className={`inline-block rounded-[0.3125rem] px-1 py-0.5 -mx-1 -my-0.5 transition-colors duration-150 ${
+                    cell.selected ? "bg-gray-200" : "bg-transparent"
+                  }`}
                   initial={false}
                   animate={
                     state === "success"
@@ -336,10 +341,18 @@ export default function OtpInput({
             className={[
               "absolute inset-0 w-full h-full border-0 outline-none bg-transparent font-mono text-xl cursor-text",
               "[letter-spacing:calc(var(--otp-cell-w)+var(--otp-gap)-1ch)] pl-[calc(var(--otp-cell-w)/2-0.5ch)]",
-              "selection:bg-transparent [caret-color:transparent]",
+              // A host page's own ::selection styling repaints selected glyphs
+              // with a visible foreground — select-all would reveal masked
+              // digits (this site does exactly that: selection:text-white on
+              // the page wrapper, which Tailwind cascades to descendants at
+              // EQUAL specificity, so source order decides). `!` makes the
+              // component win deterministically in any host page; the
+              // text-fill-color below is the second lock — ::selection cannot
+              // override it, so the glyphs stay invisible mid-selection.
+              "selection:bg-transparent! selection:text-transparent! [caret-color:transparent]",
               inspect
-                ? "text-[rgba(220,38,38,0.55)] outline outline-[1.5px] outline-dashed outline-[#ef4444] outline-offset-4" // the secret, revealed
-                : "text-transparent",
+                ? "text-[rgba(220,38,38,0.55)] [-webkit-text-fill-color:rgba(220,38,38,0.55)] outline outline-[1.5px] outline-dashed outline-[#ef4444] outline-offset-4" // the secret, revealed
+                : "text-transparent [-webkit-text-fill-color:transparent]",
             ].join(" ")}
             type="text"
             value={value}
