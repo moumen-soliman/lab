@@ -31,6 +31,11 @@ import { motion, MotionConfig, useAnimationControls, useReducedMotion } from "mo
 // snapping (position only — the width change stays instant so the new digit is
 // never clipped). Animation via motion/react; honours prefers-reduced-motion.
 // Requires the lab-theme tokens. Fully Tailwind, no CSS files.
+//
+// NOTE ON SIZE: the pill is deliberately compact (text-xl value, h-8 actions)
+// so it drops straight into dashboards, list rows and toolbars. The lab demo
+// page renders it inside a scale wrapper purely for presentation — what you
+// install is the dashboard size you see in your own app.
 
 const MEASURE_SAFETY = 2; // px of slack so the value never kisses the clip edge
 
@@ -76,8 +81,9 @@ const ICON_SHOWN = { opacity: 1, scale: 1, filter: "blur(0px)" };
 const ICON_HIDDEN = { opacity: 0, scale: 0.25, filter: "blur(4px)" };
 
 // The value's typography, shared verbatim by the visible value and the hidden
-// measuring clone so the fit is pixel-accurate. 1.875rem = text-3xl.
-const VALUE_TYPE = "text-3xl font-semibold tracking-[-0.01em] tabular-nums whitespace-nowrap";
+// measuring clone so the fit is pixel-accurate. 1.25rem = text-xl — dashboard
+// scale, not display scale.
+const VALUE_TYPE = "text-xl font-semibold tracking-[-0.01em] tabular-nums whitespace-nowrap";
 
 export default function TicketNumber({
   value = "#0",
@@ -85,7 +91,7 @@ export default function TicketNumber({
   status,
   onStatusClick,
   width = "max",
-  maxWidth = "21rem",
+  maxWidth = "14rem",
   copyable = true,
   inspect = false,
   onStateChange,
@@ -133,9 +139,11 @@ export default function TicketNumber({
     const cs = getComputedStyle(pill);
     const padX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
     const gap = parseFloat(cs.columnGap || cs.gap) || 0;
-    const actionsW = actionsRef.current ? actionsRef.current.getBoundingClientRect().width : 0;
+    // offsetWidth (layout px) rather than getBoundingClientRect, so an ancestor
+    // CSS `scale` (e.g. a demo presentation wrapper) never skews the budget.
+    const actionsW = actionsRef.current ? actionsRef.current.offsetWidth : 0;
     const rootPx = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-    const capPx = (parseFloat(cs.getPropertyValue("--ticket-max")) || 21) * rootPx;
+    const capPx = (parseFloat(cs.getPropertyValue("--ticket-max")) || 14) * rootPx;
     let parentAvail = Infinity;
     const parent = pill.parentElement;
     if (parent) {
@@ -229,7 +237,7 @@ export default function TicketNumber({
         layout="position"
         transition={{ duration: 0.22, ease: EASE }}
         className={[
-          "relative inline-flex items-center gap-3 max-w-[min(100%,var(--ticket-max))] py-2.5 pl-4 pr-3 bg-white rounded-2xl text-[#111] transition-shadow duration-200",
+          "relative inline-flex items-center gap-2.5 max-w-[min(100%,var(--ticket-max))] py-2 pl-3.5 pr-2.5 bg-white rounded-xl text-[#111] transition-shadow duration-200",
           width === "fixed" ? "w-[min(100%,var(--ticket-max))]" : "w-fit",
           inspect
             ? "shadow-none outline outline-[1.5px] outline-dashed outline-[#3b82f6]"
@@ -328,7 +336,7 @@ export default function TicketNumber({
               (onStatusClick ? (
                 <button
                   type="button"
-                  className={`grid place-items-center w-9 h-9 rounded-[0.625rem] transition-[color,background-color,box-shadow,scale,filter] hover:brightness-[0.97] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${statusStyle.className}`}
+                  className={`grid place-items-center w-8 h-8 rounded-lg transition-[color,background-color,box-shadow,scale,filter] hover:brightness-[0.97] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${statusStyle.className}`}
                   onClick={onStatusClick}
                   aria-label={`Pull request status: ${statusStyle.label}. Click to change`}
                   title={`Pull request · ${statusStyle.label}`}
@@ -337,7 +345,7 @@ export default function TicketNumber({
                 </button>
               ) : (
                 <span
-                  className={`grid place-items-center w-9 h-9 rounded-[0.625rem] transition-[color,background-color,box-shadow] ${statusStyle.className}`}
+                  className={`grid place-items-center w-8 h-8 rounded-lg transition-[color,background-color,box-shadow] ${statusStyle.className}`}
                   role="img"
                   aria-label={`Pull request status: ${statusStyle.label}`}
                   title={`Pull request · ${statusStyle.label}`}
@@ -348,7 +356,7 @@ export default function TicketNumber({
             {copyable && (
               <button
                 type="button"
-                className="grid place-items-center w-9 h-9 rounded-[0.625rem] text-gray-500 transition-[scale,background-color,color] hover:bg-[#f4f4f5] hover:text-[#111] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                className="grid place-items-center w-8 h-8 rounded-lg text-gray-500 transition-[scale,background-color,color] hover:bg-[#f4f4f5] hover:text-[#111] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
                 onClick={copy}
                 aria-label={copied ? "Copied" : `Copy ${fullId}`}
               >
