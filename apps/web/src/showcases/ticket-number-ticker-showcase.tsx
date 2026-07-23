@@ -60,7 +60,10 @@ export function TicketNumberShowcase() {
         to <code className="text-[#111]">start…end</code> - the git-SHA idiom - with the full value one hover or copy
         away. Spaces become <code className="text-[#111]">-</code>; drop the digits entirely and it becomes a plain
         name (no reels). Tick <span className="font-medium text-[#111]">GitHub PR status</span> for a live PR badge
-        driven by the <code className="text-[#111]">status</code> prop - click it to cycle the lifecycle.
+        driven by the <code className="text-[#111]">status</code> prop - click it to cycle the lifecycle.{" "}
+        <span className="font-medium text-[#111]">Note:</span> the demo below is scaled{" "}
+        <code className="text-[#111]">1.5×</code> for presentation - the installed component ships at a compact
+        dashboard size that sits naturally in list rows and toolbars.
       </ShowcaseIntro>
 
       <div className="animate-fade-in mb-4 flex flex-col gap-3" style={{ animationDelay: "60ms" }}>
@@ -115,15 +118,20 @@ export function TicketNumberShowcase() {
         }`}
         style={{ animationDelay: "70ms" }}
       >
-        <TicketNumber
-          value={ticketValue}
-          runKey={runKey}
-          status={prOn ? prStatus : undefined}
-          onStatusClick={prOn ? cyclePr : undefined}
-          width={fixedWidth ? "fixed" : "max"}
-          inspect={inspectTicket}
-          onStateChange={handleTicketState}
-        />
+        {/* Presentation-only 1.5× scale: the wrapper is 100%/1.5 wide so the
+            scaled pill fills the stage exactly. The installed component is NOT
+            scaled — it ships at the compact dashboard size. */}
+        <div className="flex justify-center w-[calc(100%/1.5)] scale-150">
+          <TicketNumber
+            value={ticketValue}
+            runKey={runKey}
+            status={prOn ? prStatus : undefined}
+            onStatusClick={prOn ? cyclePr : undefined}
+            width={fixedWidth ? "fixed" : "max"}
+            inspect={inspectTicket}
+            onStateChange={handleTicketState}
+          />
+        </div>
       </section>
 
       <p className="animate-fade-in mt-4 text-center text-sm text-gray-500 break-words" style={{ animationDelay: "90ms" }}>
