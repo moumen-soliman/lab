@@ -68,6 +68,13 @@ function readRegistryFile(slug: string, file: string): string | null {
   return fs.existsSync(abs) ? fs.readFileSync(abs, "utf8") : null;
 }
 
+// The AI document build-registry.mjs generates (predev/prebuild, so it exists
+// before any page render). Served at /r/<slug>.md; copied by "Copy .md".
+function readGeneratedMd(slug: string): string | null {
+  const abs = path.join(process.cwd(), "public", "r", `${slug}.md`);
+  return fs.existsSync(abs) ? fs.readFileSync(abs, "utf8") : null;
+}
+
 export default async function ComponentPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const component = getComponent(slug);
@@ -77,6 +84,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const source = readRegistryFile(slug, `${slug}.tsx`);
   if (!source) notFound();
   const usage = readRegistryFile(slug, "example.tsx");
+  const markdown = readGeneratedMd(slug);
   const highlightedHtml = await highlight(source);
   const usageHtml = usage ? await highlight(usage) : null;
 
@@ -95,6 +103,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           highlightedHtml={highlightedHtml}
           usage={usage}
           usageHtml={usageHtml}
+          markdown={markdown}
         />
 
         <Divider delay={120} className="mt-10 mb-8" />

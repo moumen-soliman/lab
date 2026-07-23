@@ -1,0 +1,281 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "moumenlab",
+  "homepage": "https://lab.moumen.dev",
+  "items": [
+    {
+      "name": "lab-theme",
+      "type": "registry:theme",
+      "title": "Lab Theme",
+      "description": "Shared design tokens (easings, shadow-border ring, and keyframes) every moumenlab component builds on.",
+      "cssVars": {
+        "theme": {
+          "ease-smooth-out": "cubic-bezier(0.22, 1, 0.36, 1)",
+          "ease-icon": "cubic-bezier(0.2, 0, 0, 1)",
+          "shadow-border": "0px 0px 0px 1px oklch(0 0 0 / 0.06), 0px 1px 2px -1px oklch(0 0 0 / 0.06), 0px 2px 4px 0px oklch(0 0 0 / 0.04)",
+          "shadow-border-hover": "0px 0px 0px 1px oklch(0 0 0 / 0.08), 0px 1px 2px -1px oklch(0 0 0 / 0.08), 0px 2px 4px 0px oklch(0 0 0 / 0.06)",
+          "shadow-lift": "0px 12px 28px -14px oklch(0.178 0 0 / 0.16)",
+          "animate-fade-in": "fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards",
+          "animate-shimmer": "shimmer 1.6s linear infinite"
+        }
+      },
+      "css": {
+        "@keyframes fade-in": {
+          "from": {
+            "opacity": "0",
+            "transform": "translateY(10px)"
+          }
+        },
+        "@keyframes shimmer": {
+          "to": {
+            "background-position": "-200% 0"
+          }
+        }
+      }
+    },
+    {
+      "name": "unlimited-nested-menu",
+      "type": "registry:component",
+      "title": "Unlimited Nested Menu",
+      "description": "A dropdown where each branch morphs into a stacked sub-panel, no depth limit, fully keyboard driven.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/unlimited-nested-menu/unlimited-nested-menu.tsx",
+          "type": "registry:component",
+          "target": "components/lab/unlimited-nested-menu.tsx"
+        }
+      ]
+    },
+    {
+      "name": "ticket-number-ticker",
+      "type": "registry:component",
+      "title": "Ticket Number Ticker",
+      "description": "An odometer that runs digits up on tabular-nums and middle-truncates long ids to start…end, with an optional GitHub PR status badge.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/ticket-number-ticker/ticket-number-ticker.tsx",
+          "type": "registry:component",
+          "target": "components/lab/ticket-number-ticker.tsx"
+        }
+      ]
+    },
+    {
+      "name": "file-upload-staging",
+      "type": "registry:component",
+      "title": "File Upload Staging Area",
+      "description": "Per-tile interruptible upload state machines with capped concurrency and a layout-glide grid reflow.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/file-upload-staging/file-upload-staging.tsx",
+          "type": "registry:component",
+          "target": "components/lab/file-upload-staging.tsx"
+        }
+      ]
+    },
+    {
+      "name": "schedule-builder",
+      "type": "registry:component",
+      "title": "Schedule Builder",
+      "description": "A recurrence rule as a live English sentence over real occurrences, with month-end and DST traps.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/schedule-builder/schedule-builder.tsx",
+          "type": "registry:component",
+          "target": "components/lab/schedule-builder.tsx"
+        }
+      ]
+    },
+    {
+      "name": "otp-segmented-input",
+      "type": "registry:component",
+      "title": "OTP Segmented Input",
+      "description": "Six cells that are secretly one real input, with native selection driving the active cell.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/otp-segmented-input/otp-segmented-input.tsx",
+          "type": "registry:component",
+          "target": "components/lab/otp-segmented-input.tsx"
+        }
+      ]
+    },
+    {
+      "name": "share-permissions-popover",
+      "type": "registry:component",
+      "title": "Share & Permissions Popover",
+      "description": "A three-view floating surface that morphs on both axes with a focus trap surviving the swaps.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/share-permissions-popover/share-permissions-popover.tsx",
+          "type": "registry:component",
+          "target": "components/lab/share-permissions-popover.tsx"
+        }
+      ]
+    },
+    {
+      "name": "command-palette",
+      "type": "registry:component",
+      "title": "Command Palette with Argument Chips",
+      "description": "Commands that take inline argument chips, fuzzy ranking, and a measured height morph.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/command-palette/command-palette.tsx",
+          "type": "registry:component",
+          "target": "components/lab/command-palette.tsx"
+        }
+      ]
+    },
+    {
+      "name": "morphing-checkout",
+      "type": "registry:component",
+      "title": "Morphing Checkout Flow",
+      "description": "A three-step card payment with a height:auto illusion, caret-safe masking, a 3D flip, and a FLIP pay button.",
+      "dependencies": [
+        "motion"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/morphing-checkout/morphing-checkout.tsx",
+          "type": "registry:component",
+          "target": "components/lab/morphing-checkout.tsx"
+        }
+      ]
+    },
+    {
+      "name": "search-expand-nav",
+      "type": "registry:component",
+      "title": "Search-Expand Navigation Bar",
+      "description": "A nav bar that expands into a search field then grows into a recent-searches card.",
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/search-expand-nav/search-expand-nav.tsx",
+          "type": "registry:component",
+          "target": "components/lab/search-expand-nav.tsx"
+        }
+      ],
+      "dependencies": [
+        "motion"
+      ]
+    },
+    {
+      "name": "drag-to-reorder-list",
+      "type": "registry:component",
+      "title": "Drag-to-Reorder List",
+      "description": "A reorderable list where siblings glide one slot and the drop plays a FLIP, keyboard included.",
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/drag-to-reorder-list/drag-to-reorder-list.tsx",
+          "type": "registry:component",
+          "target": "components/lab/drag-to-reorder-list.tsx"
+        }
+      ],
+      "dependencies": [
+        "motion"
+      ]
+    },
+    {
+      "name": "caret-mention-popover",
+      "type": "registry:component",
+      "title": "Caret-Anchored Mention Popover",
+      "description": "An @-mention popover anchored to the text caret via a hidden mirror, gliding as you type.",
+      "dependencies": [
+        "motion"
+      ],
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/caret-mention-popover/caret-mention-popover.tsx",
+          "type": "registry:component",
+          "target": "components/lab/caret-mention-popover.tsx"
+        }
+      ]
+    },
+    {
+      "name": "hover-expand-icon-strip",
+      "type": "registry:component",
+      "title": "Hover-Expand Icon Strip",
+      "description": "Icons in a fixed-width box that expand on hover or Tab while the others squeeze to fit.",
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/hover-expand-icon-strip/hover-expand-icon-strip.tsx",
+          "type": "registry:component",
+          "target": "components/lab/hover-expand-icon-strip.tsx"
+        }
+      ],
+      "dependencies": [
+        "motion"
+      ]
+    },
+    {
+      "name": "inertial-wheel-list",
+      "type": "registry:component",
+      "title": "Inertial Wheel List",
+      "description": "An iOS picker drum built on native scroll-snap, with selection derived from scrollTop.",
+      "registryDependencies": [
+        "https://lab.moumen.dev/r/lab-theme.json"
+      ],
+      "files": [
+        {
+          "path": "registry/lab/inertial-wheel-list/inertial-wheel-list.tsx",
+          "type": "registry:component",
+          "target": "components/lab/inertial-wheel-list.tsx"
+        }
+      ],
+      "dependencies": [
+        "motion"
+      ]
+    }
+  ]
+}

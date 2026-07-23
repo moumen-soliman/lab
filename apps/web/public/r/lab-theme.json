@@ -1,0 +1,32 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "lab-theme",
+  "type": "registry:theme",
+  "title": "Lab Theme",
+  "description": "Shared design tokens (easings, shadow-border ring, and keyframes) every moumenlab component builds on.",
+  "cssVars": {
+    "theme": {
+      "ease-smooth-out": "cubic-bezier(0.22, 1, 0.36, 1)",
+      "ease-icon": "cubic-bezier(0.2, 0, 0, 1)",
+      "shadow-border": "0px 0px 0px 1px oklch(0 0 0 / 0.06), 0px 1px 2px -1px oklch(0 0 0 / 0.06), 0px 2px 4px 0px oklch(0 0 0 / 0.04)",
+      "shadow-border-hover": "0px 0px 0px 1px oklch(0 0 0 / 0.08), 0px 1px 2px -1px oklch(0 0 0 / 0.08), 0px 2px 4px 0px oklch(0 0 0 / 0.06)",
+      "shadow-lift": "0px 12px 28px -14px oklch(0.178 0 0 / 0.16)",
+      "animate-fade-in": "fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards",
+      "animate-shimmer": "shimmer 1.6s linear infinite"
+    }
+  },
+  "css": {
+    "@keyframes fade-in": {
+      "from": {
+        "opacity": "0",
+        "transform": "translateY(10px)"
+      }
+    },
+    "@keyframes shimmer": {
+      "to": {
+        "background-position": "-200% 0"
+      }
+    }
+  },
+  "files": []
+}

@@ -2,8 +2,8 @@
   "$schema": "https://turbo.build/schema.json",
   "tasks": {
     "registry:build": {
-      "inputs": ["registry.json", "registry/**"],
-      "outputs": ["public/r/**"]
+      "inputs": ["registry.json", "registry/**", "scripts/build-registry.mjs"],
+      "outputs": ["public/r/**", "public/llms.txt"]
     },
     "build": {
       "dependsOn": ["^build", "registry:build"],
@@ -13,6 +13,7 @@
       "dependsOn": ["^build"]
     },
     "dev": {
+      "dependsOn": ["registry:build"],
       "cache": false,
       "persistent": true
     }

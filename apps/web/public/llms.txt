@@ -1,0 +1,25 @@
+# moumenlab
+
+> A lab of polished React interface components — Tailwind CSS + motion/react, installable with the shadcn CLI. Every component ships as one self-contained file.
+
+Each component has a single-file markdown doc — description, install command, usage example and full source — at /r/<name>.md. Fetch that one file for complete context on a component.
+
+## Components
+
+- [Unlimited Nested Menu](https://lab.moumen.dev/r/unlimited-nested-menu.md): A dropdown where each branch morphs into a stacked sub-panel, no depth limit, fully keyboard driven.
+- [Ticket Number Ticker](https://lab.moumen.dev/r/ticket-number-ticker.md): An odometer that runs digits up on tabular-nums and middle-truncates long ids to start…end, with an optional GitHub PR status badge.
+- [File Upload Staging Area](https://lab.moumen.dev/r/file-upload-staging.md): Per-tile interruptible upload state machines with capped concurrency and a layout-glide grid reflow.
+- [Schedule Builder](https://lab.moumen.dev/r/schedule-builder.md): A recurrence rule as a live English sentence over real occurrences, with month-end and DST traps.
+- [OTP Segmented Input](https://lab.moumen.dev/r/otp-segmented-input.md): Six cells that are secretly one real input, with native selection driving the active cell.
+- [Share & Permissions Popover](https://lab.moumen.dev/r/share-permissions-popover.md): A three-view floating surface that morphs on both axes with a focus trap surviving the swaps.
+- [Command Palette with Argument Chips](https://lab.moumen.dev/r/command-palette.md): Commands that take inline argument chips, fuzzy ranking, and a measured height morph.
+- [Morphing Checkout Flow](https://lab.moumen.dev/r/morphing-checkout.md): A three-step card payment with a height:auto illusion, caret-safe masking, a 3D flip, and a FLIP pay button.
+- [Search-Expand Navigation Bar](https://lab.moumen.dev/r/search-expand-nav.md): A nav bar that expands into a search field then grows into a recent-searches card.
+- [Drag-to-Reorder List](https://lab.moumen.dev/r/drag-to-reorder-list.md): A reorderable list where siblings glide one slot and the drop plays a FLIP, keyboard included.
+- [Caret-Anchored Mention Popover](https://lab.moumen.dev/r/caret-mention-popover.md): An @-mention popover anchored to the text caret via a hidden mirror, gliding as you type.
+- [Hover-Expand Icon Strip](https://lab.moumen.dev/r/hover-expand-icon-strip.md): Icons in a fixed-width box that expand on hover or Tab while the others squeeze to fit.
+- [Inertial Wheel List](https://lab.moumen.dev/r/inertial-wheel-list.md): An iOS picker drum built on native scroll-snap, with selection derived from scrollTop.
+
+## Registry
+
+- [registry.json](https://lab.moumen.dev/r/registry.json): shadcn-format registry index (per-item payloads at /r/<name>.json)

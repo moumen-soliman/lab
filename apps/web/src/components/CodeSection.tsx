@@ -75,7 +75,7 @@ function CopySwapIcon({ copied }: { copied: boolean }) {
 
 // Quiet text copy action: looks like a text link, hits like a 40px button
 // (invisible pseudo-element padding).
-function CopyAction({ copied, onCopy }: { copied: boolean; onCopy: () => void }) {
+function CopyAction({ copied, onCopy, label = "Copy" }: { copied: boolean; onCopy: () => void; label?: string }) {
   return (
     <button
       type="button"
@@ -83,7 +83,7 @@ function CopyAction({ copied, onCopy }: { copied: boolean; onCopy: () => void })
       className="relative inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 select-none transition-colors hover:text-[#111] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
     >
       <CopySwapIcon copied={copied} />
-      {copied ? "Copied" : "Copy"}
+      {copied ? "Copied" : label}
     </button>
   );
 }
@@ -106,18 +106,22 @@ export function CodeSection({
   highlightedHtml,
   usage,
   usageHtml,
+  markdown,
 }: {
   slug: string;
   source: string;
   highlightedHtml: string;
   usage: string | null;
   usageHtml: string | null;
+  /** The generated /r/<slug>.md — the whole component as one AI-ready document. */
+  markdown?: string | null;
 }) {
   const [manager, setManager] = useState<Manager>("moumenlab");
   const [open, setOpen] = useState(false);
   const install = useCopy();
   const code = useCopy();
   const usageCopy = useCopy();
+  const mdCopy = useCopy();
   const command = installCommand(manager, slug);
   const sourceId = useId();
 
@@ -161,6 +165,26 @@ export function CodeSection({
           </button>
         </div>
       </section>
+
+      {/* For AI: the generated /r/<slug>.md bundles description, install,
+          usage and full source into one document — copy it into a chat, or
+          point an agent at the URL. */}
+      {markdown && (
+        <section className="flex items-center justify-between gap-4">
+          <SectionLabel>For AI</SectionLabel>
+          <div className="flex items-center gap-5">
+            <a
+              href={`/r/${slug}.md`}
+              target="_blank"
+              rel="noreferrer"
+              className="relative text-xs font-medium text-gray-500 select-none transition-colors hover:text-[#111] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
+            >
+              Open .md
+            </a>
+            <CopyAction copied={mdCopy.copied} onCopy={() => mdCopy.copy(markdown)} label="Copy .md" />
+          </div>
+        </section>
+      )}
 
       {/* Usage: the example that lives beside the component in the registry -
           short enough to stay open, with its own copy. */}
