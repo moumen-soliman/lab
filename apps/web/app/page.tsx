@@ -34,14 +34,41 @@ export default function HomePage() {
           <span className="font-medium text-[#111]">one thing well</span>, built in React and fully Tailwind, and
           available in the <span className="font-medium text-[#111]">shadcn registry</span> - copy the source, install
           it with <code className="whitespace-nowrap text-[#111]">npx moumenlab add</code>, or star it on{" "}
-          <a
-            href="https://github.com/moumen-soliman/lab"
-            target="_blank"
-            rel="noreferrer"
-            className="font-medium text-[#111] underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-[#111]"
-          >
-            GitHub
-          </a>
+          {/* The GitHub link hides a meme: hover reveals a gif popover guilt-
+              tripping you about our very humble star count.
+              ── HOVER STORYBOARD ──────────────────────────────────────────
+                idle   card sits 4px low, scale 0.96, fully transparent
+                hover  over 200ms it lifts into place + fades in, growing out
+                       of the link (origin-bottom); reverses on leave.
+              Pure CSS via the group so the page stays a server component. It's
+              one compact surface, so it reveals as a single unit rather than a
+              staggered entrance. @media(hover:hover) keeps it off touch (tap
+              falls through to the repo); prefers-reduced-motion drops the move. */}
+          <span className="group/gh relative inline-block">
+            <a
+              href="https://github.com/moumen-soliman/lab"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-[#111] underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-[#111]"
+            >
+              GitHub
+            </a>
+            <span
+              role="tooltip"
+              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-40 origin-bottom -translate-x-1/2 translate-y-1 scale-[0.96] rounded-2xl bg-white p-2 opacity-0 shadow-[var(--shadow-border),var(--shadow-lift)] transition-[opacity,scale,translate] duration-200 ease-smooth-out motion-reduce:transition-none [@media(hover:hover)]:group-hover/gh:translate-y-0 [@media(hover:hover)]:group-hover/gh:scale-100 [@media(hover:hover)]:group-hover/gh:opacity-100"
+            >
+              <img
+                src="/github.gif"
+                alt="A meme reacting to our star count"
+                width={288}
+                height={288}
+                className="block aspect-square w-full rounded-lg object-cover outline outline-1 -outline-offset-1 outline-black/10"
+              />
+              <span className="mt-2 block text-center text-xs leading-snug text-gray-500">
+                be the <span className="font-medium text-[#111]">⭐</span> we&apos;ve been waiting for.
+              </span>
+            </span>
+          </span>
           .
         </p>
 
