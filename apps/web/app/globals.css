@@ -16,6 +16,26 @@
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
+  /* Semantic colors — shadcn token names, valued to match this site's design.
+     Components reference only these (never raw grays/hexes) so that on a
+     consumer's site they pick up the consumer's own shadcn theme, including
+     dark mode. NOT shipped via lab-theme: `shadcn init` defines them. */
+  --color-background: oklch(1 0 0);
+  --color-foreground: oklch(0.178 0 0);
+  --color-card: oklch(1 0 0);
+  --color-card-foreground: oklch(0.178 0 0);
+  --color-popover: oklch(1 0 0);
+  --color-popover-foreground: oklch(0.178 0 0);
+  --color-primary: oklch(0.178 0 0);
+  --color-primary-foreground: oklch(1 0 0);
+  --color-muted: oklch(0.967 0.001 286.375);
+  --color-muted-foreground: oklch(0.551 0.027 264.364);
+  --color-accent: oklch(0.967 0.001 286.375);
+  --color-accent-foreground: oklch(0.178 0 0);
+  --color-destructive: oklch(0.577 0.245 27.325);
+  --color-border: oklch(0.967 0.003 264.542);
+  --color-ring: oklch(0.178 0 0);
+
   /* Easings */
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1); /* open + close, resize */
   --ease-icon: cubic-bezier(0.2, 0, 0, 1); /* contextual icon cross-fade */
@@ -58,8 +78,8 @@
   }
 
   body {
-    background-color: #fff;
-    color: #111;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
   }
 
   button {
@@ -68,7 +88,7 @@
 
   /* Global focus ring, matching the source site's ink outline. */
   :focus-visible {
-    outline: 2px solid #111;
+    outline: 2px solid var(--color-ring);
     outline-offset: 2px;
   }
 }

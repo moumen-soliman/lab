@@ -27,7 +27,7 @@ export default function TicketNumberExample() {
       <button
         type="button"
         onClick={() => setRunKey((key) => key + 1)}
-        className="rounded-full bg-[#111] px-4 py-2 text-xs font-medium text-white transition-[background-color,scale] hover:bg-[#333] active:scale-[0.96]"
+        className="rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-[background-color,scale] hover:bg-primary/85 active:scale-[0.96]"
       >
         Run the numbers
       </button>

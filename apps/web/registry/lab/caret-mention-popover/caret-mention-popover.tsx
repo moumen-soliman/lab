@@ -138,8 +138,8 @@ function buildSegments(text: string, names: string[], token: { start: number; en
         transition={{ duration: 0.2, ease: EASE }}
         className={
           mark.kind === "pill"
-            ? "bg-[#e8ebee] rounded-[0.25rem] shadow-[0_0_0_1.5px_#e8ebee] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]"
-            : `bg-[#f4f4f5] rounded-[0.25rem] shadow-[0_0_0_1.5px_#f4f4f5] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]${inspect ? " outline outline-[1.5px] outline-dashed outline-[#f59e0b] outline-offset-[1.5px]" : ""}`
+            ? "bg-foreground/10 rounded-[0.25rem] shadow-[0_0_0_1.5px_color-mix(in_oklab,var(--color-foreground)_10%,transparent)] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]"
+            : `bg-muted rounded-[0.25rem] shadow-[0_0_0_1.5px_var(--color-muted)] [box-decoration-break:clone] [-webkit-box-decoration-break:clone]${inspect ? " outline outline-[1.5px] outline-dashed outline-[#f59e0b] outline-offset-[1.5px]" : ""}`
         }
       >
         {content}
@@ -161,7 +161,7 @@ function Highlight({ text, range }: { text: string; range: [number, number] | nu
   return (
     <>
       {text.slice(0, range[0])}
-      <span className="underline underline-offset-2 decoration-gray-400">{text.slice(range[0], range[1])}</span>
+      <span className="underline underline-offset-2 decoration-muted-foreground/70">{text.slice(range[0], range[1])}</span>
       {text.slice(range[1])}
     </>
   );
@@ -417,7 +417,7 @@ export default function MentionComposer({
     <MotionConfig reducedMotion="user">
       <div ref={rootRef} className="relative w-full" data-inspect={inspect ? "true" : "false"}>
         <div
-          className={`bg-white rounded-2xl px-4 pt-3.5 pb-2.5 shadow-border [transition:box-shadow_200ms_ease] hover:shadow-border-hover focus-within:shadow-border-hover focus-within:outline focus-within:outline-2 focus-within:-outline-offset-1 focus-within:outline-[#111]${
+          className={`bg-card rounded-2xl px-4 pt-3.5 pb-2.5 shadow-border [transition:box-shadow_200ms_ease] hover:shadow-border-hover focus-within:shadow-border-hover focus-within:outline focus-within:outline-2 focus-within:-outline-offset-1 focus-within:outline-ring${
             inspect ? " !shadow-none outline outline-[1.5px] outline-dashed outline-[#3b82f6]" : ""
           }`}
         >
@@ -427,7 +427,7 @@ export default function MentionComposer({
             </div>
             <textarea
               ref={inputRef}
-              className={`${TEXT} block relative z-[1] w-full min-h-12 max-h-[10.5rem] p-0 border-0 resize-none overflow-y-auto bg-transparent text-[#111] [caret-color:#111] outline-none placeholder:text-gray-400`}
+              className={`${TEXT} block relative z-[1] w-full min-h-12 max-h-[10.5rem] p-0 border-0 resize-none overflow-y-auto bg-transparent text-foreground caret-foreground outline-none placeholder:text-muted-foreground/70`}
               value={value}
               rows={2}
               placeholder="Write a comment, @ to mention"
@@ -458,13 +458,13 @@ export default function MentionComposer({
           </div>
 
           <div className="flex items-center justify-between gap-3 mt-2">
-            <span className="inline-flex items-center gap-1.5 text-xs text-gray-400">
-              <kbd className="font-[inherit] text-[0.6875rem] font-semibold text-gray-500 bg-[#f4f4f5] px-[0.3125rem] rounded-[0.25rem] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)]">@</kbd> to mention
+            <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground/70">
+              <kbd className="font-[inherit] text-[0.6875rem] font-semibold text-muted-foreground bg-muted px-[0.3125rem] rounded-[0.25rem] shadow-[inset_0_0_0_1px_rgba(0,0,0,0.06)]">@</kbd> to mention
               {mentioned.length > 0 && <> · {mentioned.length} mentioned</>}
             </span>
             <button
               type="button"
-              className="grid place-items-center w-9 h-9 rounded-[0.625rem] text-gray-500 [transition:scale_150ms_ease-out,background-color_200ms_ease,color_200ms_ease,opacity_200ms_ease] hover:enabled:bg-[#f4f4f5] hover:enabled:text-[#111] active:enabled:scale-[0.96] disabled:opacity-35 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+              className="grid place-items-center w-9 h-9 rounded-[0.625rem] text-muted-foreground [transition:scale_150ms_ease-out,background-color_200ms_ease,color_200ms_ease,opacity_200ms_ease] hover:enabled:bg-accent hover:enabled:text-foreground active:enabled:scale-[0.96] disabled:opacity-35 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               disabled={!sent && value.trim() === ""}
               onClick={handleSend}
               aria-label="Send comment"
@@ -488,7 +488,7 @@ export default function MentionComposer({
           aria-hidden={!open}
         >
           <div
-            className={`relative bg-white rounded-xl p-1 shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_12px_32px_-8px_rgba(0,0,0,0.22)] [transform-origin:var(--ox,1rem)_top] opacity-0 scale-[0.96] -translate-y-1 blur-[2px] invisible [transition:opacity_140ms_var(--ease-smooth-out),scale_140ms_var(--ease-smooth-out),translate_140ms_var(--ease-smooth-out),filter_140ms_var(--ease-smooth-out),visibility_0s_linear_140ms] group-data-[placement=above]/pop:[transform-origin:var(--ox,1rem)_bottom] group-data-[placement=above]/pop:translate-y-1 group-data-[open=true]/pop:opacity-100 group-data-[open=true]/pop:scale-100 group-data-[open=true]/pop:translate-y-0 group-data-[open=true]/pop:blur-[0px] group-data-[open=true]/pop:visible group-data-[open=true]/pop:[transition:opacity_180ms_var(--ease-smooth-out),scale_180ms_var(--ease-smooth-out),translate_180ms_var(--ease-smooth-out),filter_180ms_var(--ease-smooth-out),visibility_0s]${
+            className={`relative bg-popover rounded-xl p-1 shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_12px_32px_-8px_rgba(0,0,0,0.22)] [transform-origin:var(--ox,1rem)_top] opacity-0 scale-[0.96] -translate-y-1 blur-[2px] invisible [transition:opacity_140ms_var(--ease-smooth-out),scale_140ms_var(--ease-smooth-out),translate_140ms_var(--ease-smooth-out),filter_140ms_var(--ease-smooth-out),visibility_0s_linear_140ms] group-data-[placement=above]/pop:[transform-origin:var(--ox,1rem)_bottom] group-data-[placement=above]/pop:translate-y-1 group-data-[open=true]/pop:opacity-100 group-data-[open=true]/pop:scale-100 group-data-[open=true]/pop:translate-y-0 group-data-[open=true]/pop:blur-[0px] group-data-[open=true]/pop:visible group-data-[open=true]/pop:[transition:opacity_180ms_var(--ease-smooth-out),scale_180ms_var(--ease-smooth-out),translate_180ms_var(--ease-smooth-out),filter_180ms_var(--ease-smooth-out),visibility_0s]${
               inspect ? " outline outline-[1.5px] outline-dashed outline-[#ef4444]" : ""
             }`}
             ref={popCardRef}
@@ -501,7 +501,7 @@ export default function MentionComposer({
                     id={`${listboxId}-${index}`}
                     role="option"
                     aria-selected={index === active}
-                    className="flex items-center gap-2.5 min-h-10 px-2 py-1.5 rounded-lg cursor-pointer opacity-0 translate-y-1 [transition:background-color_90ms_ease,opacity_200ms_var(--ease-smooth-out),translate_200ms_var(--ease-smooth-out)] group-data-[open=true]/pop:opacity-100 group-data-[open=true]/pop:translate-y-0 group-data-[open=true]/pop:[transition-delay:0ms,calc(var(--i,0)*25ms),calc(var(--i,0)*25ms)] data-[active]:bg-[#f4f4f5]"
+                    className="flex items-center gap-2.5 min-h-10 px-2 py-1.5 rounded-lg cursor-pointer opacity-0 translate-y-1 [transition:background-color_90ms_ease,opacity_200ms_var(--ease-smooth-out),translate_200ms_var(--ease-smooth-out)] group-data-[open=true]/pop:opacity-100 group-data-[open=true]/pop:translate-y-0 group-data-[open=true]/pop:[transition-delay:0ms,calc(var(--i,0)*25ms),calc(var(--i,0)*25ms)] data-[active]:bg-accent"
                     style={{ "--i": Math.min(index, 5) } as React.CSSProperties}
                     data-active={index === active ? "true" : undefined}
                     onMouseDown={(event) => {
@@ -510,14 +510,14 @@ export default function MentionComposer({
                     }}
                     onMouseMove={() => setActive(index)}
                   >
-                    <span className="flex-none grid place-items-center w-7 h-7 rounded-full bg-[#eef0f2] text-[0.625rem] font-semibold tracking-[0.02em] text-gray-700" aria-hidden="true">
+                    <span className="flex-none grid place-items-center w-7 h-7 rounded-full bg-foreground/10 text-[0.625rem] font-semibold tracking-[0.02em] text-foreground/80" aria-hidden="true">
                       {initials(match.person.name)}
                     </span>
                     <span className="flex flex-col min-w-0">
-                      <span className="text-[0.8125rem] font-medium text-[#111] whitespace-nowrap overflow-hidden text-ellipsis">
+                      <span className="text-[0.8125rem] font-medium text-foreground whitespace-nowrap overflow-hidden text-ellipsis">
                         <Highlight text={match.person.name} range={match.nameRange} />
                       </span>
-                      <span className="text-[0.6875rem] text-gray-400 whitespace-nowrap overflow-hidden text-ellipsis">
+                      <span className="text-[0.6875rem] text-muted-foreground/70 whitespace-nowrap overflow-hidden text-ellipsis">
                         @<Highlight text={match.person.handle} range={match.handleRange} />
                       </span>
                     </span>

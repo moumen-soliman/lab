@@ -119,7 +119,7 @@ const roleLabel = (id: string) => ROLES.find((r) => r.id === id)?.label ?? id;
 const scopeLabel = (id: string) => LINK_SCOPES.find((s) => s.id === id)?.label ?? id;
 
 const OPT =
-  "group/opt flex items-center gap-2 w-full p-1.5 rounded-lg bg-transparent text-left cursor-pointer transition-colors duration-150 hover:bg-[#f4f4f5] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]";
+  "group/opt flex items-center gap-2 w-full p-1.5 rounded-lg bg-transparent text-left cursor-pointer transition-colors duration-150 hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring";
 
 export default function SharePopover({
   people: initialPeople = INITIAL_PEOPLE,
@@ -355,13 +355,13 @@ export default function SharePopover({
         <div className="p-2 w-[15rem]">
           <button
             type="button"
-            className="flex items-center gap-1.5 w-full p-1.5 rounded-lg bg-transparent text-gray-500 text-left cursor-pointer transition-colors duration-150 hover:bg-[#f4f4f5] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]"
+            className="flex items-center gap-1.5 w-full p-1.5 rounded-lg bg-transparent text-muted-foreground text-left cursor-pointer transition-colors duration-150 hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
             onClick={live ? () => backFromRole(person) : undefined}
           >
             <ChevronLeftIcon />
             <span className="flex flex-col min-w-0">
-              <span className="text-[0.8125rem] font-medium text-[#111]">{person.name}</span>
-              <span className="text-[0.6875rem] text-gray-400">{person.email}</span>
+              <span className="text-[0.8125rem] font-medium text-foreground">{person.name}</span>
+              <span className="text-[0.6875rem] text-muted-foreground/70">{person.email}</span>
             </span>
           </button>
           <div className="flex flex-col mt-1" role="group" aria-label={`Role for ${person.name}`}>
@@ -375,25 +375,25 @@ export default function SharePopover({
                 onClick={live ? () => pickRole(person, role.id) : undefined}
               >
                 <span className="flex flex-col min-w-0 flex-1">
-                  <span className="text-[0.8125rem] text-[#111]">{role.label}</span>
-                  <span className="text-[0.6875rem] text-gray-400">{role.hint}</span>
+                  <span className="text-[0.8125rem] text-foreground">{role.label}</span>
+                  <span className="text-[0.6875rem] text-muted-foreground/70">{role.hint}</span>
                 </span>
                 {role.id === current && (
-                  <span className="inline-flex flex-none text-[#111]">
+                  <span className="inline-flex flex-none text-foreground">
                     <CheckIcon />
                   </span>
                 )}
               </button>
             ))}
-            <div className="h-px mx-1.5 my-1.5 bg-gray-100" role="presentation" />
+            <div className="h-px mx-1.5 my-1.5 bg-border" role="presentation" />
             <button
               type="button"
-              className="group/danger flex items-center gap-2 w-full p-1.5 rounded-lg bg-transparent text-left cursor-pointer transition-colors duration-150 hover:bg-[#fef2f2] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]"
+              className="group/danger flex items-center gap-2 w-full p-1.5 rounded-lg bg-transparent text-left cursor-pointer transition-colors duration-150 hover:bg-destructive/10 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
               onClick={live ? () => removePerson(person) : undefined}
             >
               <span className="flex flex-col min-w-0 flex-1">
-                <span className="text-[0.8125rem] text-[#111] group-hover/danger:text-[#dc2626]">Remove access</span>
-                <span className="text-[0.6875rem] text-gray-400 group-hover/danger:text-[#dc2626]">They lose this doc</span>
+                <span className="text-[0.8125rem] text-foreground group-hover/danger:text-destructive">Remove access</span>
+                <span className="text-[0.6875rem] text-muted-foreground/70 group-hover/danger:text-destructive">They lose this doc</span>
               </span>
             </button>
           </div>
@@ -406,13 +406,13 @@ export default function SharePopover({
         <div className="p-2 w-[17rem]">
           <button
             type="button"
-            className="flex items-center gap-1.5 w-full p-1.5 rounded-lg bg-transparent text-gray-500 text-left cursor-pointer transition-colors duration-150 hover:bg-[#f4f4f5] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]"
+            className="flex items-center gap-1.5 w-full p-1.5 rounded-lg bg-transparent text-muted-foreground text-left cursor-pointer transition-colors duration-150 hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
             onClick={live ? backFromLink : undefined}
           >
             <ChevronLeftIcon />
             <span className="flex flex-col min-w-0">
-              <span className="text-[0.8125rem] font-medium text-[#111]">Link access</span>
-              <span className="text-[0.6875rem] text-gray-400">Who can use the doc link</span>
+              <span className="text-[0.8125rem] font-medium text-foreground">Link access</span>
+              <span className="text-[0.6875rem] text-muted-foreground/70">Who can use the doc link</span>
             </span>
           </button>
           <div className="flex flex-col mt-1" role="group" aria-label="Link access">
@@ -425,15 +425,15 @@ export default function SharePopover({
                 aria-pressed={scope.id === linkScope}
                 onClick={live ? () => pickScope(scope.id) : undefined}
               >
-                <span className="inline-flex flex-none text-gray-400">
+                <span className="inline-flex flex-none text-muted-foreground/70">
                   <ScopeIcon name={scope.icon} />
                 </span>
                 <span className="flex flex-col min-w-0 flex-1">
-                  <span className="text-[0.8125rem] text-[#111]">{scope.label}</span>
-                  <span className="text-[0.6875rem] text-gray-400">{scope.hint}</span>
+                  <span className="text-[0.8125rem] text-foreground">{scope.label}</span>
+                  <span className="text-[0.6875rem] text-muted-foreground/70">{scope.hint}</span>
                 </span>
                 {scope.id === linkScope && (
-                  <span className="inline-flex flex-none text-[#111]">
+                  <span className="inline-flex flex-none text-foreground">
                     <CheckIcon />
                   </span>
                 )}
@@ -449,7 +449,7 @@ export default function SharePopover({
         <div className="flex gap-1.5 mb-2">
           <input
             data-invite-input
-            className="flex-1 min-w-0 h-8 px-2.5 rounded-lg bg-[#f4f4f5] text-[0.8125rem] text-[#111] outline-none transition-[background-color,box-shadow] duration-150 placeholder:text-gray-400 focus:bg-white focus:shadow-[inset_0_0_0_1.5px_#111]"
+            className="flex-1 min-w-0 h-8 px-2.5 rounded-lg bg-muted text-[0.8125rem] text-foreground outline-none transition-[background-color,box-shadow] duration-150 placeholder:text-muted-foreground/70 focus:bg-popover focus:shadow-[inset_0_0_0_1.5px_var(--color-ring)]"
             type="text"
             value={live ? invite : ""}
             placeholder="Invite by name or email"
@@ -470,7 +470,7 @@ export default function SharePopover({
           />
           <button
             type="button"
-            className="relative h-8 px-2.5 rounded-lg bg-[#111] text-white text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 disabled:bg-[#f4f4f5] disabled:text-gray-400 disabled:cursor-default active:enabled:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1"
+            className="relative h-8 px-2.5 rounded-lg bg-primary text-primary-foreground text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 disabled:bg-muted disabled:text-muted-foreground/70 disabled:cursor-default active:enabled:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1"
             disabled={!live || parseInvite(invite) === null}
             onClick={live ? handleInvite : undefined}
           >
@@ -478,32 +478,32 @@ export default function SharePopover({
           </button>
         </div>
 
-        <p className="mx-1.5 mt-1 mb-0.5 text-[0.625rem] font-semibold tracking-[0.06em] uppercase text-gray-400">
+        <p className="mx-1.5 mt-1 mb-0.5 text-[0.625rem] font-semibold tracking-[0.06em] uppercase text-muted-foreground/70">
           People with access
         </p>
         <div className="flex flex-col">
           <div className="flex items-center gap-2 px-1.5 py-[0.3125rem] rounded-lg">
-            <span className="inline-flex items-center justify-center flex-none w-[1.625rem] h-[1.625rem] rounded-full bg-[#111] text-white text-[0.5625rem] font-semibold tracking-[0.02em]" aria-hidden="true">
+            <span className="inline-flex items-center justify-center flex-none w-[1.625rem] h-[1.625rem] rounded-full bg-primary text-primary-foreground text-[0.5625rem] font-semibold tracking-[0.02em]" aria-hidden="true">
               {initials(owner.name)}
             </span>
             <span className="flex flex-col min-w-0 flex-1">
-              <span className="text-[0.8125rem] text-[#111] overflow-hidden text-ellipsis whitespace-nowrap">{owner.name}</span>
-              <span className="text-[0.6875rem] text-gray-400 overflow-hidden text-ellipsis whitespace-nowrap">{owner.email}</span>
+              <span className="text-[0.8125rem] text-foreground overflow-hidden text-ellipsis whitespace-nowrap">{owner.name}</span>
+              <span className="text-[0.6875rem] text-muted-foreground/70 overflow-hidden text-ellipsis whitespace-nowrap">{owner.email}</span>
             </span>
-            <span className="flex-none text-xs text-gray-400 pr-1">Owner</span>
+            <span className="flex-none text-xs text-muted-foreground/70 pr-1">Owner</span>
           </div>
           {people.map((person) => (
             <div className="flex items-center gap-2 px-1.5 py-[0.3125rem] rounded-lg" key={person.id}>
-              <span className="inline-flex items-center justify-center flex-none w-[1.625rem] h-[1.625rem] rounded-full bg-gray-200 text-zinc-600 text-[0.5625rem] font-semibold tracking-[0.02em]" aria-hidden="true">
+              <span className="inline-flex items-center justify-center flex-none w-[1.625rem] h-[1.625rem] rounded-full bg-foreground/10 text-foreground/70 text-[0.5625rem] font-semibold tracking-[0.02em]" aria-hidden="true">
                 {initials(person.name)}
               </span>
               <span className="flex flex-col min-w-0 flex-1">
-                <span className="text-[0.8125rem] text-[#111] overflow-hidden text-ellipsis whitespace-nowrap">{person.name}</span>
-                <span className="text-[0.6875rem] text-gray-400 overflow-hidden text-ellipsis whitespace-nowrap">{person.email}</span>
+                <span className="text-[0.8125rem] text-foreground overflow-hidden text-ellipsis whitespace-nowrap">{person.name}</span>
+                <span className="text-[0.6875rem] text-muted-foreground/70 overflow-hidden text-ellipsis whitespace-nowrap">{person.email}</span>
               </span>
               <button
                 type="button"
-                className="relative inline-flex items-center gap-1 flex-none h-8 px-2 rounded-md bg-transparent text-gray-500 text-xs cursor-pointer transition-[background-color,color,scale] duration-150 hover:bg-[#f4f4f5] hover:text-[#111] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1"
+                className="relative inline-flex items-center gap-1 flex-none h-8 px-2 rounded-md bg-transparent text-muted-foreground text-xs cursor-pointer transition-[background-color,color,scale] duration-150 hover:bg-accent hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1"
                 data-person={person.id}
                 aria-label={`${person.name}: ${roleLabel(roles[person.id])}. Change role`}
                 onClick={live ? () => goRole(person) : undefined}
@@ -515,27 +515,27 @@ export default function SharePopover({
           ))}
         </div>
 
-        <div className="h-px mx-1.5 my-1.5 bg-gray-100" role="presentation" />
+        <div className="h-px mx-1.5 my-1.5 bg-border" role="presentation" />
         <button
           type="button"
-          className="flex items-center gap-2 w-full p-1.5 rounded-lg bg-transparent text-gray-400 text-left cursor-pointer transition-colors duration-150 hover:bg-[#f4f4f5] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]"
+          className="flex items-center gap-2 w-full p-1.5 rounded-lg bg-transparent text-muted-foreground/70 text-left cursor-pointer transition-colors duration-150 hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
           data-link-row
           onClick={live ? goLink : undefined}
         >
-          <span className="inline-flex flex-none text-gray-400">
+          <span className="inline-flex flex-none text-muted-foreground/70">
             <ScopeIcon name={LINK_SCOPES.find((s) => s.id === linkScope)!.icon} />
           </span>
           <span className="flex flex-col min-w-0 flex-1">
-            <span className="text-[0.8125rem] text-[#111] overflow-hidden text-ellipsis whitespace-nowrap">Link access</span>
-            <span className="text-[0.6875rem] text-gray-400 overflow-hidden text-ellipsis whitespace-nowrap">{scopeLabel(linkScope)}</span>
+            <span className="text-[0.8125rem] text-foreground overflow-hidden text-ellipsis whitespace-nowrap">Link access</span>
+            <span className="text-[0.6875rem] text-muted-foreground/70 overflow-hidden text-ellipsis whitespace-nowrap">{scopeLabel(linkScope)}</span>
           </span>
           <ChevronRightIcon />
         </button>
 
-        <div className="flex items-center justify-between gap-2 mt-1.5 pt-1.5 px-1.5 pb-0.5 border-t border-gray-100">
+        <div className="flex items-center justify-between gap-2 mt-1.5 pt-1.5 px-1.5 pb-0.5 border-t border-border">
           <button
             type="button"
-            className="relative inline-flex items-center gap-1.5 h-8 pl-7 pr-2 rounded-lg bg-transparent text-gray-500 text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 hover:bg-[#f4f4f5] hover:text-[#111] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1"
+            className="relative inline-flex items-center gap-1.5 h-8 pl-7 pr-2 rounded-lg bg-transparent text-muted-foreground text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 hover:bg-accent hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1"
             onClick={live ? copyLink : undefined}
           >
             <motion.span
@@ -559,7 +559,7 @@ export default function SharePopover({
             </motion.span>
             {copied && live ? "Copied" : "Copy link"}
           </button>
-          <span className="text-[0.6875rem] text-gray-400 tabular-nums">{people.length + 1} people</span>
+          <span className="text-[0.6875rem] text-muted-foreground/70 tabular-nums">{people.length + 1} people</span>
         </div>
       </div>
     );
@@ -569,18 +569,18 @@ export default function SharePopover({
     <MotionConfig reducedMotion="user">
       <div ref={rootRef} className="relative w-full max-w-96" data-inspect={inspect ? "true" : "false"}>
         {/* The anchor context: a fake doc header the popover hangs off. */}
-        <div className="flex items-center gap-2.5 px-3.5 py-3 bg-white rounded-xl shadow-border">
-          <span className="inline-flex flex-none text-gray-400" aria-hidden="true">
+        <div className="flex items-center gap-2.5 px-3.5 py-3 bg-card rounded-xl shadow-border">
+          <span className="inline-flex flex-none text-muted-foreground/70" aria-hidden="true">
             <DocIcon />
           </span>
           <span className="flex flex-col min-w-0 flex-1">
-            <span className="text-sm font-medium text-[#111]">{docTitle}</span>
-            <span className="text-[0.6875rem] text-gray-400">Edited 2h ago</span>
+            <span className="text-sm font-medium text-foreground">{docTitle}</span>
+            <span className="text-[0.6875rem] text-muted-foreground/70">Edited 2h ago</span>
           </span>
           <button
             ref={triggerRef}
             type="button"
-            className={`relative inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-[#111] text-white text-[0.8125rem] font-medium cursor-pointer transition-[background-color,scale] duration-150 hover:bg-[#2a2a2a] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1${
+            className={`relative inline-flex items-center gap-1.5 h-8 px-3 rounded-lg bg-primary text-primary-foreground text-[0.8125rem] font-medium cursor-pointer transition-[background-color,scale] duration-150 hover:bg-primary/85 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1${
               inspect ? " outline outline-[1.5px] outline-dashed outline-[#ef4444] outline-offset-[3px]" : ""
             }`}
             aria-haspopup="dialog"
@@ -608,7 +608,7 @@ export default function SharePopover({
         >
           <motion.div
             ref={frameRef}
-            className={`relative overflow-hidden bg-white rounded-xl shadow-[var(--shadow-border),0_12px_32px_-12px_rgba(0,0,0,0.18)]${
+            className={`relative overflow-hidden bg-popover rounded-xl shadow-[var(--shadow-border),0_12px_32px_-12px_rgba(0,0,0,0.18)]${
               inspect ? " outline outline-[1.5px] outline-dashed outline-[#3b82f6] outline-offset-[3px]" : ""
             }`}
             animate={dims ? { width: dims.w, height: dims.h } : undefined}

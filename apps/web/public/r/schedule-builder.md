@@ -251,12 +251,12 @@ function sentenceWords(rule: ScheduleRule) {
 }
 
 const SEG_BTN =
-  "h-7 px-2.5 rounded-md bg-transparent text-gray-500 text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 aria-pressed:bg-[#111] aria-pressed:text-white active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]";
+  "h-7 px-2.5 rounded-md bg-transparent text-muted-foreground text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 aria-pressed:bg-primary aria-pressed:text-primary-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 const STEP_BTN =
-  "w-7 h-7 rounded-lg bg-transparent text-gray-500 text-sm cursor-pointer transition-[background-color,color,scale] duration-150 hover:enabled:bg-[#f4f4f5] hover:enabled:text-[#111] active:enabled:scale-[0.96] disabled:opacity-35 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]";
+  "w-7 h-7 rounded-lg bg-transparent text-muted-foreground text-sm cursor-pointer transition-[background-color,color,scale] duration-150 hover:enabled:bg-accent hover:enabled:text-foreground active:enabled:scale-[0.96] disabled:opacity-35 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 const SELECT =
-  "h-7 px-1.5 rounded-lg bg-white shadow-border text-[#111] text-xs font-medium cursor-pointer outline-none transition-shadow duration-150 hover:shadow-border-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]";
-const ROW_LABEL = "w-14 flex-none text-[0.6875rem] font-semibold tracking-[0.06em] uppercase text-gray-400";
+  "h-7 px-1.5 rounded-lg bg-background shadow-border text-foreground text-xs font-medium cursor-pointer outline-none transition-shadow duration-150 hover:shadow-border-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
+const ROW_LABEL = "w-14 flex-none text-[0.6875rem] font-semibold tracking-[0.06em] uppercase text-muted-foreground/70";
 
 export default function ScheduleBuilder({
   defaultRule,
@@ -334,7 +334,7 @@ export default function ScheduleBuilder({
             "Every week…", not "Everyweek…". Surviving keys glide via layout;
             new keys blur in. */}
         <p
-          className="m-0 min-h-[3.2em] text-lg leading-[1.5] font-medium tracking-[-0.01em] text-[#111]"
+          className="m-0 min-h-[3.2em] text-lg leading-[1.5] font-medium tracking-[-0.01em] text-foreground"
           aria-live="polite"
         >
           {words.map(({ word, key }, index) => (
@@ -357,7 +357,7 @@ export default function ScheduleBuilder({
         <div className="flex flex-col gap-2">
           <div className="flex items-center flex-wrap gap-2 min-h-8">
             <span className={ROW_LABEL}>Repeats</span>
-            <div className="inline-flex gap-[2px] p-[2px] rounded-lg bg-[#f4f4f5]" role="group" aria-label="Frequency">
+            <div className="inline-flex gap-[2px] p-[2px] rounded-lg bg-muted" role="group" aria-label="Frequency">
               {(["daily", "weekly", "monthly"] as const).map((freq) => (
                 <button key={freq} type="button" className={SEG_BTN} aria-pressed={rule.freq === freq} onClick={() => set({ freq })}>
                   {freq[0].toUpperCase() + freq.slice(1)}
@@ -369,16 +369,16 @@ export default function ScheduleBuilder({
           {rule.freq !== "monthly" && (
             <div className="flex items-center flex-wrap gap-2 min-h-8">
               <span className={ROW_LABEL}>Every</span>
-              <div className="inline-flex items-center rounded-lg bg-white shadow-border" role="group" aria-label="Interval">
+              <div className="inline-flex items-center rounded-lg bg-background shadow-border" role="group" aria-label="Interval">
                 <button type="button" className={STEP_BTN} aria-label="Less often" disabled={rule.interval <= 1} onClick={() => set({ interval: rule.interval - 1 })}>
                   −
                 </button>
-                <span className="min-w-6 text-center text-[0.8125rem] font-medium text-[#111] tabular-nums">{rule.interval}</span>
+                <span className="min-w-6 text-center text-[0.8125rem] font-medium text-foreground tabular-nums">{rule.interval}</span>
                 <button type="button" className={STEP_BTN} aria-label="More often" disabled={rule.interval >= 6} onClick={() => set({ interval: rule.interval + 1 })}>
                   +
                 </button>
               </div>
-              <span className="text-xs font-medium text-gray-400">
+              <span className="text-xs font-medium text-muted-foreground/70">
                 {rule.freq === "daily" ? (rule.interval === 1 ? "day" : "days") : rule.interval === 1 ? "week" : "weeks"}
               </span>
             </div>
@@ -392,7 +392,7 @@ export default function ScheduleBuilder({
                   <button
                     key={name}
                     type="button"
-                    className="w-7 h-7 rounded-full bg-[#f4f4f5] text-gray-500 text-[0.6875rem] font-semibold cursor-pointer transition-[background-color,color,scale] duration-150 aria-pressed:bg-[#111] aria-pressed:text-white active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                    className="w-7 h-7 rounded-full bg-muted text-muted-foreground text-[0.6875rem] font-semibold cursor-pointer transition-[background-color,color,scale] duration-150 aria-pressed:bg-primary aria-pressed:text-primary-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                     aria-pressed={rule.weekdays.includes(day)}
                     aria-label={name}
                     onClick={() => toggleWeekday(day)}
@@ -407,7 +407,7 @@ export default function ScheduleBuilder({
           {rule.freq === "monthly" && (
             <div className="flex items-center flex-wrap gap-2 min-h-8">
               <span className={ROW_LABEL}>On</span>
-              <div className="inline-flex gap-[2px] p-[2px] rounded-lg bg-[#f4f4f5]" role="group" aria-label="Monthly mode">
+              <div className="inline-flex gap-[2px] p-[2px] rounded-lg bg-muted" role="group" aria-label="Monthly mode">
                 <button type="button" className={SEG_BTN} aria-pressed={rule.monthMode === "date"} onClick={() => set({ monthMode: "date" })}>
                   A date
                 </button>
@@ -416,11 +416,11 @@ export default function ScheduleBuilder({
                 </button>
               </div>
               {rule.monthMode === "date" ? (
-                <div className="inline-flex items-center rounded-lg bg-white shadow-border" role="group" aria-label="Day of month">
+                <div className="inline-flex items-center rounded-lg bg-background shadow-border" role="group" aria-label="Day of month">
                   <button type="button" className={STEP_BTN} aria-label="Earlier day" disabled={rule.monthDay <= 1} onClick={() => set({ monthDay: rule.monthDay - 1 })}>
                     −
                   </button>
-                  <span className="min-w-6 text-center text-[0.8125rem] font-medium text-[#111] tabular-nums">{rule.monthDay}</span>
+                  <span className="min-w-6 text-center text-[0.8125rem] font-medium text-foreground tabular-nums">{rule.monthDay}</span>
                   <button type="button" className={STEP_BTN} aria-label="Later day" disabled={rule.monthDay >= 31} onClick={() => set({ monthDay: rule.monthDay + 1 })}>
                     +
                   </button>
@@ -475,7 +475,7 @@ export default function ScheduleBuilder({
                 </option>
               ))}
             </select>
-            <div className="inline-flex gap-[2px] p-[2px] rounded-lg bg-[#f4f4f5]" role="group" aria-label="AM or PM">
+            <div className="inline-flex gap-[2px] p-[2px] rounded-lg bg-muted" role="group" aria-label="AM or PM">
               <button type="button" className={SEG_BTN} aria-pressed={rule.hour < 12} onClick={() => set({ hour: rule.hour % 12 })}>
                 AM
               </button>
@@ -487,8 +487,8 @@ export default function ScheduleBuilder({
         </div>
 
         {/* ── The proof: real occurrences, ghosts for skipped months ── */}
-        <div className="border-t border-gray-100 pt-2.5">
-          <p className="m-0 mb-1.5 text-[0.625rem] font-semibold tracking-[0.06em] uppercase text-gray-400">
+        <div className="border-t border-border pt-2.5">
+          <p className="m-0 mb-1.5 text-[0.625rem] font-semibold tracking-[0.06em] uppercase text-muted-foreground/70">
             Next {runs.filter((r) => r.kind === "run").length} runs
           </p>
           <ol className="flex flex-col gap-0.5 m-0 p-0 list-none">
@@ -499,7 +499,7 @@ export default function ScheduleBuilder({
                   initial={{ opacity: 0, y: "0.25rem", filter: "blur(1px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 0.24, ease: EASE, delay: index * 0.03 }}
-                  className="flex items-center justify-between gap-3 px-1.5 py-[0.3125rem] rounded-lg text-xs text-gray-400 border border-dashed border-gray-200"
+                  className="flex items-center justify-between gap-3 px-1.5 py-[0.3125rem] rounded-lg text-xs text-muted-foreground/70 border border-dashed border-foreground/10"
                 >
                   <span>{entry.label}</span>
                   <span className="text-[0.625rem] font-semibold tracking-[0.04em] uppercase">skipped</span>
@@ -510,7 +510,7 @@ export default function ScheduleBuilder({
                   initial={{ opacity: 0, y: "0.25rem", filter: "blur(1px)" }}
                   animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
                   transition={{ duration: 0.24, ease: EASE, delay: index * 0.03 }}
-                  className="flex items-center justify-between gap-3 px-1.5 py-[0.3125rem] rounded-lg text-[0.8125rem] text-[#111]"
+                  className="flex items-center justify-between gap-3 px-1.5 py-[0.3125rem] rounded-lg text-[0.8125rem] text-foreground"
                 >
                   <span className="min-w-0 overflow-hidden text-ellipsis whitespace-nowrap">
                     {runFmt(entry.date)}
@@ -518,13 +518,13 @@ export default function ScheduleBuilder({
                       <span className="ml-1.5 text-[0.625rem] font-semibold tracking-[0.04em] uppercase text-[#d97706]">clamped</span>
                     )}
                   </span>
-                  <span className="inline-flex items-baseline gap-1.5 flex-none text-gray-500 tabular-nums">
+                  <span className="inline-flex items-baseline gap-1.5 flex-none text-muted-foreground tabular-nums">
                     {timeLabel(entry.date.getHours(), entry.date.getMinutes())} {entry.date.getHours() < 12 ? "AM" : "PM"}
                     <span
                       className={
                         offsetLabel(entry.date) !== baseOffset
                           ? "text-[0.6875rem] text-[#d97706] font-semibold"
-                          : "text-[0.6875rem] text-gray-400"
+                          : "text-[0.6875rem] text-muted-foreground/70"
                       }
                     >
                       {offsetLabel(entry.date)}

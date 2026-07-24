@@ -503,7 +503,7 @@ export default function NestedMenu({
         <button
           ref={triggerRef}
           type="button"
-          className="inline-flex items-center gap-2 rounded-[0.625rem] bg-white px-3 py-2 text-sm font-medium text-[#111] shadow-border [transition:box-shadow_250ms_var(--ease-smooth-out)] hover:shadow-border-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] [&>svg]:text-gray-500"
+          className="inline-flex items-center gap-2 rounded-[0.625rem] bg-card px-3 py-2 text-sm font-medium text-foreground shadow-border [transition:box-shadow_250ms_var(--ease-smooth-out)] hover:shadow-border-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&>svg]:text-muted-foreground"
           aria-haspopup="menu"
           aria-expanded={open}
           aria-controls={popupId}
@@ -512,7 +512,7 @@ export default function NestedMenu({
           <MenuIcon />
           <span>{triggerLabel}</span>
           <motion.span
-            className="inline-flex text-gray-400"
+            className="inline-flex text-muted-foreground/70"
             animate={{ rotate: open ? 180 : 0 }}
             transition={{ duration: 0.25, ease: EASE }}
           >
@@ -691,7 +691,7 @@ function Panel({
       exit={{ opacity: 0 }}
       transition={{ duration: animateProp ? POP_S : 0, ease: EASE, opacity: { duration: animateProp ? EXIT_S : 0, ease: EASE } }}
       className={[
-        "absolute w-[17rem] origin-top rounded-xl bg-white",
+        "absolute w-[17rem] origin-top rounded-xl bg-popover",
         "[transition:box-shadow_220ms_var(--ease-smooth-out)]",
         shadowClass,
       ].join(" ")}
@@ -704,7 +704,7 @@ function Panel({
           through (panel opacity would reveal every layer behind). */}
       {!isTop && present && (
         <motion.span
-          className="absolute inset-0 z-[5] rounded-[inherit] bg-[#fbfbfc] pointer-events-none"
+          className="absolute inset-0 z-[5] rounded-[inherit] bg-popover pointer-events-none"
           initial={{ opacity: 0 }}
           animate={{ opacity: dim ? 0.62 : 0 }}
           transition={{ duration: animateProp ? POP_S : 0, ease: EASE }}
@@ -719,7 +719,7 @@ function Panel({
       <div
         data-nm-header
         className={[
-          "flex items-center border-b border-black/[0.06]",
+          "flex items-center border-b border-foreground/[0.06]",
           depth > 0 ? "min-h-9 gap-2.5 px-[0.875rem]" : "min-h-10 gap-1.5 py-1 pr-2 pl-[0.875rem]",
           inspect && depth > 0 ? "outline outline-[1.5px] outline-dashed outline-[#f59e0b] -outline-offset-[1.5px]" : "",
         ].join(" ")}
@@ -728,7 +728,7 @@ function Panel({
           (onBack ? (
             <button
               type="button"
-              className="relative inline-flex h-4 w-4 flex-none cursor-pointer items-center justify-center text-gray-500 hover:text-[#111] before:absolute before:-inset-1.5 before:rounded-lg before:content-[''] before:[transition:background-color_250ms_var(--ease-smooth-out)] hover:before:bg-gray-100 [&>svg]:relative"
+              className="relative inline-flex h-4 w-4 flex-none cursor-pointer items-center justify-center text-muted-foreground hover:text-foreground before:absolute before:-inset-1.5 before:rounded-lg before:content-[''] before:[transition:background-color_250ms_var(--ease-smooth-out)] hover:before:bg-accent [&>svg]:relative"
               tabIndex={-1}
               onMouseDown={(e) => e.preventDefault()}
               onClick={(e) => {
@@ -741,7 +741,7 @@ function Panel({
             </button>
           ) : (
             <span
-              className="relative inline-flex h-4 w-4 flex-none items-center justify-center text-gray-500 [&>svg]:relative"
+              className="relative inline-flex h-4 w-4 flex-none items-center justify-center text-muted-foreground [&>svg]:relative"
               aria-hidden="true"
             >
               {nodeIcon ?? <ChevronLeftIcon />}
@@ -749,7 +749,7 @@ function Panel({
           ))}
         <span
           data-nm-title
-          className="relative min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-[#111]"
+          className="relative min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-foreground"
         >
           {/* Two stacked copies: the bold one is the real header text, the plain
               one matches the row label. The morph crossfades them — smoother
@@ -774,17 +774,17 @@ function Panel({
           const branch = (item.items?.length ?? 0) > 0;
           const active = isTop && present && index === activeIndex;
           const rowClass = [
-            "group/item flex w-full min-h-9 items-center gap-2.5 rounded-lg px-2 text-left text-sm text-[#111] [transition:background-color_250ms_var(--ease-smooth-out)]",
-            "hover:bg-gray-100 focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]",
-            "aria-disabled:text-gray-400 aria-disabled:cursor-default aria-disabled:hover:bg-transparent",
-            "data-[danger=true]:text-[#dc2626] data-[danger=true]:hover:bg-[#fef2f2] data-[danger=true]:data-[highlighted=true]:bg-[#fef2f2]",
-            active ? "bg-gray-100" : "",
+            "group/item flex w-full min-h-9 items-center gap-2.5 rounded-lg px-2 text-left text-sm text-foreground [transition:background-color_250ms_var(--ease-smooth-out)]",
+            "hover:bg-accent focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring",
+            "aria-disabled:text-muted-foreground/70 aria-disabled:cursor-default aria-disabled:hover:bg-transparent",
+            "data-[danger=true]:text-destructive data-[danger=true]:hover:bg-destructive/10 data-[danger=true]:data-[highlighted=true]:bg-destructive/10",
+            active ? "bg-accent" : "",
             "[@media(pointer:coarse)]:min-h-11",
           ].join(" ");
           const inner = (
             <>
               {item.icon && (
-                <span className="inline-flex flex-none text-gray-500 group-data-[danger=true]/item:text-[#dc2626] group-aria-[disabled=true]/item:text-gray-300">
+                <span className="inline-flex flex-none text-muted-foreground group-data-[danger=true]/item:text-destructive group-aria-[disabled=true]/item:text-muted-foreground/50">
                   {item.icon}
                 </span>
               )}
@@ -792,11 +792,11 @@ function Panel({
                 {item.label}
               </span>
               {branch ? (
-                <span className="inline-flex flex-none text-gray-500" aria-hidden="true">
+                <span className="inline-flex flex-none text-muted-foreground" aria-hidden="true">
                   <ChevronRightIcon />
                 </span>
               ) : item.hint ? (
-                <span className="flex-none text-xs tabular-nums text-gray-500">{item.hint}</span>
+                <span className="flex-none text-xs tabular-nums text-muted-foreground">{item.hint}</span>
               ) : null}
             </>
           );
@@ -832,7 +832,7 @@ function Panel({
             </button>
           );
         })}
-        {items.length === 0 && <p className="px-2 py-3 text-[0.8125rem] text-gray-500">Nothing here yet</p>}
+        {items.length === 0 && <p className="px-2 py-3 text-[0.8125rem] text-muted-foreground">Nothing here yet</p>}
       </div>
 
       {inspect && isTop && present && (

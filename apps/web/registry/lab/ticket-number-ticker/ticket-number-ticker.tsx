@@ -225,7 +225,7 @@ export default function TicketNumber({
   const tailDigits = display.tail.split("");
   const statusStyle = status ? STATUS_STYLES[status] : null;
 
-  const ellipsisClass = `text-gray-400 px-[0.06em]${inspect ? " outline outline-[1.5px] outline-dashed outline-[#f59e0b] outline-offset-1 rounded-[2px]" : ""}`;
+  const ellipsisClass = `text-muted-foreground/70 px-[0.06em]${inspect ? " outline outline-[1.5px] outline-dashed outline-[#f59e0b] outline-offset-1 rounded-[2px]" : ""}`;
 
   return (
     <MotionConfig reducedMotion="user">
@@ -237,7 +237,7 @@ export default function TicketNumber({
         layout="position"
         transition={{ duration: 0.22, ease: EASE }}
         className={[
-          "relative inline-flex items-center gap-2.5 max-w-[min(100%,var(--ticket-max))] py-2 pl-3.5 pr-2.5 bg-white rounded-xl text-[#111] transition-shadow duration-200",
+          "relative inline-flex items-center gap-2.5 max-w-[min(100%,var(--ticket-max))] py-2 pl-3.5 pr-2.5 bg-card rounded-xl text-card-foreground transition-shadow duration-200",
           width === "fixed" ? "w-[min(100%,var(--ticket-max))]" : "w-fit",
           inspect
             ? "shadow-none outline outline-[1.5px] outline-dashed outline-[#3b82f6]"
@@ -260,7 +260,7 @@ export default function TicketNumber({
             title={fullId}
             aria-hidden="true"
           >
-            <span className="mr-[0.06em] text-gray-400 font-medium">#</span>
+            <span className="mr-[0.06em] text-muted-foreground/70 font-medium">#</span>
             {kind === "numeric" ? (
               <span className="inline-flex">
                 {/* Key by index+digit: changing a digit (typing a new id) remounts
@@ -336,7 +336,7 @@ export default function TicketNumber({
               (onStatusClick ? (
                 <button
                   type="button"
-                  className={`grid place-items-center w-8 h-8 rounded-lg transition-[color,background-color,box-shadow,scale,filter] hover:brightness-[0.97] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${statusStyle.className}`}
+                  className={`grid place-items-center w-8 h-8 rounded-lg transition-[color,background-color,box-shadow,scale,filter] hover:brightness-[0.97] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${statusStyle.className}`}
                   onClick={onStatusClick}
                   aria-label={`Pull request status: ${statusStyle.label}. Click to change`}
                   title={`Pull request · ${statusStyle.label}`}
@@ -356,7 +356,7 @@ export default function TicketNumber({
             {copyable && (
               <button
                 type="button"
-                className="grid place-items-center w-8 h-8 rounded-lg text-gray-500 transition-[scale,background-color,color] hover:bg-[#f4f4f5] hover:text-[#111] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                className="grid place-items-center w-8 h-8 rounded-lg text-muted-foreground transition-[scale,background-color,color] hover:bg-accent hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                 onClick={copy}
                 aria-label={copied ? "Copied" : `Copy ${fullId}`}
               >

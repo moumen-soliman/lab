@@ -57,7 +57,7 @@ export default function UploadStagingExample() {
       <button
         type="button"
         onClick={stageSamples}
-        className="rounded-full bg-[#111] px-4 py-2 text-xs font-medium text-white transition-[background-color,scale] hover:bg-[#333] active:scale-[0.96]"
+        className="rounded-full bg-primary px-4 py-2 text-xs font-medium text-primary-foreground transition-[background-color,scale] hover:bg-primary/85 active:scale-[0.96]"
       >
         Stage 4 sample files
       </button>

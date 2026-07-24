@@ -173,10 +173,10 @@ export default function ExpandingIconStrip({
               scale: { duration: 0.15, ease: "easeOut" },
             }}
             className={
-              "group/item relative shrink basis-0 min-w-0 flex items-center justify-center px-2 overflow-hidden rounded-[0.875rem] bg-[#f4f4f5] text-gray-500 " +
+              "group/item relative shrink basis-0 min-w-0 flex items-center justify-center px-2 overflow-hidden rounded-[0.875rem] bg-muted text-muted-foreground " +
               "[transition:background-color_250ms_ease,color_250ms_ease] " +
-              "hover:bg-[#111] hover:text-white focus-visible:bg-[#111] focus-visible:text-white " +
-              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]" +
+              "hover:bg-primary hover:text-primary-foreground focus-visible:bg-primary focus-visible:text-primary-foreground " +
+              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring" +
               (inspect ? " outline outline-[1.5px] outline-dashed outline-[#ef4444] -outline-offset-2" : "")
             }
             aria-label={item.label}

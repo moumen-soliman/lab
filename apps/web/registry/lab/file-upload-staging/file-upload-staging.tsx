@@ -304,7 +304,7 @@ export default function UploadStaging({
   }, [files.length, counts.queued, counts.uploading, counts.done, counts.error, onStateChange]);
 
   const ghostBtnClass =
-    "h-7 px-2.5 rounded-lg bg-[#f4f4f5] text-[#111] text-xs font-medium transition-[background-color,scale] duration-150 hover:bg-[#e4e4e7] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]";
+    "h-7 px-2.5 rounded-lg bg-muted text-foreground text-xs font-medium transition-[background-color,scale] duration-150 hover:bg-foreground/10 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
   return (
     <MotionConfig reducedMotion="user">
@@ -313,7 +313,7 @@ export default function UploadStaging({
         <div
           className={[
             "flex flex-col items-center gap-1 px-4 py-[1.125rem] border-[1.5px] border-dashed rounded-xl text-center transition-[border-color,background-color] duration-150",
-            dragOver ? "border-[#111] bg-[#fafafa]" : "border-[#d4d4d8] bg-white",
+            dragOver ? "border-foreground bg-muted/50" : "border-muted-foreground/50 bg-card",
           ].join(" ")}
           onDragOver={(event) => {
             event.preventDefault();
@@ -322,20 +322,20 @@ export default function UploadStaging({
           onDragLeave={() => setDragOver(false)}
           onDrop={handleDrop}
         >
-          <span className="inline-flex text-gray-400" aria-hidden="true">
+          <span className="inline-flex text-muted-foreground/70" aria-hidden="true">
             <UploadIcon />
           </span>
-          <p className="m-0 text-[0.8125rem] text-gray-500">
+          <p className="m-0 text-[0.8125rem] text-muted-foreground">
             Drop files here or{" "}
             <button
               type="button"
-              className="p-0 border-0 bg-transparent text-[#111] text-[length:inherit] font-medium underline underline-offset-[3px] decoration-[#d4d4d8] cursor-pointer transition-[text-decoration-color] duration-150 hover:decoration-[#111] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] focus-visible:rounded-[2px]"
+              className="p-0 border-0 bg-transparent text-foreground text-[length:inherit] font-medium underline underline-offset-[3px] decoration-muted-foreground/50 cursor-pointer transition-[text-decoration-color] duration-150 hover:decoration-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring focus-visible:rounded-[2px]"
               onClick={() => fileInputRef.current?.click()}
             >
               browse
             </button>
           </p>
-          <p className="m-0 text-[0.6875rem] text-[#b3b8c2]">Nothing is uploaded anywhere - the network is simulated</p>
+          <p className="m-0 text-[0.6875rem] text-muted-foreground/50">Nothing is uploaded anywhere - the network is simulated</p>
           <input
             ref={fileInputRef}
             type="file"
@@ -366,15 +366,15 @@ export default function UploadStaging({
                   file.status === "done"
                     ? "shadow-[var(--shadow-border),0_0_0_1.5px_#86efac] bg-[#fcfefc]"
                     : file.status === "error"
-                      ? "shadow-[var(--shadow-border),0_0_0_1.5px_#fca5a5] bg-white"
-                      : "shadow-border bg-white",
+                      ? "shadow-[var(--shadow-border),0_0_0_1.5px_color-mix(in_oklab,var(--color-destructive)_40%,transparent)] bg-card"
+                      : "shadow-border bg-card",
                   inspect ? "outline outline-[1.5px] outline-dashed outline-[#3b82f6] outline-offset-2" : "",
                 ].join(" ")}
                 data-status={file.status}
               >
                 <button
                   type="button"
-                  className="absolute top-1 right-1 z-[1] inline-flex items-center justify-center w-5 h-5 rounded-[0.3125rem] text-[#b3b8c2] opacity-0 transition-[opacity,background-color,color,scale] duration-150 group-hover/tile:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100 hover:bg-[#f4f4f5] hover:text-[#111] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[#111] after:content-[''] after:absolute after:-inset-1.5"
+                  className="absolute top-1 right-1 z-[1] inline-flex items-center justify-center w-5 h-5 rounded-[0.3125rem] text-muted-foreground/50 opacity-0 transition-[opacity,background-color,color,scale] duration-150 group-hover/tile:opacity-100 focus-visible:opacity-100 [@media(hover:none)]:opacity-100 hover:bg-accent hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-ring after:content-[''] after:absolute after:-inset-1.5"
                   aria-label={`Remove ${file.name}`}
                   onClick={() => remove(file.id)}
                 >
@@ -385,18 +385,18 @@ export default function UploadStaging({
                     the retry button takes over the same footprint. */}
                 <span className="relative w-[34px] h-[34px] inline-flex items-center justify-center">
                   <svg className="absolute inset-0 -rotate-90" width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">
-                    <circle className="fill-none stroke-[#f0f0f2] stroke-[2.5]" cx="17" cy="17" r={R} />
+                    <circle className="fill-none stroke-muted stroke-[2.5]" cx="17" cy="17" r={R} />
                     <circle
                       className={[
                         // linear on purpose: the jitter IS the texture, easing would fake it
                         "fill-none stroke-[2.5] [stroke-linecap:round] [transition:stroke-dashoffset_140ms_linear,stroke_200ms_ease,opacity_250ms_ease]",
                         file.status === "queued"
-                          ? "stroke-[#d4d4d8]"
+                          ? "stroke-muted-foreground/50"
                           : file.status === "error"
-                            ? "stroke-[#dc2626]"
+                            ? "stroke-destructive"
                             : file.status === "done"
-                              ? "stroke-[#111] opacity-0"
-                              : "stroke-[#111]",
+                              ? "stroke-foreground opacity-0"
+                              : "stroke-foreground",
                       ].join(" ")}
                       cx="17"
                       cy="17"
@@ -408,7 +408,7 @@ export default function UploadStaging({
                   {/* Contextual swap: the kind icon ducks out (opacity + scale +
                       blur) when the check or retry takes the footprint. */}
                   <motion.span
-                    className="inline-flex text-gray-500"
+                    className="inline-flex text-muted-foreground"
                     initial={false}
                     animate={
                       file.status === "done" || file.status === "error"
@@ -434,7 +434,7 @@ export default function UploadStaging({
                   {file.status === "error" && (
                     <motion.button
                       type="button"
-                      className="absolute inset-0 inline-flex items-center justify-center rounded-full text-[#dc2626] transition-[background-color,scale] duration-150 hover:bg-[#fef2f2] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#dc2626] after:content-[''] after:absolute after:-inset-1"
+                      className="absolute inset-0 inline-flex items-center justify-center rounded-full text-destructive transition-[background-color,scale] duration-150 hover:bg-destructive/10 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-destructive after:content-[''] after:absolute after:-inset-1"
                       aria-label={`Retry ${file.name}, failed at ${file.progress}%`}
                       onClick={() => retry(file.id)}
                       initial={{ opacity: 0, scale: 0.25, filter: "blur(4px)" }}
@@ -447,14 +447,14 @@ export default function UploadStaging({
                 </span>
 
                 <span
-                  className="max-w-full overflow-hidden whitespace-nowrap text-ellipsis text-[0.6875rem] font-medium text-[#111]"
+                  className="max-w-full overflow-hidden whitespace-nowrap text-ellipsis text-[0.6875rem] font-medium text-foreground"
                   title={file.name}
                 >
                   {truncateName(file.name)}
                 </span>
                 <span
                   className={`text-[0.625rem] min-h-[0.9375rem] tabular-nums ${
-                    file.status === "error" ? "text-[#dc2626]" : "text-gray-400"
+                    file.status === "error" ? "text-destructive" : "text-muted-foreground/70"
                   }`}
                 >
                   {file.status === "uploading" && `${Math.floor(file.progress)}%`}
@@ -470,9 +470,9 @@ export default function UploadStaging({
         {/* Pipeline footer — batch actions double as multi-tile glide demos. */}
         {files.length > 0 && (
           <div className="flex items-center justify-between gap-2 min-h-7">
-            <span className="text-xs text-gray-500 tabular-nums">
+            <span className="text-xs text-muted-foreground tabular-nums">
               {counts.done}/{files.length} uploaded
-              {counts.error > 0 && <span className="text-[#dc2626] font-medium"> · {counts.error} failed</span>}
+              {counts.error > 0 && <span className="text-destructive font-medium"> · {counts.error} failed</span>}
             </span>
             <span className="inline-flex gap-1.5">
               {counts.error > 0 && (
