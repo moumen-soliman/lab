@@ -320,7 +320,7 @@ export default function DragReorderList({
                 onPointerCancel={cancelPointerDrag}
               >
                 <motion.div
-                  className={`flex items-center gap-2.5 py-2.5 pl-2 pr-3.5 bg-white rounded-xl ${lifted ? "cursor-grabbing" : "cursor-grab"}${
+                  className={`flex items-center gap-2.5 py-2.5 pl-2 pr-3.5 bg-card rounded-xl ${lifted ? "cursor-grabbing" : "cursor-grab"}${
                     lifted && inspect ? " outline outline-[1.5px] outline-dashed outline-[#ef4444]" : ""
                   }`}
                   initial={false}
@@ -334,7 +334,7 @@ export default function DragReorderList({
                   <button
                     type="button"
                     data-reorder-grip
-                    className="grid place-items-center w-9 h-9 rounded-lg text-gray-400 cursor-grab [transition:background-color_200ms_ease,color_200ms_ease] hover:bg-[#f4f4f5] hover:text-[#111] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] aria-pressed:bg-[#111] aria-pressed:text-white"
+                    className="grid place-items-center w-9 h-9 rounded-lg text-muted-foreground/70 cursor-grab [transition:background-color_200ms_ease,color_200ms_ease] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring aria-pressed:bg-primary aria-pressed:text-primary-foreground"
                     aria-label={`Reorder ${item.label}, position ${index + 1} of ${items.length}${isGrabbed ? ", grabbed" : ""}`}
                     aria-pressed={isGrabbed}
                     onKeyDown={(event) => handleGripKeyDown(event, index)}
@@ -349,10 +349,10 @@ export default function DragReorderList({
                     <GripIcon />
                   </button>
                   <span className="flex flex-col min-w-0 flex-1">
-                    <span className="text-sm font-medium text-[#111] whitespace-nowrap overflow-hidden text-ellipsis">{item.label}</span>
-                    {item.meta && <span className="text-[0.6875rem] text-gray-400">{item.meta}</span>}
+                    <span className="text-sm font-medium text-foreground whitespace-nowrap overflow-hidden text-ellipsis">{item.label}</span>
+                    {item.meta && <span className="text-[0.6875rem] text-muted-foreground/70">{item.meta}</span>}
                   </span>
-                  <span className="flex-none text-xs font-medium text-gray-400 tabular-nums" aria-hidden="true">
+                  <span className="flex-none text-xs font-medium text-muted-foreground/70 tabular-nums" aria-hidden="true">
                     {index + 1}
                   </span>
                 </motion.div>

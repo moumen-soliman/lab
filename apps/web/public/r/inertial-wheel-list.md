@@ -223,14 +223,14 @@ export default function WheelList({
 
   return (
     <div className="relative w-full max-w-[var(--wheel-w)]" style={WHEEL_VARS}>
-      <div className="relative p-2 rounded-[1.25rem] bg-white shadow-border">
+      <div className="relative p-2 rounded-[1.25rem] bg-card shadow-border">
         {/* The selection lens: a static bar the centred item scrolls through. */}
         <span
-          className="absolute left-2 right-2 top-1/2 h-[var(--wheel-item)] -translate-y-1/2 rounded-xl bg-gray-100 pointer-events-none"
+          className="absolute left-2 right-2 top-1/2 h-[var(--wheel-item)] -translate-y-1/2 rounded-xl bg-muted pointer-events-none"
           aria-hidden="true"
         />
         <div
-          className="relative h-[var(--wheel-h)] overflow-y-auto overscroll-contain rounded-xl [scroll-snap-type:y_mandatory] [perspective:44rem] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_bottom,transparent_0,#000_30%,#000_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0,#000_30%,#000_70%,transparent_100%)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]"
+          className="relative h-[var(--wheel-h)] overflow-y-auto overscroll-contain rounded-xl [scroll-snap-type:y_mandatory] [perspective:44rem] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [mask-image:linear-gradient(to_bottom,transparent_0,#000_30%,#000_70%,transparent_100%)] [-webkit-mask-image:linear-gradient(to_bottom,transparent_0,#000_30%,#000_70%,transparent_100%)] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
           ref={scrollerRef}
           role="listbox"
           aria-label={label}
@@ -317,7 +317,7 @@ function Option({
       id={id}
       role="option"
       aria-selected={selected}
-      className="h-[var(--wheel-item)] flex items-center justify-center [scroll-snap-align:center] text-[0.9375rem] font-medium tabular-nums text-[#111] cursor-pointer select-none"
+      className="h-[var(--wheel-item)] flex items-center justify-center [scroll-snap-align:center] text-[0.9375rem] font-medium tabular-nums text-foreground cursor-pointer select-none"
       style={{ rotateX, scale, opacity }}
       onClick={onClick}
     >

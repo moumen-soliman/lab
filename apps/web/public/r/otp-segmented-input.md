@@ -283,10 +283,10 @@ export default function OtpInput({
                 state === "success"
                   ? "shadow-[var(--shadow-border),0_0_0_1.5px_#16a34a] bg-[#f0fdf4] text-[#15803d]"
                   : cell.active
-                    ? "bg-white text-[#111] shadow-[var(--shadow-border),0_0_0_2px_#111]"
+                    ? "bg-card text-foreground shadow-[var(--shadow-border),0_0_0_2px_var(--color-ring)]"
                     : state === "error"
-                      ? "bg-white text-[#dc2626] shadow-border"
-                      : "bg-white text-[#111] shadow-border",
+                      ? "bg-card text-destructive shadow-border"
+                      : "bg-card text-foreground shadow-border",
                 inspect ? "outline outline-[1.5px] outline-dashed outline-[#3b82f6] -outline-offset-2" : "",
               ].join(" ")}
               style={state === "success" ? { transitionDelay: `${cell.index * FILL_S * 1000}ms` } : undefined}
@@ -300,7 +300,7 @@ export default function OtpInput({
                 // shifts the centered glyph.
                 <motion.span
                   className={`inline-block rounded-[0.3125rem] px-1 py-0.5 -mx-1 -my-0.5 transition-colors duration-150 ${
-                    cell.selected ? "bg-gray-200" : "bg-transparent"
+                    cell.selected ? "bg-foreground/10" : "bg-transparent"
                   }`}
                   initial={false}
                   animate={
@@ -324,7 +324,7 @@ export default function OtpInput({
               {cell.active && !cell.char && (
                 // The fake caret: a hard blink (steps, not a fade).
                 <motion.span
-                  className="w-[1.5px] h-[1.375rem] rounded-[1px] bg-[#111]"
+                  className="w-[1.5px] h-[1.375rem] rounded-[1px] bg-foreground"
                   animate={{ opacity: [1, 1, 0, 0] }}
                   transition={{ duration: 1.1, times: [0, 0.5, 0.5, 1], repeat: Infinity, ease: "linear" }}
                 />
@@ -379,7 +379,7 @@ export default function OtpInput({
         <div className="flex items-center gap-2.5 min-h-7">
           <span
             className={`text-[0.8125rem] transition-colors duration-150 ${
-              state === "success" ? "text-[#16a34a] font-medium" : state === "error" ? "text-[#dc2626] font-medium" : "text-gray-400"
+              state === "success" ? "text-[#16a34a] font-medium" : state === "error" ? "text-destructive font-medium" : "text-muted-foreground/70"
             }`}
           >
             {state === "success" ? "Verified" : state === "error" ? "Wrong code" : mask ? "Digits are masked" : " "}
@@ -387,7 +387,7 @@ export default function OtpInput({
           {state === "success" && (
             <motion.button
               type="button"
-              className="h-7 px-2.5 rounded-lg bg-[#f4f4f5] text-[#111] text-xs font-medium cursor-pointer transition-[background-color,scale] duration-150 hover:bg-[#e4e4e7] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+              className="h-7 px-2.5 rounded-lg bg-muted text-foreground text-xs font-medium cursor-pointer transition-[background-color,scale] duration-150 hover:bg-foreground/10 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               onClick={reset}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

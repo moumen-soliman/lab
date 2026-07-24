@@ -68,10 +68,10 @@ const CHROME_SHOWN = { opacity: 1, x: 0, scale: 1, filter: "blur(0px)" };
 const CHROME_HIDDEN = { opacity: 0, x: -6.4, scale: 0.96, filter: "blur(3px)" };
 
 const ICON_BTN =
-  "flex-none grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] text-gray-500 hover:bg-[#f4f4f5] hover:text-[#111] active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]";
+  "flex-none grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] text-muted-foreground hover:bg-accent hover:text-foreground active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring";
 
 const MENU_ITEM =
-  "flex items-center gap-2.5 w-full px-2 py-2 rounded-lg text-gray-700 text-sm text-left [transition:background-color_150ms_ease,color_150ms_ease] hover:bg-[#f4f4f5] hover:text-[#111] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]";
+  "flex items-center gap-2.5 w-full px-2 py-2 rounded-lg text-foreground/80 text-sm text-left [transition:background-color_150ms_ease,color_150ms_ease] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring";
 
 export interface NavItem {
   label: string;
@@ -232,7 +232,7 @@ export default function SearchExpandNav({
         data-menu={menuOpen ? "true" : "false"}
       >
         <div
-          className={`group/nav absolute inset-x-0 bottom-0 flex flex-col bg-white rounded-xl shadow-border [--nav-icon:2.25rem] [--nav-pad:0.5rem] [--nav-avatar:2rem] @max-[330px]:[--nav-icon:1.9rem] @max-[330px]:[--nav-pad:0.375rem] @max-[330px]:[--nav-avatar:1.7rem]${
+          className={`group/nav absolute inset-x-0 bottom-0 flex flex-col bg-card rounded-xl shadow-border [--nav-icon:2.25rem] [--nav-pad:0.5rem] [--nav-avatar:2rem] @max-[330px]:[--nav-icon:1.9rem] @max-[330px]:[--nav-pad:0.375rem] @max-[330px]:[--nav-avatar:1.7rem]${
             inspect ? " outline outline-[1.5px] outline-dashed outline-[#3b82f6] outline-offset-4" : ""
           }`}
           data-menu={menuOpen ? "true" : "false"}
@@ -260,7 +260,7 @@ export default function SearchExpandNav({
           >
             <div className="pt-3 px-2 pb-2">
               <motion.p
-                className="px-2 mb-1 text-[0.6875rem] font-semibold tracking-[0.04em] uppercase text-gray-400"
+                className="px-2 mb-1 text-[0.6875rem] font-semibold tracking-[0.04em] uppercase text-muted-foreground/70"
                 initial={false}
                 animate={expanded ? { opacity: 1, filter: "blur(0px)" } : { opacity: 0, filter: "blur(4px)" }}
                 transition={GROW}
@@ -279,15 +279,15 @@ export default function SearchExpandNav({
                   >
                     <button
                       type="button"
-                      className="group/sug flex items-center gap-2.5 w-full p-2 rounded-[0.625rem] text-gray-600 text-left [transition:background-color_200ms_ease,color_200ms_ease] hover:bg-[#f4f4f5] hover:text-[#111] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                      className="group/sug flex items-center gap-2.5 w-full p-2 rounded-[0.625rem] text-foreground/70 text-left [transition:background-color_200ms_ease,color_200ms_ease] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                       tabIndex={expanded ? 0 : -1}
                       onClick={() => pickSuggestion(value)}
                     >
-                      <span className="flex-none inline-flex text-gray-400">
+                      <span className="flex-none inline-flex text-muted-foreground/70">
                         <ClockIcon />
                       </span>
                       <span className="flex-1 min-w-0 overflow-hidden text-ellipsis whitespace-nowrap text-sm">{value}</span>
-                      <span className="flex-none inline-flex text-gray-300 opacity-0 -translate-x-1 [transition:opacity_200ms_ease,transform_200ms_ease] group-hover/sug:opacity-100 group-hover/sug:translate-x-0">
+                      <span className="flex-none inline-flex text-muted-foreground/50 opacity-0 -translate-x-1 [transition:opacity_200ms_ease,transform_200ms_ease] group-hover/sug:opacity-100 group-hover/sug:translate-x-0">
                         <ArrowUpLeftIcon />
                       </span>
                     </button>
@@ -303,7 +303,7 @@ export default function SearchExpandNav({
             <motion.input
               ref={inputRef}
               type="search"
-              className="absolute inset-0 w-full pl-[calc(var(--nav-pad)+var(--nav-icon)+0.25rem)] pr-[calc(var(--nav-pad)+var(--nav-icon)+0.25rem)] bg-transparent border-0 outline-none text-[0.9375rem] text-[#111] placeholder:text-gray-400 [&::-webkit-search-cancel-button]:appearance-none"
+              className="absolute inset-0 w-full pl-[calc(var(--nav-pad)+var(--nav-icon)+0.25rem)] pr-[calc(var(--nav-pad)+var(--nav-icon)+0.25rem)] bg-transparent border-0 outline-none text-[0.9375rem] text-foreground placeholder:text-muted-foreground/70 [&::-webkit-search-cancel-button]:appearance-none"
               placeholder="Search…"
               aria-label="Search"
               aria-hidden={!open}
@@ -319,7 +319,7 @@ export default function SearchExpandNav({
                 <motion.button
                   ref={firstSlotRef}
                   type="button"
-                  className="flex-none grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] overflow-hidden text-gray-500 hover:bg-[#f4f4f5] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                  className="flex-none grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] overflow-hidden text-muted-foreground hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   aria-label={open && effect === "flip" ? "Search" : firstNav.label}
                   title={firstNav.label}
                   aria-hidden={open && effect !== "flip" ? true : undefined}
@@ -346,7 +346,7 @@ export default function SearchExpandNav({
                     {firstNav.icon}
                   </motion.span>
                   <motion.span
-                    className="[grid-area:1/1] inline-flex text-[#111]"
+                    className="[grid-area:1/1] inline-flex text-foreground"
                     aria-hidden="true"
                     initial={false}
                     animate={open && effect === "flip" ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 11.2, filter: "blur(4px)" }}
@@ -376,7 +376,7 @@ export default function SearchExpandNav({
                 <button
                   ref={avatarBtnRef}
                   type="button"
-                  className="block rounded-[0.625rem] active:scale-[0.96] [transition:scale_150ms_ease-out] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+                  className="block rounded-[0.625rem] active:scale-[0.96] [transition:scale_150ms_ease-out] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
                   aria-label="Account"
                   aria-haspopup="menu"
                   aria-expanded={menuOpen}
@@ -392,13 +392,13 @@ export default function SearchExpandNav({
                     width="32"
                     height="32"
                     loading="lazy"
-                    className="block w-[var(--nav-avatar)] h-[var(--nav-avatar)] rounded-[0.625rem] object-cover outline outline-1 -outline-offset-1 outline-black/10 [transition:outline-color_200ms_ease,box-shadow_200ms_ease] group-data-[menu=true]/nav:outline-[#111] group-data-[menu=true]/nav:shadow-[0_0_0_3px_rgba(17,17,17,0.08)]"
+                    className="block w-[var(--nav-avatar)] h-[var(--nav-avatar)] rounded-[0.625rem] object-cover outline outline-1 -outline-offset-1 outline-foreground/10 [transition:outline-color_200ms_ease,box-shadow_200ms_ease] group-data-[menu=true]/nav:outline-ring group-data-[menu=true]/nav:shadow-[0_0_0_3px_rgba(17,17,17,0.08)]"
                   />
                 </button>
 
                 {/* The dropdown: opens UPWARD, scaling out of its bottom-right corner. */}
                 <motion.div
-                  className="absolute bottom-[calc(100%+0.625rem)] right-0 w-52 p-1.5 bg-white rounded-[0.875rem] shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_12px_32px_-8px_rgba(0,0,0,0.22)] origin-bottom-right z-20"
+                  className="absolute bottom-[calc(100%+0.625rem)] right-0 w-52 p-1.5 bg-popover rounded-[0.875rem] shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_12px_32px_-8px_rgba(0,0,0,0.22)] origin-bottom-right z-20"
                   id={menuId}
                   ref={menuRef}
                   role="menu"
@@ -410,24 +410,24 @@ export default function SearchExpandNav({
                 >
                   <div className="flex items-center gap-2.5 px-2 pt-2 pb-2.5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={avatar} alt="" width="36" height="36" loading="lazy" className="flex-none w-9 h-9 rounded-lg object-cover outline outline-1 -outline-offset-1 outline-black/10" />
+                    <img src={avatar} alt="" width="36" height="36" loading="lazy" className="flex-none w-9 h-9 rounded-lg object-cover outline outline-1 -outline-offset-1 outline-foreground/10" />
                     <span className="flex flex-col min-w-0">
-                      <span className="text-sm font-semibold text-[#111] leading-tight">{user}</span>
-                      <span className="text-xs text-gray-400 leading-snug overflow-hidden text-ellipsis whitespace-nowrap">{handle}</span>
+                      <span className="text-sm font-semibold text-foreground leading-tight">{user}</span>
+                      <span className="text-xs text-muted-foreground/70 leading-snug overflow-hidden text-ellipsis whitespace-nowrap">{handle}</span>
                     </span>
                   </div>
-                  <div className="h-px bg-[#f1f1f3] my-1" aria-hidden="true" />
+                  <div className="h-px bg-border my-1" aria-hidden="true" />
                   <button type="button" role="menuitem" className={MENU_ITEM} tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)}>
                     <UserIcon /> View profile
                   </button>
                   <button type="button" role="menuitem" className={MENU_ITEM} tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)}>
                     <GearIcon /> Settings
                   </button>
-                  <div className="h-px bg-[#f1f1f3] my-1" aria-hidden="true" />
+                  <div className="h-px bg-border my-1" aria-hidden="true" />
                   <button
                     type="button"
                     role="menuitem"
-                    className={`${MENU_ITEM} text-[#dc2626] hover:!bg-[#fef2f2] hover:!text-[#dc2626]`}
+                    className={`${MENU_ITEM} text-destructive hover:!bg-destructive/10 hover:!text-destructive`}
                     tabIndex={menuOpen ? 0 : -1}
                     onClick={() => setMenuOpen(false)}
                   >
@@ -441,8 +441,8 @@ export default function SearchExpandNav({
               <motion.button
                 ref={searchBtnRef}
                 type={open ? "submit" : "button"}
-                className={`relative z-[2] flex-none grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] [transition:color_200ms_ease] hover:text-[#111] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${
-                  open && effect === "travel" ? "text-gray-500" : "text-[#111]"
+                className={`relative z-[2] flex-none grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] [transition:color_200ms_ease] hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${
+                  open && effect === "travel" ? "text-muted-foreground" : "text-foreground"
                 }${inspect && effect === "travel" ? " outline outline-[1.5px] outline-dashed outline-[#ef4444]" : ""}`}
                 aria-label="Search"
                 aria-expanded={open}
@@ -471,7 +471,7 @@ export default function SearchExpandNav({
             {/* ✕ fades in on the right once the search icon has vacated it. */}
             <motion.button
               type="button"
-              className="absolute top-1/2 right-[var(--nav-pad)] z-[2] grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] text-gray-500 [transition:background-color_200ms_ease,color_200ms_ease] hover:bg-[#f4f4f5] hover:text-[#111] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+              className="absolute top-1/2 right-[var(--nav-pad)] z-[2] grid place-items-center w-[var(--nav-icon)] h-[var(--nav-icon)] rounded-[0.625rem] text-muted-foreground [transition:background-color_200ms_ease,color_200ms_ease] hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
               aria-label="Close search"
               tabIndex={open ? 0 : -1}
               initial={false}

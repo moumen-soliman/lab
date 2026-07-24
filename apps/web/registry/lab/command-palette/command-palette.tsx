@@ -130,7 +130,7 @@ function Highlight({ text, idx }: { text: string; idx: number[] }) {
       if (run)
         out.push(
           marked ? (
-            <span key={`m${i}`} className="text-[#111] underline decoration-gray-400 decoration-1 underline-offset-[3px] group-data-[danger=true]/opt:group-data-[active=true]/opt:text-inherit">
+            <span key={`m${i}`} className="text-foreground underline decoration-muted-foreground/70 decoration-1 underline-offset-[3px] group-data-[danger=true]/opt:group-data-[active=true]/opt:text-inherit">
               {run}
             </span>
           ) : (
@@ -448,13 +448,13 @@ export default function CommandPalette({
   function renderRows(rows: Row[], ctx: { command: Command | null; slotIndex: number }, live: boolean) {
     if (rows.length === 0) {
       return query === "" ? (
-        <div className="flex flex-col items-center gap-1 px-3 py-[1.125rem] text-[0.8125rem] text-gray-400 text-center">
+        <div className="flex flex-col items-center gap-1 px-3 py-[1.125rem] text-[0.8125rem] text-muted-foreground/70 text-center">
           Everything staged
           <span className="text-[0.6875rem]">✓ Apply runs it all · Backspace pops a chip</span>
         </div>
       ) : (
-        <div className="flex flex-col items-center gap-1 px-3 py-[1.125rem] text-[0.8125rem] text-gray-400 text-center">
-          No matches for <span className="text-gray-500">&ldquo;{query}&rdquo;</span>
+        <div className="flex flex-col items-center gap-1 px-3 py-[1.125rem] text-[0.8125rem] text-muted-foreground/70 text-center">
+          No matches for <span className="text-muted-foreground">&ldquo;{query}&rdquo;</span>
           <span className="text-[0.6875rem]">Esc clears{ctx.command || clauses.length > 0 ? " · Backspace pops a chip" : ""}</span>
         </div>
       );
@@ -476,7 +476,7 @@ export default function CommandPalette({
               id={live ? `${listboxId}-${index}` : undefined}
               role={live ? "option" : undefined}
               aria-selected={live ? index === activeSafe : undefined}
-              className="group/opt flex items-center gap-2 px-2 py-[0.4375rem] rounded-lg text-[0.8125rem] text-gray-700 cursor-pointer data-[active=true]:bg-[#f4f4f5] data-[active=true]:text-[#111] data-[danger=true]:data-[active=true]:bg-[#fef2f2] data-[danger=true]:data-[active=true]:text-[#dc2626]"
+              className="group/opt flex items-center gap-2 px-2 py-[0.4375rem] rounded-lg text-[0.8125rem] text-foreground/80 cursor-pointer data-[active=true]:bg-accent data-[active=true]:text-foreground data-[danger=true]:data-[active=true]:bg-destructive/10 data-[danger=true]:data-[active=true]:text-destructive"
               data-active={live && index === activeSafe ? "true" : undefined}
               data-danger={isCommand && (row.item as Command).danger ? "true" : undefined}
               onMouseDown={
@@ -490,24 +490,24 @@ export default function CommandPalette({
               onMouseMove={live ? () => setActive(index) : undefined}
             >
               {kind === "command" && (
-                <span className="inline-flex flex-none text-gray-400 group-data-[active=true]/opt:text-gray-500 group-data-[danger=true]/opt:group-data-[active=true]/opt:text-[#dc2626]">
+                <span className="inline-flex flex-none text-muted-foreground/70 group-data-[active=true]/opt:text-muted-foreground group-data-[danger=true]/opt:group-data-[active=true]/opt:text-destructive">
                   {(row.item as Command).icon}
                 </span>
               )}
               {kind === "person" && (
-                <span className="inline-flex items-center justify-center flex-none w-[1.375rem] h-[1.375rem] rounded-full bg-gray-200 text-zinc-600 text-[0.5625rem] font-semibold tracking-[0.02em]" aria-hidden="true">
+                <span className="inline-flex items-center justify-center flex-none w-[1.375rem] h-[1.375rem] rounded-full bg-foreground/10 text-foreground/70 text-[0.5625rem] font-semibold tracking-[0.02em]" aria-hidden="true">
                   {initials((row.item as CommandOption).value)}
                 </span>
               )}
               {kind === "dot" && (
                 <span
                   className="inline-block flex-none w-2 h-2 rounded-full"
-                  style={{ background: (row.item as CommandOption).dot ?? "#9ca3af" }}
+                  style={{ background: (row.item as CommandOption).dot ?? "var(--color-muted-foreground)" }}
                   aria-hidden="true"
                 />
               )}
               {kind === "plain" && (
-                <span className="inline-flex flex-none text-gray-400 group-data-[active=true]/opt:text-gray-500">
+                <span className="inline-flex flex-none text-muted-foreground/70 group-data-[active=true]/opt:text-muted-foreground">
                   {ctx.command?.icon}
                 </span>
               )}
@@ -515,14 +515,14 @@ export default function CommandPalette({
                 <Highlight text={labelOf(row.item)} idx={row.idx} />
               </span>
               {"hint" in row.item && row.item.hint && (
-                <span className="flex-none text-[0.6875rem] text-gray-400">{row.item.hint}</span>
+                <span className="flex-none text-[0.6875rem] text-muted-foreground/70">{row.item.hint}</span>
               )}
               {isCommand && (row.item as Command).shortcut ? (
-                <kbd className="inline-flex items-center justify-center min-w-4 px-1 rounded text-[0.625rem] font-mono leading-normal text-gray-500 shadow-[inset_0_0_0_1px_#e5e7eb] group-data-[active=true]/opt:bg-white group-data-[active=true]/opt:shadow-none" aria-hidden="true">
+                <kbd className="inline-flex items-center justify-center min-w-4 px-1 rounded text-[0.625rem] font-mono leading-normal text-muted-foreground inset-ring inset-ring-foreground/10 group-data-[active=true]/opt:bg-background group-data-[active=true]/opt:inset-ring-0" aria-hidden="true">
                   {(row.item as Command).shortcut}
                 </kbd>
               ) : (
-                <kbd className="inline-flex items-center justify-center min-w-4 px-1 rounded text-[0.625rem] font-mono leading-normal bg-[#f4f4f5] text-gray-500 opacity-0 group-data-[active=true]/opt:opacity-100" aria-hidden="true">
+                <kbd className="inline-flex items-center justify-center min-w-4 px-1 rounded text-[0.625rem] font-mono leading-normal bg-muted text-muted-foreground opacity-0 group-data-[active=true]/opt:opacity-100" aria-hidden="true">
                   ↵
                 </kbd>
               )}
@@ -539,14 +539,14 @@ export default function CommandPalette({
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative w-full max-w-[24rem]" data-inspect={inspect ? "true" : "false"}>
-        <div className="bg-white rounded-xl shadow-border overflow-hidden">
+        <div className="bg-popover rounded-xl shadow-border overflow-hidden">
           <div
-            className={`flex flex-wrap items-center gap-1.5 px-3 py-2.5 border-b border-gray-100 cursor-text${
+            className={`flex flex-wrap items-center gap-1.5 px-3 py-2.5 border-b border-border cursor-text${
               inspect ? " outline outline-[1.5px] outline-dashed outline-[#ef4444] -outline-offset-[3px]" : ""
             }`}
             onClick={() => inputRef.current?.focus()}
           >
-            <span className="inline-flex flex-none text-gray-400" aria-hidden="true">
+            <span className="inline-flex flex-none text-muted-foreground/70" aria-hidden="true">
               <SearchIcon />
             </span>
             {chipGroups.map((group, groupIndex) => (
@@ -557,7 +557,7 @@ export default function CommandPalette({
                     const myFlat = flat;
                     return (
                       <span
-                        className="flex-none text-[0.6875rem] font-medium text-gray-400 transition-opacity duration-[240ms]"
+                        className="flex-none text-[0.6875rem] font-medium text-muted-foreground/70 transition-opacity duration-[240ms]"
                         style={{ opacity: hoveredChip != null && myFlat > hoveredChip ? 0.35 : 1 }}
                       >
                         and
@@ -580,10 +580,10 @@ export default function CommandPalette({
                         initial={morph && !reduced ? { opacity: 0, scale: 0.85, filter: "blur(2px)" } : false}
                         animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                         transition={{ duration: 0.24, ease: EASE }}
-                        className={`inline-flex items-center gap-[0.3125rem] min-w-0 overflow-hidden whitespace-nowrap px-[0.4375rem] py-[0.1875rem] rounded-md text-xs font-medium cursor-pointer active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${
+                        className={`inline-flex items-center gap-[0.3125rem] min-w-0 overflow-hidden whitespace-nowrap px-[0.4375rem] py-[0.1875rem] rounded-md text-xs font-medium cursor-pointer active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${
                           chip.kind === "cmd"
-                            ? "bg-[#111] text-white [@media(hover:hover)_and_(pointer:fine)]:hover:bg-[#3f3f46]"
-                            : "bg-[#f4f4f5] text-[#111] [@media(hover:hover)_and_(pointer:fine)]:hover:bg-[#e4e4e7]"
+                            ? "bg-primary text-primary-foreground [@media(hover:hover)_and_(pointer:fine)]:hover:bg-primary/85"
+                            : "bg-muted text-foreground [@media(hover:hover)_and_(pointer:fine)]:hover:bg-foreground/10"
                         }`}
                         aria-label={`${chip.kind === "cmd" ? "Remove" : "Change"} ${chip.label}${isLast ? "" : ", also removes later chips"}`}
                         onMouseDown={(event) => event.preventDefault()}
@@ -603,7 +603,7 @@ export default function CommandPalette({
             ))}
             <input
               ref={inputRef}
-              className="flex-1 min-w-[5rem] border-0 outline-none bg-transparent text-sm text-[#111] py-0.5 placeholder:text-gray-400"
+              className="flex-1 min-w-[5rem] border-0 outline-none bg-transparent text-sm text-foreground py-0.5 placeholder:text-muted-foreground/70"
               type="text"
               value={query}
               placeholder={slot ? slot.prompt : "Type a command"}
@@ -658,7 +658,7 @@ export default function CommandPalette({
             </motion.div>
           </motion.div>
 
-          <div className="relative flex items-center justify-between gap-2 min-h-8 px-3 py-[0.4375rem] border-t border-gray-100 text-[0.6875rem] text-gray-400">
+          <div className="relative flex items-center justify-between gap-2 min-h-8 px-3 py-[0.4375rem] border-t border-border text-[0.6875rem] text-muted-foreground/70">
             <motion.span
               className="inline-flex items-center gap-[0.3125rem]"
               animate={ran ? { opacity: 0, y: -4, filter: "blur(2px)" } : { opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -685,7 +685,7 @@ export default function CommandPalette({
             >
               <button
                 type="button"
-                className="relative inline-flex items-center justify-center w-7 h-7 rounded-md bg-transparent text-gray-400 cursor-pointer transition-[background-color,color,opacity,scale] duration-150 hover:enabled:bg-[#f4f4f5] hover:enabled:text-[#111] active:enabled:scale-[0.96] disabled:opacity-35 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] after:content-[''] after:absolute after:-inset-1.5"
+                className="relative inline-flex items-center justify-center w-7 h-7 rounded-md bg-transparent text-muted-foreground/70 cursor-pointer transition-[background-color,color,opacity,scale] duration-150 hover:enabled:bg-accent hover:enabled:text-foreground active:enabled:scale-[0.96] disabled:opacity-35 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring after:content-[''] after:absolute after:-inset-1.5"
                 disabled={clauses.length === 0 && !command && query === ""}
                 aria-label="Clear staged commands"
                 onMouseDown={(event) => event.preventDefault()}
@@ -695,7 +695,7 @@ export default function CommandPalette({
               </button>
               <button
                 type="button"
-                className="relative inline-flex items-center gap-[0.3125rem] h-7 px-2.5 rounded-[0.4375rem] bg-[#111] text-white text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 active:enabled:scale-[0.96] disabled:bg-[#f4f4f5] disabled:text-gray-400 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] after:content-[''] after:absolute after:-inset-y-1.5 after:inset-x-0 disabled:[&_[data-n]]:bg-black/[0.06]"
+                className="relative inline-flex items-center gap-[0.3125rem] h-7 px-2.5 rounded-[0.4375rem] bg-primary text-primary-foreground text-xs font-medium cursor-pointer transition-[background-color,color,scale] duration-150 active:enabled:scale-[0.96] disabled:bg-muted disabled:text-muted-foreground/70 disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring after:content-[''] after:absolute after:-inset-y-1.5 after:inset-x-0 disabled:[&_[data-n]]:bg-foreground/[0.06]"
                 disabled={clauses.length === 0 || !!command}
                 aria-label={`Apply ${clauses.length} staged ${clauses.length === 1 ? "command" : "commands"}`}
                 aria-keyshortcuts="Meta+Enter Control+Enter"
@@ -706,14 +706,14 @@ export default function CommandPalette({
                 <CheckIcon />
                 Apply
                 {clauses.length > 0 && (
-                  <span data-n className="inline-flex items-center justify-center min-w-4 px-1 rounded-[0.3125rem] bg-white/[0.18] text-[0.625rem] leading-normal tabular-nums">
+                  <span data-n className="inline-flex items-center justify-center min-w-4 px-1 rounded-[0.3125rem] bg-primary-foreground/[0.18] text-[0.625rem] leading-normal tabular-nums">
                     {clauses.length}
                   </span>
                 )}
               </button>
             </motion.span>
             <motion.span
-              className="absolute inset-0 flex items-center gap-1.5 px-3 text-[#111] font-medium"
+              className="absolute inset-0 flex items-center gap-1.5 px-3 text-foreground font-medium"
               aria-hidden={!ran}
               initial={false}
               animate={ran ? { opacity: 1, y: 0, filter: "blur(0px)" } : { opacity: 0, y: 4, filter: "blur(2px)" }}

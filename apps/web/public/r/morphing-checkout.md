@@ -138,8 +138,8 @@ function hopSeparators(event: React.KeyboardEvent<HTMLInputElement>) {
 const reducedMotion = () => typeof window !== "undefined" && window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
 const INPUT =
-  "w-full h-10 px-3 rounded-lg bg-white text-[#111] text-sm shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)] [transition:box-shadow_200ms_ease] placeholder:text-gray-400 hover:shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_1px_2px_-1px_rgba(0,0,0,0.08),0_2px_4px_0_rgba(0,0,0,0.06)] focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-[#111] aria-[invalid=true]:shadow-[0_0_0_1px_#fca5a5,0_1px_2px_-1px_rgba(220,38,38,0.12)] aria-[invalid=true]:focus:outline-[#dc2626]";
-const LABEL = "text-[0.6875rem] font-medium tracking-[0.02em] text-gray-500";
+  "w-full h-10 px-3 rounded-lg bg-background text-foreground text-sm shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)] [transition:box-shadow_200ms_ease] placeholder:text-muted-foreground/70 hover:shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_1px_2px_-1px_rgba(0,0,0,0.08),0_2px_4px_0_rgba(0,0,0,0.06)] focus:outline focus:outline-2 focus:-outline-offset-1 focus:outline-ring aria-[invalid=true]:ring aria-[invalid=true]:ring-destructive/40 aria-[invalid=true]:shadow-[0_1px_2px_-1px_rgba(220,38,38,0.12)] aria-[invalid=true]:focus:outline-destructive";
+const LABEL = "text-[0.6875rem] font-medium tracking-[0.02em] text-muted-foreground";
 
 export default function MorphingCheckout({
   price = "$149.00",
@@ -496,7 +496,7 @@ export default function MorphingCheckout({
               <SumRow dt="Total" total><span className="tabular-nums">{price}</span></SumRow>
             </dl>
           </StepChild>
-          <StepChild i={1} cascade={cascade}><p className="text-xs text-gray-400">Demo checkout - nothing is charged.</p></StepChild>
+          <StepChild i={1} cascade={cascade}><p className="text-xs text-muted-foreground/70">Demo checkout - nothing is charged.</p></StepChild>
         </>
       );
     }
@@ -504,11 +504,11 @@ export default function MorphingCheckout({
       <>
         <StepChild i={0} cascade={cascade}>
           <div>
-            <h3 className="text-[0.9375rem] font-semibold text-[#111]">Payment complete</h3>
-            <p className="mt-1.5 text-[0.8125rem] text-gray-500">Charged <span className="tabular-nums">{price}</span> to {spec.label} •••• {last4}</p>
+            <h3 className="text-[0.9375rem] font-semibold text-foreground">Payment complete</h3>
+            <p className="mt-1.5 text-[0.8125rem] text-muted-foreground">Charged <span className="tabular-nums">{price}</span> to {spec.label} •••• {last4}</p>
           </div>
         </StepChild>
-        <StepChild i={1} cascade={cascade}><p className="text-xs text-gray-400">A receipt is on its way to your inbox. Probably.</p></StepChild>
+        <StepChild i={1} cascade={cascade}><p className="text-xs text-muted-foreground/70">A receipt is on its way to your inbox. Probably.</p></StepChild>
       </>
     );
   }
@@ -519,7 +519,7 @@ export default function MorphingCheckout({
   return (
     <MotionConfig reducedMotion="user">
       <div className="w-full max-w-[22rem] relative">
-        <div className="relative p-4 rounded-3xl bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)]">
+        <div className="relative p-4 rounded-3xl bg-card shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)]">
           {/* Live preview — presentational, hidden from AT. */}
           <div className="relative [perspective:62.5rem] mb-4">
             <motion.div className="relative aspect-[1.586] [transform-style:preserve-3d]" animate={{ rotateY: flipped ? 180 : 0 }} transition={{ duration: 0.6, ease: EASE }} aria-hidden="true">
@@ -578,20 +578,20 @@ export default function MorphingCheckout({
             <nav className="mb-4" aria-label="Checkout steps">
               <div className="grid grid-cols-3">
                 {tabs.map((label, index) => (
-                  <button key={label} type="button" className={`relative h-8 rounded-md text-xs font-medium [transition:color_200ms_ease] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1 ${step === index ? "text-[#111]" : index > maxStep ? "text-gray-400" : "text-gray-500"} enabled:hover:text-[#111] disabled:cursor-default focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]`} aria-current={step === index ? "step" : undefined} disabled={index === step || index > maxStep || status !== "idle"} onClick={() => navigate(index)}>
+                  <button key={label} type="button" className={`relative h-8 rounded-md text-xs font-medium [transition:color_200ms_ease] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1 ${step === index ? "text-foreground" : index > maxStep ? "text-muted-foreground/70" : "text-muted-foreground"} enabled:hover:text-foreground disabled:cursor-default focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring`} aria-current={step === index ? "step" : undefined} disabled={index === step || index > maxStep || status !== "idle"} onClick={() => navigate(index)}>
                     {label}
                   </button>
                 ))}
               </div>
-              <div className="h-1 mt-1.5 rounded-full bg-gray-100 overflow-hidden" aria-hidden="true">
-                <motion.span className={`block h-full rounded-full ${step === 3 ? "bg-[#16a34a]" : "bg-[#111]"}`} animate={{ x: `${(1 - p) * -100}%` }} transition={morph && !reduced ? { duration: 0.38, ease: EASE } : { duration: 0 }} />
+              <div className="h-1 mt-1.5 rounded-full bg-muted overflow-hidden" aria-hidden="true">
+                <motion.span className={`block h-full rounded-full ${step === 3 ? "bg-[#16a34a]" : "bg-primary"}`} animate={{ x: `${(1 - p) * -100}%` }} transition={morph && !reduced ? { duration: 0.38, ease: EASE } : { duration: 0 }} />
               </div>
             </nav>
           ) : (
-            <nav className="relative grid grid-cols-3 p-1 mb-4 rounded-full bg-gray-100" aria-label="Checkout steps">
-              <motion.span className="absolute top-1 bottom-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-white shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)]" aria-hidden="true" animate={{ x: `${Math.min(step, 2) * 100}%` }} transition={morph && !reduced ? { duration: 0.38, ease: EASE } : { duration: 0 }} />
+            <nav className="relative grid grid-cols-3 p-1 mb-4 rounded-full bg-muted" aria-label="Checkout steps">
+              <motion.span className="absolute top-1 bottom-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-background shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)]" aria-hidden="true" animate={{ x: `${Math.min(step, 2) * 100}%` }} transition={morph && !reduced ? { duration: 0.38, ease: EASE } : { duration: 0 }} />
               {tabs.map((label, index) => (
-                <button key={label} type="button" className={`relative z-[1] h-8 rounded-full text-xs font-medium [transition:color_200ms_ease] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1 ${step === index ? "text-[#111]" : "text-gray-500"} enabled:hover:text-[#111] disabled:cursor-default focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#111]`} aria-current={step === index ? "step" : undefined} disabled={index === step || index > maxStep || status !== "idle"} onClick={() => navigate(index)}>
+                <button key={label} type="button" className={`relative z-[1] h-8 rounded-full text-xs font-medium [transition:color_200ms_ease] after:content-[''] after:absolute after:inset-x-0 after:-inset-y-1 ${step === index ? "text-foreground" : "text-muted-foreground"} enabled:hover:text-foreground disabled:cursor-default focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring`} aria-current={step === index ? "step" : undefined} disabled={index === step || index > maxStep || status !== "idle"} onClick={() => navigate(index)}>
                   {label}
                 </button>
               ))}
@@ -618,7 +618,7 @@ export default function MorphingCheckout({
           <div className="relative flex items-center justify-between gap-3 min-h-11 mt-4">
             <button
               type="button"
-              className={`h-11 px-3.5 rounded-full text-[0.8125rem] font-medium text-gray-500 [transition:color_200ms_ease,background-color_200ms_ease,opacity_250ms_cubic-bezier(0.2,0,0,1),scale_150ms_ease-out] hover:text-[#111] hover:bg-gray-100 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] ${step === 0 || (status !== "idle" && step !== 3) ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+              className={`h-11 px-3.5 rounded-full text-[0.8125rem] font-medium text-muted-foreground [transition:color_200ms_ease,background-color_200ms_ease,opacity_250ms_cubic-bezier(0.2,0,0,1),scale_150ms_ease-out] hover:text-foreground hover:bg-accent active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring ${step === 0 || (status !== "idle" && step !== 3) ? "opacity-0 pointer-events-none" : "opacity-100"}`}
               tabIndex={step === 0 || (status !== "idle" && step !== 3) ? -1 : 0}
               onClick={() => (step === 3 ? reset() : navigate(step - 1))}
             >
@@ -628,7 +628,7 @@ export default function MorphingCheckout({
               <button
                 type="button"
                 ref={payRef}
-                className="relative grid place-items-center h-11 min-w-11 rounded-full overflow-hidden whitespace-nowrap bg-[#111] text-white [transition:width_420ms_cubic-bezier(0.22,1,0.36,1),background-color_300ms_ease,scale_150ms_ease-out] active:enabled:scale-[0.96] disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] data-[status=paid]:bg-[#16a34a] data-[status=failed]:bg-[#dc2626]"
+                className="relative grid place-items-center h-11 min-w-11 rounded-full overflow-hidden whitespace-nowrap bg-primary text-primary-foreground [transition:width_420ms_cubic-bezier(0.22,1,0.36,1),background-color_300ms_ease,scale_150ms_ease-out] active:enabled:scale-[0.96] disabled:cursor-default focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring data-[status=paid]:bg-[#16a34a] data-[status=failed]:bg-destructive"
                 data-status={status}
                 disabled={status !== "idle"}
                 aria-busy={status === "processing"}
@@ -638,7 +638,7 @@ export default function MorphingCheckout({
                   {step >= 2 ? (<><LockIcon /> Pay <span className="tabular-nums">{price}</span></>) : "Continue"}
                 </motion.span>
                 <PayIcon show={status === "processing"}>
-                  <motion.span className="w-[1.125rem] h-[1.125rem] rounded-full border-2 border-white/30 border-t-white" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 0.7, ease: "linear" }} />
+                  <motion.span className="w-[1.125rem] h-[1.125rem] rounded-full border-2 border-primary-foreground/30 border-t-primary-foreground" animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 0.7, ease: "linear" }} />
                 </PayIcon>
                 <PayIcon show={status === "paid"}>
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -656,7 +656,7 @@ export default function MorphingCheckout({
             {inspect && status !== "idle" && <SpecLabel className="bottom-[calc(100%+0.4rem)] right-0 border-[#fecaca] text-[#dc2626]">width: measured px → 2.75rem</SpecLabel>}
           </div>
 
-          {payError && <motion.p className="mt-3 text-xs text-[#dc2626]" role="alert" initial={{ opacity: 0, y: "-0.25rem" }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeOut" }}>{payError}</motion.p>}
+          {payError && <motion.p className="mt-3 text-xs text-destructive" role="alert" initial={{ opacity: 0, y: "-0.25rem" }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeOut" }}>{payError}</motion.p>}
         </div>
 
         <p className="sr-only" role="status" aria-live="polite">
@@ -697,7 +697,7 @@ function StepChild({
 
 function ErrorMsg({ id, children }: { id?: string; children: ReactNode }) {
   return (
-    <motion.p className="text-xs text-[#dc2626]" id={id} initial={{ opacity: 0, y: "-0.25rem" }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeOut" }}>
+    <motion.p className="text-xs text-destructive" id={id} initial={{ opacity: 0, y: "-0.25rem" }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.2, ease: "easeOut" }}>
       {children}
     </motion.p>
   );
@@ -723,9 +723,9 @@ function PayIcon({ show, children }: { show: boolean; children: ReactNode }) {
 
 function SumRow({ dt, total, children }: { dt: string; total?: boolean; children: ReactNode }) {
   return (
-    <div className={`flex justify-between gap-4 py-[0.4375rem] text-[0.8125rem] [&+&]:border-t [&+&]:border-gray-100 ${total ? "font-semibold" : ""}`}>
-      <dt className={total ? "text-[#111]" : "text-gray-500"}>{dt}</dt>
-      <dd className={`min-w-0 text-right [overflow-wrap:anywhere] ${total ? "text-[#111]" : "text-[#111] font-medium"}`}>{children}</dd>
+    <div className={`flex justify-between gap-4 py-[0.4375rem] text-[0.8125rem] [&+&]:border-t [&+&]:border-border ${total ? "font-semibold" : ""}`}>
+      <dt className={total ? "text-foreground" : "text-muted-foreground"}>{dt}</dt>
+      <dd className={`min-w-0 text-right [overflow-wrap:anywhere] ${total ? "text-foreground" : "text-foreground font-medium"}`}>{children}</dd>
     </div>
   );
 }
