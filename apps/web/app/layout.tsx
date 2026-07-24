@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
+import { OpenPanelComponent } from '@openpanel/nextjs';
 import "./globals.css";
 
 const title = "moumenlab — Less is more";
@@ -47,7 +48,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable} antialiased`}>
-      <body>{children}</body>
+      <body>
+        <OpenPanelComponent
+          clientId={process.env.NEXT_PUBLIC_OPEN_PANEL_CLIENT_ID as string}
+          trackScreenViews={true}
+          trackAttributes={true}
+          trackOutgoingLinks={true}
+        /> {children}</body>
     </html>
   );
 }
