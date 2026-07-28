@@ -11,7 +11,7 @@ export type StoryStep = {
 };
 
 export type StoryReference = {
-  /** Omi- while the link is still being tracked down — the label renders as plain text until then. */
+  /** Omit while the link is still being tracked down — the label renders as plain text until then. */
   href?: string;
   label: string;
   /** What the reference is and why it matters — including a pointer to the exact part (e.g. a video timestamp). */

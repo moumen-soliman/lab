@@ -21,7 +21,7 @@ const unlimitedNestedMenuSteps: StoryStep[] = [
     {
       title: "A job request, not an experiment",
       figure: <FigWallOfRows />,
-      body: (-
+      body: (
         <>
           This one didn&apos;t start in the lab. At work, a screen had an action menu that was{" "}
           <span className={em}>already big</span> — and the ticket asked for more options. Cramming them in would turn
@@ -32,7 +32,7 @@ const unlimitedNestedMenuSteps: StoryStep[] = [
     },
     {
       title: "Looking for prior art",
-      figure: <FigPriorArt />,-
+      figure: <FigPriorArt />,
       body: (
         <>
           I went looking for anyone who had taken menu depth seriously — almost nobody had. The closest was an{" "}
@@ -45,7 +45,7 @@ const unlimitedNestedMenuSteps: StoryStep[] = [
     {
       title: "The shadcn/ui & Base UI dead end",
       figure: <FigFlyoutDeadEnd />,
-      body: (-
+      body: (
         <>
           First instinct: reach for the libraries — <span className={em}>shadcn/ui&apos;s dropdown menu</span>, then{" "}
           <span className={em}>Base UI&apos;s menu</span>. Nothing wrong with either — they handle{" "}
@@ -88,7 +88,7 @@ const unlimitedNestedMenuSteps: StoryStep[] = [
     },
     {
       title: "Levels, rebuilt as a stack",
-      figure: <FigStack />,-
+      figure: <FigStack />,
       body: (
         <>
           So the levels became <span className={em}>panels</span>. Each branch opens right under the row you clicked,
@@ -99,7 +99,7 @@ const unlimitedNestedMenuSteps: StoryStep[] = [
       ),
     },
     {
-      title: "Then the-animation came out",
+      title: "Then the animation came out",
       figure: <FigMorph />,
       body: (
         <>

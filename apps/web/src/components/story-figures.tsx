@@ -50,7 +50,7 @@ function Figure({ id, height, children }: { id: string; height: number; children
   );
 }
 
-// A dashed metric guide ru-ning out to its label, specimen-style.
+// A dashed metric guide running out to its label, specimen-style.
 function Guide({ y, label, color = "#6b7280", x1 = 0, x2 = 270 }: { y: number; label: string; color?: string; x1?: number; x2?: number }) {
   return (
     <g>
@@ -213,7 +213,7 @@ export function FigBreadcrumb() {
         <line x1="52" y1="46" x2="150" y2="46" />
         <line x1="52" y1="60" x2="136" y2="60" />
         <line x1="52" y1="74" x2="154" y2="74" />
-        <line x1="52" y1="88" x2="130" y2=-88" />
+        <line x1="52" y1="88" x2="130" y2="88" />
         <line x1="52" y1="102" x2="144" y2="102" />
       </g>
       <Guide y={22} label="PATH TRAIL" x1={172} x2={270} />

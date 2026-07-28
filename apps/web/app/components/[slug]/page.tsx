@@ -110,8 +110,15 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           markdown={markdown}
         />
 
-        {story && (
+        {story ? (
           <StorySection steps={story.steps} references={story.references} legend={story.legend} delay={110} />
+        ) : (
+          <section className="animate-fade-in mt-10" style={{ animationDelay: "110ms" }}>
+            <h2 className="text-[0.6875rem] font-medium uppercase tracking-wide text-gray-500 select-none">Story</h2>
+            <p className="mt-2 text-sm leading-relaxed text-gray-400">
+              Coming soon — the how and why behind this component.
+            </p>
+          </section>
         )}
 
         <Divider delay={120} className="mt-10 mb-8" />
