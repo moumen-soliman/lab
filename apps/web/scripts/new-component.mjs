@@ -1,6 +1,6 @@
 // Scaffold a new component end to end. This is the "component #17 is cheap"
 // guarantee: it writes the installable stub, the showcase stub, and wires
-// registry.json + showcases.tsx — no route, config, or CLI edits (the dynamic
+// registry.json + showcases.tsx - no route, config, or CLI edits (the dynamic
 // /components/[slug] route and registry-data pick it up automatically).
 //
 //   pnpm new:component "Radial Dial" radial-dial
@@ -21,7 +21,7 @@ if (!title || !slug) {
   process.exit(1);
 }
 if (!/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/.test(slug)) {
-  console.error(`Invalid slug "${slug}" — use kebab-case (e.g. radial-dial).`);
+  console.error(`Invalid slug "${slug}" - use kebab-case (e.g. radial-dial).`);
   process.exit(1);
 }
 
@@ -43,7 +43,7 @@ writeFileSync(
   componentPath,
   `"use client";
 
-// ${title} — TODO: one-paragraph description of the hard-constraint story.
+// ${title} - TODO: one-paragraph description of the hard-constraint story.
 //
 // Requires the lab-theme registry item (shared tokens). Fully Tailwind, no CSS
 // files, zero runtime dependencies. See CONTRIBUTING.md for the porting recipe.

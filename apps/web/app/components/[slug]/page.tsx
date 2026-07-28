@@ -7,6 +7,8 @@ import { components, getComponent } from "@/src/registry-data";
 import { showcases } from "@/src/showcases";
 import { highlight } from "@/src/lib/highlight";
 import { CodeSection } from "@/src/components/CodeSection";
+import { StorySection } from "@/src/components/StorySection";
+import { getStory } from "@/src/stories";
 import { BackLink, Divider } from "@/src/components/navigation";
 
 /* ─────────────────────────────────────────────────────────
@@ -18,6 +20,7 @@ import { BackLink, Divider } from "@/src/components/navigation";
  *   70ms   the live demo surface
  *   90ms   status line under the demo
  *  100ms   Install / Usage / Source block
+ *  110ms   story timeline (only components that have one)
  *  120ms   divider
  *  140ms   footer byline
  * ───────────────────────────────────────────────────────── */
@@ -85,6 +88,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   if (!source) notFound();
   const usage = readRegistryFile(slug, "example.tsx");
   const markdown = readGeneratedMd(slug);
+  const story = getStory(slug);
   const highlightedHtml = await highlight(source);
   const usageHtml = usage ? await highlight(usage) : null;
 
@@ -105,6 +109,10 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           usageHtml={usageHtml}
           markdown={markdown}
         />
+
+        {story && (
+          <StorySection steps={story.steps} references={story.references} legend={story.legend} delay={110} />
+        )}
 
         <Divider delay={120} className="mt-10 mb-8" />
 

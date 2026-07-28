@@ -3,7 +3,7 @@
 An iOS picker drum built on native scroll-snap, with selection derived from scrollTop.
 
 - Demo: https://lab.moumen.dev/components/inertial-wheel-list
-- Install: `npx moumenlab add inertial-wheel-list` — or `npx shadcn@latest add https://lab.moumen.dev/r/inertial-wheel-list.json`
+- Install: `npx moumenlab add inertial-wheel-list` - or `npx shadcn@latest add https://lab.moumen.dev/r/inertial-wheel-list.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/inertial-wheel-list.tsx`
@@ -34,14 +34,14 @@ export default function WheelListExample() {
         onStateChange={(state) => console.log(state.settled ? `selected ${state.value}` : "coasting")}
       />
 
-      {/* drum={false}: a flat wheel — keeps the scale + fade, drops the rotateX. */}
+      {/* drum={false}: a flat wheel - keeps the scale + fade, drops the rotateX. */}
       <WheelList items={TIMES} label="Pick a start time" initialIndex={36} drum={false} />
     </div>
   );
 }
 ```
 
-## Source — `components/lab/inertial-wheel-list.tsx`
+## Source - `components/lab/inertial-wheel-list.tsx`
 
 ```tsx
 "use client";
@@ -58,24 +58,24 @@ import {
 } from "react";
 import { motion, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 
-// Inertial wheel list — the iOS picker drum, rebuilt on one principle: the
+// Inertial wheel list - the iOS picker drum, rebuilt on one principle: the
 // SCROLL POSITION IS THE STATE. Nothing is scroll-jacked and no library fakes
 // the physics: the scroller is a plain overflow-y list, so the browser (and a
 // thumb on a phone) owns momentum, and `scroll-snap-type: y mandatory` +
 // `scroll-snap-align: center` land every fling on an item. The selection is
-// DERIVED from scrollTop — round(scrollTop / itemHeight) — never stored beside
+// DERIVED from scrollTop - round(scrollTop / itemHeight) - never stored beside
 // it, so the two can't disagree.
 //
 // The drum look is paint, not layout: motion's `useScroll` tracks the scroller
 // and every item derives `rotateX(±38° · t) scale(1.14 → 0.80)` and opacity from
-// its distance to the viewport's centre via `useTransform` — motion values
+// its distance to the viewport's centre via `useTransform` - motion values
 // update outside the React render loop, GPU-composited, no per-frame setState.
 // The edge fade is a `mask-image` gradient on the scroller, so items dissolve at
 // the rim instead of clipping.
 //
 // Settling: `scrollend` fires when the snap lands, but not in every engine, so
 // a 140ms quiet-timer fallback commits the same selection. Keyboard follows the
-// listbox pattern — the scroller is the single tab stop, arrows/Home/End scroll
+// listbox pattern - the scroller is the single tab stop, arrows/Home/End scroll
 // to the neighbour (which updates selection because selection IS scroll) and
 // aria-activedescendant tracks the centre item. Honours prefers-reduced-motion:
 // transforms stay flat, programmatic scrolls jump.
@@ -102,7 +102,7 @@ interface Metrics {
   half: number;
 }
 
-// Fallback geometry (16px root): item 40px, viewport 200px — used until the
+// Fallback geometry (16px root): item 40px, viewport 200px - used until the
 // first real measure lands.
 const fallbackMetrics = (count: number): Metrics => ({
   itemH: 40,
@@ -186,7 +186,7 @@ export default function WheelList({
   }
 
   // Measure once (and on resize / new items): item height, each centre, and the
-  // half-viewport — cached so the motion transforms never read layout.
+  // half-viewport - cached so the motion transforms never read layout.
   useLayoutEffect(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return undefined;
@@ -205,7 +205,7 @@ export default function WheelList({
     return () => observer?.disconnect();
   }, [items]);
 
-  // Land on the initial value before first paint — no snap animation on load.
+  // Land on the initial value before first paint - no snap animation on load.
   useLayoutEffect(() => {
     const scroller = scrollerRef.current;
     if (scroller) scroller.scrollTop = clampIndex(initialIndex) * metricsRef.current.itemH;
@@ -282,7 +282,7 @@ export default function WheelList({
 }
 
 // One drum row. `t` is the item's signed distance from the viewport centre in
-// half-viewport units — the centre item is biggest (scale 1.14) and the rim
+// half-viewport units - the centre item is biggest (scale 1.14) and the rim
 // dissolves, by continuous function rather than a styled selected class. All
 // four styles are motion values derived from the scroll: no React re-render,
 // no layout read, GPU-composited.

@@ -3,23 +3,23 @@
 import { useEffect, useImperativeHandle, useRef, useState, type Ref } from "react";
 import { MotionConfig, motion } from "motion/react";
 
-// File upload staging area — a pipeline expressed through motion.
+// File upload staging area - a pipeline expressed through motion.
 //
 // Three hard problems, none of them the dropzone:
 //
 //   · A reflowing GRID that never jump-cuts. Tiles are motion.li with `layout`:
 //     removing a tile mid-grid makes every later tile glide up and across, and
-//     entering tiles scale + unblur in. Exits stay subtler than enters — here,
+//     entering tiles scale + unblur in. Exits stay subtler than enters - here,
 //     instant.
 //   · An interruptible state machine PER TILE: queued → uploading → done, or
 //     → error frozen at the failure percent. Retry RESUMES from that percent
 //     (the arc never lies by rewinding), removal works in any state, and a
-//     freed slot immediately promotes the next queued tile — concurrency is
+//     freed slot immediately promotes the next queued tile - concurrency is
 //     capped at 2 so the pipeline is visible instead of everything blasting
 //     to 100% at once.
 //   · Honest jittered progress. One shared ticker advances every uploading
-//     tile by a random 0.6-4% with a 12% chance to stall a beat — variable
-//     like a real network — but progress NEVER moves backwards and 100% is
+//     tile by a random 0.6-4% with a 12% chance to stall a beat - variable
+//     like a real network - but progress NEVER moves backwards and 100% is
 //     the only way to complete. Failures are decided up front (a hidden
 //     failAt percent), not rolled per frame.
 //
@@ -104,7 +104,7 @@ function formatSize(bytes: number) {
   return `${Math.max(1, Math.round(bytes / 1000))} KB`;
 }
 
-// Middle-truncate, keeping the start and the extension — a tail-ellipsis
+// Middle-truncate, keeping the start and the extension - a tail-ellipsis
 // would eat exactly the part that tells files apart.
 function truncateName(name: string, max = 14) {
   if (name.length <= max) return name;
@@ -114,7 +114,7 @@ function truncateName(name: string, max = 14) {
 }
 
 // Failure is decided when the upload STARTS (a hidden failAt percent), not
-// re-rolled per frame — the same file fails at the same point.
+// re-rolled per frame - the same file fails at the same point.
 function pickFailAt(rate: number, floor = 25) {
   return Math.random() < rate ? floor + Math.random() * (88 - floor) : Infinity;
 }
@@ -183,7 +183,7 @@ export default function UploadStaging({
   // ── The pipeline, simulation mode ────────────────────────────────────
   // One effect owns promotion AND progress. Freed slots promote the oldest
   // queued tile; a shared 70ms tick advances every uploading tile with
-  // jitter and an occasional stall — forward only, done only at 100.
+  // jitter and an occasional stall - forward only, done only at 100.
   const anyActive = files.some((f) => f.status === "uploading" || f.status === "queued");
   useEffect(() => {
     if (upload || !anyActive) return undefined;
@@ -196,7 +196,7 @@ export default function UploadStaging({
             return { ...file, status: "uploading" as const };
           }
           if (file.status !== "uploading") return file;
-          if (Math.random() < 0.12) return file; // the stall — networks breathe
+          if (Math.random() < 0.12) return file; // the stall - networks breathe
           const progress = Math.min(100, file.progress + 0.6 + Math.random() * 3.4);
           if (progress >= file.failAt) {
             uploading -= 1;
@@ -216,7 +216,7 @@ export default function UploadStaging({
   // ── The pipeline, real mode ──────────────────────────────────────────
   // Same machine, your network. Freed slots promote queued tiles, then every
   // uploading tile that isn't in flight yet gets its adapter call. Progress is
-  // still forward-only (the arc never rewinds — a retried transfer catches up
+  // still forward-only (the arc never rewinds - a retried transfer catches up
   // to its frozen percent before the arc moves again).
   useEffect(() => {
     if (!upload) return;
@@ -267,7 +267,7 @@ export default function UploadStaging({
     [],
   );
 
-  // Retry resumes from the frozen percent — the arc never rewinds. In the
+  // Retry resumes from the frozen percent - the arc never rewinds. In the
   // simulation a retry can still re-fail (15%), but only past the point it
   // already reached; in real mode the adapter simply runs again.
   function retry(id: string) {
@@ -467,7 +467,7 @@ export default function UploadStaging({
           </ul>
         )}
 
-        {/* Pipeline footer — batch actions double as multi-tile glide demos. */}
+        {/* Pipeline footer - batch actions double as multi-tile glide demos. */}
         {files.length > 0 && (
           <div className="flex items-center justify-between gap-2 min-h-7">
             <span className="text-xs text-muted-foreground tabular-nums">

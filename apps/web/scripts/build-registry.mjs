@@ -2,7 +2,7 @@
 //
 // Reads registry.json (the source of truth), inlines each item's file contents,
 // and writes one JSON per item plus an index. This is what `npx shadcn add <url>`
-// and `npx moumenlab add <name>` consume. Deterministic, no external CLI — the
+// and `npx moumenlab add <name>` consume. Deterministic, no external CLI - the
 // output is schema-conformant registry-item JSON.
 
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from "node:fs";
@@ -19,7 +19,7 @@ const SITE = "https://lab.moumen.dev";
 const registry = JSON.parse(readFileSync(registryPath, "utf8"));
 mkdirSync(outDir, { recursive: true });
 
-// One markdown per item — the whole component as a single AI-ready document:
+// One markdown per item - the whole component as a single AI-ready document:
 // description, install commands, the usage example and the full source. This is
 // what /r/<name>.md serves, what llms.txt points at, and what the "Copy .md"
 // action on each component page copies.
@@ -28,7 +28,7 @@ function itemMarkdown(item, files) {
   const lines = [`# ${item.title}`, "", item.description, ""];
   if (isComponent) lines.push(`- Demo: ${SITE}/components/${item.name}`);
   lines.push(
-    `- Install: \`npx moumenlab add ${item.name}\` — or \`npx shadcn@latest add ${SITE}/r/${item.name}.json\``,
+    `- Install: \`npx moumenlab add ${item.name}\` - or \`npx shadcn@latest add ${SITE}/r/${item.name}.json\``,
   );
   if (item.dependencies?.length) lines.push(`- Dependencies: ${item.dependencies.join(", ")}`);
   if (item.registryDependencies?.length) lines.push(`- Registry dependencies: ${item.registryDependencies.join(", ")}`);
@@ -39,7 +39,7 @@ function itemMarkdown(item, files) {
     lines.push("", "## Usage", "", "```tsx", readFileSync(examplePath, "utf8").trim(), "```");
   }
   for (const file of files) {
-    lines.push("", `## Source — \`${file.target ?? file.path}\``, "", "```tsx", file.content.trim(), "```");
+    lines.push("", `## Source - \`${file.target ?? file.path}\``, "", "```tsx", file.content.trim(), "```");
   }
   return `${lines.join("\n")}\n`;
 }
@@ -58,15 +58,15 @@ for (const item of registry.items) {
 // The index the CLI's `list` command and discovery read.
 writeFileSync(resolve(outDir, "registry.json"), `${JSON.stringify(registry, null, 2)}\n`);
 
-// /llms.txt — the AI-discovery index (llmstxt.org): what this site is, and one
+// /llms.txt - the AI-discovery index (llmstxt.org): what this site is, and one
 // line per component pointing at its self-contained markdown doc.
 const componentItems = registry.items.filter((item) => item.type === "registry:component");
 const llms = [
   `# ${registry.name ?? "moumenlab"}`,
   "",
-  "> A lab of polished React interface components — Tailwind CSS + motion/react, installable with the shadcn CLI. Every component ships as one self-contained file.",
+  "> A lab of polished React interface components - Tailwind CSS + motion/react, installable with the shadcn CLI. Every component ships as one self-contained file.",
   "",
-  "Each component has a single-file markdown doc — description, install command, usage example and full source — at /r/<name>.md. Fetch that one file for complete context on a component.",
+  "Each component has a single-file markdown doc - description, install command, usage example and full source - at /r/<name>.md. Fetch that one file for complete context on a component.",
   "",
   "## Components",
   "",

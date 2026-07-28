@@ -27,11 +27,11 @@
 
 ## Features
 
-- **Everyday components, rethought** — Menus, OTP inputs, upload staging, command palettes, and more — each built to do one thing well
-- **Watch, then install** — Short looping clips on [lab.moumen.dev](https://lab.moumen.dev/components); open any for the live demo, blueprint, and source
-- **shadcn registry** — Install with `npx moumenlab add` or the shadcn CLI; you own the code, no runtime package
-- **Fully Tailwind** — No CSS files to import; shared tokens (`lab-theme`) merge into your `@theme` on install
-- **Motion-first** — Animations with [motion](https://motion.dev)/react; interruptible, layout-aware, reduced-motion aware
+- **Everyday components, rethought** - Menus, OTP inputs, upload staging, command palettes, and more - each built to do one thing well
+- **Watch, then install** - Short looping clips on [lab.moumen.dev](https://lab.moumen.dev/components); open any for the live demo, blueprint, and source
+- **shadcn registry** - Install with `npx moumenlab add` or the shadcn CLI; you own the code, no runtime package
+- **Fully Tailwind** - No CSS files to import; shared tokens (`lab-theme`) merge into your `@theme` on install
+- **Motion-first** - Animations with [motion](https://motion.dev)/react; interruptible, layout-aware, reduced-motion aware
 
 ## Install a component
 
@@ -114,7 +114,7 @@ Browse components at [lab.moumen.dev/components](https://lab.moumen.dev/componen
 npx moumenlab add otp-segmented-input drag-to-reorder-list
 ```
 
-Component pages are statically generated from `registry.json`. Registry payloads at `/r/*.json` are built on every deploy — the same file the site shows (highlighted) and the CLI installs.
+Component pages are statically generated from `registry.json`. Registry payloads at `/r/*.json` are built on every deploy - the same file the site shows (highlighted) and the CLI installs.
 
 ## Add a component
 
@@ -123,7 +123,7 @@ cd apps/web
 pnpm new:component "Radial Dial" radial-dial
 ```
 
-That scaffolds the installable stub, the showcase, and wires `registry.json` + showcase entries. Then write the component (Tailwind only — see [CONTRIBUTING.md](./CONTRIBUTING.md)) and optionally drop a clip in `public/lab`.
+That scaffolds the installable stub, the showcase, and wires `registry.json` + showcase entries. Then write the component (Tailwind only - see [CONTRIBUTING.md](./CONTRIBUTING.md)) and optionally drop a clip in `public/lab`.
 
 ## Contributing
 

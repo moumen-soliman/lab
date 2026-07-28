@@ -6,17 +6,17 @@
 
 /* ── Design tokens ─────────────────────────────────────────────────────────
    The ONLY sanctioned place for shared values and keyframes. Everything else in
-   this repo is expressed as Tailwind utilities in JSX — there are no custom CSS
+   this repo is expressed as Tailwind utilities in JSX - there are no custom CSS
    classes anywhere. These tokens are also what the `lab-theme` registry item
    ships to consumers, so an installed component keeps the same easings, shadows
    and keyframes it had here. */
 @theme {
-  /* Fonts — Geist, provided by next/font via the `geist` package's CSS vars.
+  /* Fonts - Geist, provided by next/font via the `geist` package's CSS vars.
      Drives preflight (html → --font-sans, code/pre → --font-mono). */
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, "SF Mono", Menlo, monospace;
 
-  /* Semantic colors — shadcn token names, valued to match this site's design.
+  /* Semantic colors - shadcn token names, valued to match this site's design.
      Components reference only these (never raw grays/hexes) so that on a
      consumer's site they pick up the consumer's own shadcn theme, including
      dark mode. NOT shipped via lab-theme: `shadcn init` defines them. */
@@ -51,7 +51,7 @@
     0px 2px 4px 0px oklch(0 0 0 / 0.06);
   --shadow-lift: 0px 12px 28px -14px oklch(0.178 0 0 / 0.16);
 
-  /* Named animations → `animate-*` utilities. Site-chrome only — the lab
+  /* Named animations → `animate-*` utilities. Site-chrome only - the lab
      components animate via motion/react, not keyframes. */
   --animate-fade-in: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   --animate-shimmer: shimmer 1.6s linear infinite;

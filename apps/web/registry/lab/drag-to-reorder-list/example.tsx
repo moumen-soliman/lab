@@ -18,7 +18,7 @@ export default function DragReorderListExample() {
     <div className="flex flex-col items-center gap-6">
       <DragReorderList items={items} onReorder={setItems} />
 
-      {/* flip={false} is the hard-snap comparison — same math, no glides. */}
+      {/* flip={false} is the hard-snap comparison - same math, no glides. */}
       <DragReorderList defaultItems={TASKS.slice(0, 3)} flip={false} />
     </div>
   );

@@ -56,7 +56,7 @@ export function ShowcaseIntro({
 }
 
 // The box pins to the FIRST line (items-start + a nudge) and the children render
-// inside one wrapping span — a long gray description flows as a paragraph
+// inside one wrapping span - a long gray description flows as a paragraph
 // instead of breaking into detached flex items beside the box.
 export function CheckToggle({
   checked,

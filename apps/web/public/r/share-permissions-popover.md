@@ -3,7 +3,7 @@
 A three-view floating surface that morphs on both axes with a focus trap surviving the swaps.
 
 - Demo: https://lab.moumen.dev/components/share-permissions-popover
-- Install: `npx moumenlab add share-permissions-popover` — or `npx shadcn@latest add https://lab.moumen.dev/r/share-permissions-popover.json`
+- Install: `npx moumenlab add share-permissions-popover` - or `npx shadcn@latest add https://lab.moumen.dev/r/share-permissions-popover.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/share-permissions-popover.tsx`
@@ -34,7 +34,7 @@ export default function SharePopoverExample() {
 }
 ```
 
-## Source — `components/lab/share-permissions-popover.tsx`
+## Source - `components/lab/share-permissions-popover.tsx`
 
 ```tsx
 "use client";
@@ -42,7 +42,7 @@ export default function SharePopoverExample() {
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { MotionConfig, motion, useReducedMotion } from "motion/react";
 
-// Share & permissions popover — three views in one floating element.
+// Share & permissions popover - three views in one floating element.
 //
 // A popover is a FLOATING element with three different-sized panels inside
 // (share list · a person's role picker · link settings), and swapping panels
@@ -51,7 +51,7 @@ import { MotionConfig, motion, useReducedMotion } from "motion/react";
 //   · Animated auto-size on BOTH axes. Each view declares its natural width and
 //     grows its own height; views are absolutely positioned so they keep their
 //     intrinsic size, and the frame's width AND height are measured px
-//     (useLayoutEffect + ResizeObserver) that motion eases between — the
+//     (useLayoutEffect + ResizeObserver) that motion eases between - the
 //     height:auto illusion, on two axes. A fresh open snaps to size instead of
 //     morphing from the last session's.
 //   · A focus trap that survives view swaps. Tab cycles the LIVE view's
@@ -136,7 +136,7 @@ export default function SharePopover({
   initialRoles?: Record<string, string>;
   owner?: { name: string; email: string };
   docTitle?: string;
-  /** Fires on any change (invite, role, remove, link scope) — wire your backend here. */
+  /** Fires on any change (invite, role, remove, link scope) - wire your backend here. */
   onShare?: (event: { type: "invite" | "role" | "remove" | "link"; detail: string }) => void;
   morph?: boolean;
   trap?: boolean;
@@ -240,7 +240,7 @@ export default function SharePopover({
     copyTimerRef.current = window.setTimeout(() => setCopied(false), 1400);
   }
 
-  // The two-axis height:auto illusion — the live view keeps its intrinsic size;
+  // The two-axis height:auto illusion - the live view keeps its intrinsic size;
   // the frame is told the measured px for BOTH axes so motion eases between
   // them. A fresh open snaps (duration 0) instead of morphing from the last one.
   useLayoutEffect(() => {

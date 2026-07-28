@@ -8,11 +8,11 @@ import { MotionConfig, animate, motion, useReducedMotion, type MotionValue, moti
 // Three motion systems working together without fighting, all driven through
 // motion/react's motion values:
 //
-//   1. The dragged card follows the pointer RAW — its y motion value is
+//   1. The dragged card follows the pointer RAW - its y motion value is
 //      `jump()`ed straight from the pointermove handler (no easing: any easing
 //      between hand and card reads as lag; no React render on the hot path).
 //   2. Siblings glide out of the way: as the dragged card crosses slot
-//      boundaries each displaced sibling's y is `animate()`d exactly one slot —
+//      boundaries each displaced sibling's y is `animate()`d exactly one slot -
 //      retargetable, so reversing mid-glide just works.
 //   3. The drop is a FLIP: capture First rects before the commit, let React
 //      reflow, then Invert each card back to its old screen pixels and
@@ -90,7 +90,7 @@ export default function DragReorderList({
   const dragRef = useRef<DragData | null>(null);
   const grabSnapshotRef = useRef<ReorderItem[] | null>(null);
   const justDraggedRef = useRef(false);
-  // One y motion value per row id — the single writing channel for all three
+  // One y motion value per row id - the single writing channel for all three
   // motion systems, so they can never fight over a transform.
   const yMapRef = useRef(new Map<string, MotionValue<number>>());
   const slotYRef = useRef(motionValue(0));

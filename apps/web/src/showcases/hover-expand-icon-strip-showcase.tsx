@@ -7,7 +7,7 @@ import ExpandingIconStrip, {
 } from "@/registry/lab/hover-expand-icon-strip/hover-expand-icon-strip";
 import { STRIP_ITEMS } from "@/registry/lab/hover-expand-icon-strip/example";
 
-// Faint 8px blueprint grid — 8px is the component's spacing unit (the gap).
+// Faint 8px blueprint grid - 8px is the component's spacing unit (the gap).
 const SPEC_GRID =
   "bg-[linear-gradient(to_right,rgba(59,130,246,0.08)_1px,transparent_1px),linear-gradient(to_bottom,rgba(59,130,246,0.08)_1px,transparent_1px)] bg-[length:0.5rem_0.5rem]";
 

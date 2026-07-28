@@ -3,7 +3,7 @@
 Icons in a fixed-width box that expand on hover or Tab while the others squeeze to fit.
 
 - Demo: https://lab.moumen.dev/components/hover-expand-icon-strip
-- Install: `npx moumenlab add hover-expand-icon-strip` — or `npx shadcn@latest add https://lab.moumen.dev/r/hover-expand-icon-strip.json`
+- Install: `npx moumenlab add hover-expand-icon-strip` - or `npx shadcn@latest add https://lab.moumen.dev/r/hover-expand-icon-strip.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/hover-expand-icon-strip.tsx`
@@ -26,7 +26,7 @@ export const STRIP_ITEMS: IconStripItem[] = [
 export default function ExpandingIconStripExample() {
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* Default: 320px box — hover or Tab a panel and the others squeeze. */}
+      {/* Default: 320px box - hover or Tab a panel and the others squeeze. */}
       <ExpandingIconStrip items={STRIP_ITEMS} onSelect={(item) => console.log(item.label)} />
 
       {/* Any fixed width; the panels share whatever box you give them. */}
@@ -83,12 +83,12 @@ function ProfileIcon() {
 }
 ```
 
-## Source — `components/lab/hover-expand-icon-strip.tsx`
+## Source - `components/lab/hover-expand-icon-strip.tsx`
 
 ```tsx
 "use client";
 
-// Hover-expand icon strip — a design-engineered fixed-width row.
+// Hover-expand icon strip - a design-engineered fixed-width row.
 //
 // N icons (3–4) share one fixed-width box. Hovering a panel grows it while the
 // others squeeze to make room, so the row's outer width never changes. The
@@ -99,7 +99,7 @@ function ProfileIcon() {
 // The label reveal is deliberately asymmetric: it enters late (a ~90ms delay
 // gives the panel room to open before the text lands, so no crushed clipped word
 // mid-expansion) with opacity + rise + blur, and exits fast with no delay so it
-// ducks out before the shrinking panel squeezes it — each variant carries its
+// ducks out before the shrinking panel squeezes it - each variant carries its
 // own transition. Inspect (blueprint) mode swaps the name for live math.
 //
 // Animation: motion/react (variants propagate hover/focus from the panel to its

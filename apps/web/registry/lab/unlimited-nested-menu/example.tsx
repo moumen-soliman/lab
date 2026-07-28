@@ -19,7 +19,7 @@ export default function NestedMenuExample() {
       <NestedMenu items={MENU_ITEMS} align="end" dim={false} triggerLabel="Options" />
 
       {/* animate={false}: instant open/drill/close, for dense tooling UIs. It can
-          also be controlled — pass `open` + `onOpenChange`. */}
+          also be controlled - pass `open` + `onOpenChange`. */}
       <NestedMenu items={MENU_ITEMS} animate={false} triggerLabel="Quick menu" />
     </div>
   );

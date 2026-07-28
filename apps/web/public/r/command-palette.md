@@ -3,7 +3,7 @@
 Commands that take inline argument chips, fuzzy ranking, and a measured height morph.
 
 - Demo: https://lab.moumen.dev/components/command-palette
-- Install: `npx moumenlab add command-palette` — or `npx shadcn@latest add https://lab.moumen.dev/r/command-palette.json`
+- Install: `npx moumenlab add command-palette` - or `npx shadcn@latest add https://lab.moumen.dev/r/command-palette.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/command-palette.tsx`
@@ -110,7 +110,7 @@ function CommandIcon({ name }: { name: string }): ReactNode {
 }
 ```
 
-## Source — `components/lab/command-palette.tsx`
+## Source - `components/lab/command-palette.tsx`
 
 ```tsx
 "use client";
@@ -118,12 +118,12 @@ function CommandIcon({ name }: { name: string }): ReactNode {
 import { Fragment, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { MotionConfig, motion, useReducedMotion } from "motion/react";
 
-// Command palette with argument chips — Linear-style multi-step commands inside
+// Command palette with argument chips - Linear-style multi-step commands inside
 // a single input.
 //
 // The hard problem is focus choreography. A command like "Assign to [person]
 // with priority [level]" is really a tiny form; the obvious build gives each
-// picked value its own focusable element — then Tab order, Backspace and
+// picked value its own focusable element - then Tab order, Backspace and
 // screen-reader context all fracture mid-command. Here the palette has exactly
 // ONE focusable control, the text input, for its whole life:
 //
@@ -131,10 +131,10 @@ import { MotionConfig, motion, useReducedMotion } from "motion/react";
 //     chip is render output, not a field). The list slides to that command's
 //     first argument slot and the same input now filters the options.
 //   · Filling a command's last slot STAGES it as a clause instead of running
-//     it — the list slides back to the remaining commands joined by an "and",
+//     it - the list slides back to the remaining commands joined by an "and",
 //     so one session builds a compound. Nothing runs until ✓ Apply (⌘⏎);
 //     ✕ discards the whole stack.
-//   · Backspace on an empty query POPS the last chip — across the "and" too.
+//   · Backspace on an empty query POPS the last chip - across the "and" too.
 //     Chips never join the tab order but ARE clickable: clicking one rewinds
 //     to that slot; the tail dims to preview the rewind scope.
 //
@@ -232,7 +232,7 @@ function substringMatch(query: string, text: string) {
   return { score: 100 - at, idx: Array.from({ length: q.length }, (_, i) => at + i) };
 }
 
-// Underline the matched letters where they sit — consecutive indices merge.
+// Underline the matched letters where they sit - consecutive indices merge.
 function Highlight({ text, idx }: { text: string; idx: number[] }) {
   if (!idx || idx.length === 0) return <>{text}</>;
   const set = new Set(idx);
@@ -513,7 +513,7 @@ export default function CommandPalette({
     }
   }
 
-  // The height:auto illusion — measure the live view; motion eases `height`.
+  // The height:auto illusion - measure the live view; motion eases `height`.
   useLayoutEffect(() => {
     const view = viewRef.current;
     if (!view) return undefined;

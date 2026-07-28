@@ -1,6 +1,6 @@
 "use client";
 
-// Hover-expand icon strip — a design-engineered fixed-width row.
+// Hover-expand icon strip - a design-engineered fixed-width row.
 //
 // N icons (3–4) share one fixed-width box. Hovering a panel grows it while the
 // others squeeze to make room, so the row's outer width never changes. The
@@ -11,7 +11,7 @@
 // The label reveal is deliberately asymmetric: it enters late (a ~90ms delay
 // gives the panel room to open before the text lands, so no crushed clipped word
 // mid-expansion) with opacity + rise + blur, and exits fast with no delay so it
-// ducks out before the shrinking panel squeezes it — each variant carries its
+// ducks out before the shrinking panel squeezes it - each variant carries its
 // own transition. Inspect (blueprint) mode swaps the name for live math.
 //
 // Animation: motion/react (variants propagate hover/focus from the panel to its

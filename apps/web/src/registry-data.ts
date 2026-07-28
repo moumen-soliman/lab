@@ -48,7 +48,7 @@ export const components: LabComponent[] = registry.items
     };
   });
 
-// The components that own a clip — the cards on the home grid.
+// The components that own a clip - the cards on the home grid.
 export const bento = components.filter((component) => component.video);
 
 export function getComponent(slug: string): LabComponent | null {

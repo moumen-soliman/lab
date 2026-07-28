@@ -4,9 +4,9 @@ import { GeistMono } from "geist/font/mono";
 import { OpenPanelComponent } from '@openpanel/nextjs';
 import "./globals.css";
 
-const title = "moumenlab — Less is more";
+const title = "moumenlab - Less is more";
 const description =
-  "A small lab of the components we build every day, rethought for better feel. React + Tailwind, on the shadcn registry — copy the source or install with npx moumenlab add.";
+  "A small lab of the components we build every day, rethought for better feel. React + Tailwind, on the shadcn registry - copy the source or install with npx moumenlab add.";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lab.moumen.dev"),

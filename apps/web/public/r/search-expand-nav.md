@@ -3,7 +3,7 @@
 A nav bar that expands into a search field then grows into a recent-searches card.
 
 - Demo: https://lab.moumen.dev/components/search-expand-nav
-- Install: `npx moumenlab add search-expand-nav` — or `npx shadcn@latest add https://lab.moumen.dev/r/search-expand-nav.json`
+- Install: `npx moumenlab add search-expand-nav` - or `npx shadcn@latest add https://lab.moumen.dev/r/search-expand-nav.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/search-expand-nav.tsx`
@@ -28,7 +28,7 @@ export default function SearchExpandNavExample() {
 }
 ```
 
-## Source — `components/lab/search-expand-nav.tsx`
+## Source - `components/lab/search-expand-nav.tsx`
 
 ```tsx
 "use client";
@@ -36,7 +36,7 @@ export default function SearchExpandNavExample() {
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { MotionConfig, motion } from "motion/react";
 
-// Search-expand navigation bar — a two-stage morph disclosure.
+// Search-expand navigation bar - a two-stage morph disclosure.
 //
 // Rest: a rounded bar with page icons + an avatar on the left and a search icon
 // pinned right. Click search and it plays in two stages, each animating a
@@ -45,9 +45,9 @@ import { MotionConfig, motion } from "motion/react";
 //   1. Horizontal morph (open): the search icon GLIDES left to become the
 //      field's leading icon while the icons + avatar fade out, the input fades
 //      in, and a ✕ fades in on the right. The travel distance is measured from
-//      layout (offsetLeft — transform-independent), so it stays correct as the
+//      layout (offsetLeft - transform-independent), so it stays correct as the
 //      component shrinks on narrow screens.
-//   2. Vertical grow (expanded): the box — anchored to the bottom — grows
+//   2. Vertical grow (expanded): the box - anchored to the bottom - grows
 //      UPWARD (motion animates the panel's height to auto), turning the
 //      rectangle into a card with a recent-searches panel cascading in above.
 //
@@ -117,7 +117,7 @@ export default function SearchExpandNav({
   const reduced = () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   // The travel distance: the search icon's resting left minus the first slot's
-  // left — offsetLeft ignores transforms, so this is safe to measure any time
+  // left - offsetLeft ignores transforms, so this is safe to measure any time
   // and re-measures as the container-query sizing kicks in.
   useLayoutEffect(() => {
     const measure = () => {
@@ -247,7 +247,7 @@ export default function SearchExpandNav({
             transition={GROW}
           />
 
-          {/* Stage 2: recent searches — motion grows the height to auto. */}
+          {/* Stage 2: recent searches - motion grows the height to auto. */}
           <motion.div
             className="overflow-hidden"
             id={panelId}
@@ -336,7 +336,7 @@ export default function SearchExpandNav({
                   }}
                 >
                   {/* Both faces share one grid cell; open rises the home out and
-                      the search in — a crossfade-in-motion, no 3D backface. */}
+                      the search in - a crossfade-in-motion, no 3D backface. */}
                   <motion.span
                     className="[grid-area:1/1] inline-flex"
                     initial={false}

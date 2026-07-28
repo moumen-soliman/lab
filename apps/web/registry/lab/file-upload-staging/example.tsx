@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import UploadStaging, { type UploadStagingHandle } from "./file-upload-staging";
 
-// Without an `upload` prop the network is simulated — drop in and demo. Wire
+// Without an `upload` prop the network is simulated - drop in and demo. Wire
 // your real network layer through the adapter and the component keeps owning
 // the queue, concurrency, retry and abort-on-remove:
 //
@@ -50,7 +50,7 @@ export default function UploadStagingExample() {
 
   return (
     <div className="flex w-full max-w-[22rem] flex-col items-center gap-3">
-      {/* Default: simulated network. Other knobs — `concurrency` caps parallel
+      {/* Default: simulated network. Other knobs - `concurrency` caps parallel
           transfers, `failRate` shapes the simulation (0-1), `morph={false}`
           snaps layout changes instead of gliding. */}
       <UploadStaging ref={staging} concurrency={2} failRate={0.25} />

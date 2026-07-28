@@ -3,7 +3,7 @@
 An odometer that runs digits up on tabular-nums and middle-truncates long ids to start…end, with an optional GitHub PR status badge.
 
 - Demo: https://lab.moumen.dev/components/ticket-number-ticker
-- Install: `npx moumenlab add ticket-number-ticker` — or `npx shadcn@latest add https://lab.moumen.dev/r/ticket-number-ticker.json`
+- Install: `npx moumenlab add ticket-number-ticker` - or `npx shadcn@latest add https://lab.moumen.dev/r/ticket-number-ticker.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/ticket-number-ticker.tsx`
@@ -29,7 +29,7 @@ export default function TicketNumberExample() {
       {/* GitHub PR status badge, driven by your data ("open" | "draft" | "merged" | "closed"). */}
       <TicketNumber value="#1042" status="merged" />
 
-      {/* width="fixed": every pill shares one footprint — steady columns in lists. */}
+      {/* width="fixed": every pill shares one footprint - steady columns in lists. */}
       <TicketNumber value="#7" width="fixed" status="open" />
 
       {/* Text ids work too: spaces become dashes, long ones truncate to start…end
@@ -49,7 +49,7 @@ export default function TicketNumberExample() {
 }
 ```
 
-## Source — `components/lab/ticket-number-ticker.tsx`
+## Source - `components/lab/ticket-number-ticker.tsx`
 
 ```tsx
 "use client";
@@ -57,7 +57,7 @@ export default function TicketNumberExample() {
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
 import { motion, MotionConfig, useAnimationControls, useReducedMotion } from "motion/react";
 
-// Ticket number ticker — a ticket id shown as one celebratory value.
+// Ticket number ticker - a ticket id shown as one celebratory value.
 //
 // The pill hugs its value and grows with it up to a max-width; a short #42 is a
 // small pill, a longer id fills out toward the cap. Past the cap it uses the
@@ -69,10 +69,10 @@ import { motion, MotionConfig, useAnimationControls, useReducedMotion } from "mo
 //   #billing-webhook-...2026 → #billing-…-2026
 //
 // How much survives is measured against the CAP's budget (not the current hug
-// width) — a hidden clone is binary-searched to the last `#start…end` that fits.
+// width) - a hidden clone is binary-searched to the last `#start…end` that fits.
 //
-// Numbers additionally get the odometer run-up: each surviving digit is a reel —
-// a 1em window over a 0-9 strip — snapped to 0 then released to `10 + digit` so
+// Numbers additionally get the odometer run-up: each surviving digit is a reel -
+// a 1em window over a 0-9 strip - snapped to 0 then released to `10 + digit` so
 // it scrolls a full turn and lands on target, cascading left→right. Bump
 // `runKey` to play it (e.g. when a new ticket arrives). tabular-nums keeps every
 // column exactly 1ch so nothing shifts as it rolls or truncates. Drop the digits
@@ -82,13 +82,13 @@ import { motion, MotionConfig, useAnimationControls, useReducedMotion } from "mo
 // closed, GitHub's own colours); pass `onStatusClick` to make it interactive.
 // `width="fixed"` gives every pill one footprint for steady columns. As you
 // type, motion's `layout` glides the centred pill to its new spot instead of
-// snapping (position only — the width change stays instant so the new digit is
+// snapping (position only - the width change stays instant so the new digit is
 // never clipped). Animation via motion/react; honours prefers-reduced-motion.
 // Requires the lab-theme tokens. Fully Tailwind, no CSS files.
 //
 // NOTE ON SIZE: the pill is deliberately compact (text-xl value, h-8 actions)
 // so it drops straight into dashboards, list rows and toolbars. The lab demo
-// page renders it inside a scale wrapper purely for presentation — what you
+// page renders it inside a scale wrapper purely for presentation - what you
 // install is the dashboard size you see in your own app.
 
 const MEASURE_SAFETY = 2; // px of slack so the value never kisses the clip edge
@@ -135,7 +135,7 @@ const ICON_SHOWN = { opacity: 1, scale: 1, filter: "blur(0px)" };
 const ICON_HIDDEN = { opacity: 0, scale: 0.25, filter: "blur(4px)" };
 
 // The value's typography, shared verbatim by the visible value and the hidden
-// measuring clone so the fit is pixel-accurate. 1.25rem = text-xl — dashboard
+// measuring clone so the fit is pixel-accurate. 1.25rem = text-xl - dashboard
 // scale, not display scale.
 const VALUE_TYPE = "text-xl font-semibold tracking-[-0.01em] tabular-nums whitespace-nowrap";
 
@@ -150,7 +150,7 @@ export default function TicketNumber({
   inspect = false,
   onStateChange,
 }: {
-  /** The ticket id — "#1042", "1042" or "ticket name here" (spaces become dashes). */
+  /** The ticket id - "#1042", "1042" or "ticket name here" (spaces become dashes). */
   value?: string;
   /** Increment to play the odometer run-up (numeric values only). */
   runKey?: number;
@@ -168,7 +168,7 @@ export default function TicketNumber({
 }) {
   // Normalise: drop a leading "#", collapse whitespace to "-" (a ticket "name
   // here" is really a slug), trim stray edge dashes. A pure-digit body is
-  // numeric (odometer); anything else — letters, dashes, mixed — is a text slug.
+  // numeric (odometer); anything else - letters, dashes, mixed - is a text slug.
   const body = String(value).trim().replace(/^#/, "").replace(/\s+/g, "-").replace(/^-+|-+$/g, "");
   const kind: "numeric" | "text" = /^\d+$/.test(body) && body.length > 0 ? "numeric" : "text";
   const fullId = `#${body}`;
@@ -208,7 +208,7 @@ export default function TicketNumber({
   }
 
   // Measure the longest `#start…end` that fits the cap budget and commit it.
-  // Runs before paint and on resize / font load — the clone it reads is never
+  // Runs before paint and on resize / font load - the clone it reads is never
   // the animated value, so there is no measure→render→measure loop.
   useLayoutEffect(() => {
     const cloneEl = measureRef.current;
@@ -260,7 +260,7 @@ export default function TicketNumber({
     document.fonts?.ready?.then(measure).catch(() => {});
     return () => observer?.disconnect();
     // `status` matters: adding the badge grows the actions row and shrinks the
-    // value's budget — so the truncation must be re-measured, or the last chars clip.
+    // value's budget - so the truncation must be re-measured, or the last chars clip.
   }, [fullId, body, kind, status, copyable, maxWidth]);
 
   async function copy() {
@@ -269,7 +269,7 @@ export default function TicketNumber({
       setCopied(true);
       window.setTimeout(() => setCopied(false), 1200);
     } catch {
-      /* clipboard blocked (insecure context / denied) — no-op */
+      /* clipboard blocked (insecure context / denied) - no-op */
     }
   }
 
@@ -284,7 +284,7 @@ export default function TicketNumber({
   return (
     <MotionConfig reducedMotion="user">
       {/* layout="position": as the hugging pill changes width it glides to its
-          new centred spot instead of snapping — position only, so the width
+          new centred spot instead of snapping - position only, so the width
           change stays instant and the just-typed digit is never clipped. */}
       <motion.div
         ref={pillRef}
@@ -318,8 +318,8 @@ export default function TicketNumber({
             {kind === "numeric" ? (
               <span className="inline-flex">
                 {/* Key by index+digit: changing a digit (typing a new id) remounts
-                    that reel so it snaps to the value instantly, while a replay —
-                    same digits — keeps the element and rolls it via runKey. */}
+                    that reel so it snaps to the value instantly, while a replay -
+                    same digits - keeps the element and rolls it via runKey. */}
                 {headDigits.map((digit, index) => (
                   <Reel
                     key={`h${index}-${digit}`}
@@ -356,7 +356,7 @@ export default function TicketNumber({
             )}
           </span>
 
-          {/* Hidden clone JS drives to measure candidate widths — same typography
+          {/* Hidden clone JS drives to measure candidate widths - same typography
               as the value, so the fit is pixel-accurate. */}
           <span
             className={`absolute top-0 left-0 invisible pointer-events-none ${VALUE_TYPE}`}
@@ -458,7 +458,7 @@ function StatusIcon({ status, Icon }: { status: PrStatus; Icon: () => React.JSX.
 
 // One odometer column. Two 0-9 cycles stacked (20 figures); the strip rests on
 // `10 + digit`. A runKey bump snaps it to 0 (no animation) and releases it to
-// the target, so it scrolls a full turn before landing — the "run up". The
+// the target, so it scrolls a full turn before landing - the "run up". The
 // per-column delay cascades the settle left→right. Soft-in on remount: a
 // changed digit fades + unblurs in instead of hard-cutting.
 function Reel({ digit, index, runKey, inspect }: { digit: number; index: number; runKey: number; inspect: boolean }) {

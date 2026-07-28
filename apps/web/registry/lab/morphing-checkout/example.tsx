@@ -5,7 +5,7 @@ import MorphingCheckout from "./morphing-checkout";
 export default function MorphingCheckoutExample() {
   return (
     <div className="flex flex-col items-center gap-10">
-      {/* Wire onPay to your real charge — return "decline" to fail, anything
+      {/* Wire onPay to your real charge - return "decline" to fail, anything
           else to succeed. Async is fine (the button spins while it resolves). */}
       <MorphingCheckout
         price="$149.00"

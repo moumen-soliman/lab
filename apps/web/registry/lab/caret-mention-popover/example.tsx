@@ -15,7 +15,7 @@ export default function MentionComposerExample() {
         onSubmit={(text, mentions) => console.log("send", text, mentions)}
       />
 
-      {/* anchor="field" is the usual dropdown shortcut — under the field, not the caret. */}
+      {/* anchor="field" is the usual dropdown shortcut - under the field, not the caret. */}
       <MentionComposer anchor="field" />
     </div>
   );

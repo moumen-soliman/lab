@@ -3,7 +3,7 @@
 Six cells that are secretly one real input, with native selection driving the active cell.
 
 - Demo: https://lab.moumen.dev/components/otp-segmented-input
-- Install: `npx moumenlab add otp-segmented-input` — or `npx shadcn@latest add https://lab.moumen.dev/r/otp-segmented-input.json`
+- Install: `npx moumenlab add otp-segmented-input` - or `npx shadcn@latest add https://lab.moumen.dev/r/otp-segmented-input.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/otp-segmented-input.tsx`
@@ -15,7 +15,7 @@ Six cells that are secretly one real input, with native selection driving the ac
 
 import OtpInput from "./otp-segmented-input";
 
-// Wire your real check through `verify` — sync or async. Return true and the
+// Wire your real check through `verify` - sync or async. Return true and the
 // cells cascade green; false and the row shakes, drops the digits, and hands
 // the caret back:
 //
@@ -31,20 +31,20 @@ export default function OtpInputExample() {
       {/* Default: six digits, verified against your adapter (or the `code` prop). */}
       <OtpInput verify={(code) => code === "246810"} />
 
-      {/* Masked — paints • instead of the digit, the value stays untouched. */}
+      {/* Masked - paints • instead of the digit, the value stays untouched. */}
       <OtpInput mask />
 
       {/* Split 3-3, the way SMS codes are read aloud. */}
       <OtpInput group />
 
-      {/* Any length — the group gap lands at the halfway point. */}
+      {/* Any length - the group gap lands at the halfway point. */}
       <OtpInput length={4} code="2468" group />
     </div>
   );
 }
 ```
 
-## Source — `components/lab/otp-segmented-input.tsx`
+## Source - `components/lab/otp-segmented-input.tsx`
 
 ```tsx
 "use client";
@@ -52,7 +52,7 @@ export default function OtpInputExample() {
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { MotionConfig, motion } from "motion/react";
 
-// OTP segmented input — N boxes, secretly ONE real input.
+// OTP segmented input - N boxes, secretly ONE real input.
 //
 // The version everyone demos is six <input>s wired together with JS focus
 // hops. It looks right and behaves wrong: SMS autofill can't fill it (iOS
@@ -60,23 +60,23 @@ import { MotionConfig, motion } from "motion/react";
 // readers announce six unlabeled boxes, and half the keyboard is re-invented.
 //
 // This is the hard version: one real <input> stretched invisibly over the
-// whole row (color and caret transparent — NOT display:none, it must stay
+// whole row (color and caret transparent - NOT display:none, it must stay
 // focusable and autofillable), with the cells painted underneath from its
 // value. Everything hard becomes free:
 //
-//   · SMS autofill just works — autocomplete="one-time-code" on a real,
+//   · SMS autofill just works - autocomplete="one-time-code" on a real,
 //     visible-to-the-browser input.
-//   · Paste just works — "246 810" lands in the input, one normalize pass
+//   · Paste just works - "246 810" lands in the input, one normalize pass
 //     strips the junk, the cells repaint.
 //   · Backspace walks backwards and ←/→ move the caret because they are the
-//     NATIVE caret — the active cell is derived from selectionStart, never
+//     NATIVE caret - the active cell is derived from selectionStart, never
 //     stored beside it. Select-all paints all cells selected, because a
 //     selection range maps to a cell range.
 //   · The input's own glyphs are letter-spaced to sit under the cells, so the
 //     blueprint toggle can simply tint them red and you SEE the real input
 //     lying over the fake one.
 //
-// Verification is yours: pass `verify` (sync or async — hit your API) and a
+// Verification is yours: pass `verify` (sync or async - hit your API) and a
 // full code drives the little state machine: right → the cells cascade green
 // left to right; wrong → the row shakes, the digits drop out one by one, then
 // the field clears and hands the caret back. Without `verify` it compares
@@ -111,14 +111,14 @@ export default function OtpInput({
   verify,
   mask = false, // paint • instead of the digit
   group = false, // split in half, like SMS codes read aloud
-  prefill = null, // {key, code} — simulate an autofill (keyed so re-picking re-applies)
+  prefill = null, // {key, code} - simulate an autofill (keyed so re-picking re-applies)
   inspect = false,
   onStateChange,
 }: {
   length?: number;
   /** Demo fallback: the code `verify` defaults to comparing against. */
   code?: string;
-  /** Your check — sync or async (hit your API); return whether the code is right. */
+  /** Your check - sync or async (hit your API); return whether the code is right. */
   verify?: (value: string) => boolean | Promise<boolean>;
   mask?: boolean;
   group?: boolean;
@@ -146,7 +146,7 @@ export default function OtpInput({
     setSel({ start: el.selectionStart ?? 0, end: el.selectionEnd ?? 0 });
   }
 
-  // The active cell is DERIVED from the native selection — arrows, backspace,
+  // The active cell is DERIVED from the native selection - arrows, backspace,
   // select-all all just move the real caret and the paint follows.
   useEffect(() => {
     const onSelectionChange = () => {
@@ -166,7 +166,7 @@ export default function OtpInput({
   }
 
   // Native click mapping is the one thing that's wrong for OTP (you can't
-  // edit the middle of a code) — snap pointer focus to the end instead.
+  // edit the middle of a code) - snap pointer focus to the end instead.
   function handleMouseDown(event: React.MouseEvent) {
     event.preventDefault();
     const el = inputRef.current;
@@ -214,7 +214,7 @@ export default function OtpInput({
     };
   }, [value, state, code, verify, length]);
 
-  // Simulated autofill (e.g. demo presets) — through the same normalize +
+  // Simulated autofill (e.g. demo presets) - through the same normalize +
   // verify path a real autofill would take.
   useEffect(() => {
     if (!prefill) return;
@@ -293,7 +293,7 @@ export default function OtpInput({
               aria-hidden="true"
             >
               {cell.char && (
-                // A selection RANGE maps to a cell range — one input. The
+                // A selection RANGE maps to a cell range - one input. The
                 // highlight hugs the digit like native text selection paints
                 // the glyph's line box, instead of tinting the whole slot.
                 // Padding is offset by negative margins so toggling it never
@@ -333,21 +333,21 @@ export default function OtpInput({
           ))}
 
           {/* THE component: one real input over the whole row. Transparent, not
-              hidden — the browser must see it to autofill and focus it. No
+              hidden - the browser must see it to autofill and focus it. No
               maxLength: it would truncate a formatted paste ("246 810" is 7
-              chars) BEFORE the normalize pass — the slice enforces length. */}
+              chars) BEFORE the normalize pass - the slice enforces length. */}
           <input
             ref={inputRef}
             className={[
               "absolute inset-0 w-full h-full border-0 outline-none bg-transparent font-mono text-xl cursor-text",
               "[letter-spacing:calc(var(--otp-cell-w)+var(--otp-gap)-1ch)] pl-[calc(var(--otp-cell-w)/2-0.5ch)]",
               // A host page's own ::selection styling repaints selected glyphs
-              // with a visible foreground — select-all would reveal masked
+              // with a visible foreground - select-all would reveal masked
               // digits (this site does exactly that: selection:text-white on
               // the page wrapper, which Tailwind cascades to descendants at
               // EQUAL specificity, so source order decides). `!` makes the
               // component win deterministically in any host page; the
-              // text-fill-color below is the second lock — ::selection cannot
+              // text-fill-color below is the second lock - ::selection cannot
               // override it, so the glyphs stay invisible mid-selection.
               "selection:bg-transparent! selection:text-transparent! [caret-color:transparent]",
               inspect
@@ -402,7 +402,7 @@ export default function OtpInput({
           {state === "success" ? "Code verified." : state === "error" ? "Wrong code, the field will clear. Try again." : ""}
         </span>
 
-        {/* Blueprint annotations — red is the real input revealed (its glyphs
+        {/* Blueprint annotations - red is the real input revealed (its glyphs
             are letter-spaced to sit under the cells), blue the derived paint. */}
         {inspect && (
           <>

@@ -21,7 +21,7 @@ export default function WheelListExample() {
         onStateChange={(state) => console.log(state.settled ? `selected ${state.value}` : "coasting")}
       />
 
-      {/* drum={false}: a flat wheel — keeps the scale + fade, drops the rotateX. */}
+      {/* drum={false}: a flat wheel - keeps the scale + fade, drops the rotateX. */}
       <WheelList items={TIMES} label="Pick a start time" initialIndex={36} drum={false} />
     </div>
   );

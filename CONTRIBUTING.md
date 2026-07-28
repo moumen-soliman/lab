@@ -1,4 +1,4 @@
-# Contributing — the porting recipe
+# Contributing - the porting recipe
 
 Every component here is **fully Tailwind** (no CSS files, no custom classes) and
 animates with **[motion/react](https://motion.dev)**. `apps/web/app/globals.css`
@@ -13,7 +13,7 @@ fails the build if a custom class appears anywhere.
   (`initial`/`animate`), scroll-linked visuals (`useScroll` + `useTransform`),
   and measured morphs (the imperative `animate()`).
 - **CSS transitions** stay ONLY for pure hover/focus styling (colors, box-shadow,
-  background) — never for state-driven movement, opacity, or reveals. Every
+  background) - never for state-driven movement, opacity, or reveals. Every
   component uses motion; every registry item lists `"motion"` in dependencies.
 - Wrap the component root in `<MotionConfig reducedMotion="user">` and guard
   imperative sequences with `useReducedMotion()`.
@@ -30,13 +30,13 @@ pnpm new:component "Radial Dial" radial-dial
 
 You get:
 
-- `registry/lab/radial-dial/radial-dial.tsx` — the installable component (keep it free of demo data)
-- `registry/lab/radial-dial/example.tsx` — the usage example: demo props/data live HERE, and this file renders in the page's Usage box. Show the full prop surface: one instance per meaningful variant (mask, fixed width, align, adapters…), each with a one-line comment saying what it demonstrates
-- `src/showcases/radial-dial-showcase.tsx` — the live demo (imports the example's data)
+- `registry/lab/radial-dial/radial-dial.tsx` - the installable component (keep it free of demo data)
+- `registry/lab/radial-dial/example.tsx` - the usage example: demo props/data live HERE, and this file renders in the page's Usage box. Show the full prop surface: one instance per meaningful variant (mask, fixed width, align, adapters…), each with a one-line comment saying what it demonstrates
+- `src/showcases/radial-dial-showcase.tsx` - the live demo (imports the example's data)
 - `registry.json` + `src/showcases.tsx` wired
 
-No route or config edits — the `/components/[slug]` route and `registry-data.ts`
-pick it up automatically. Update the `description` in `registry.json` (one line —
+No route or config edits - the `/components/[slug]` route and `registry-data.ts`
+pick it up automatically. Update the `description` in `registry.json` (one line -
 it's what the CLI and OG tags show). If it has a clip, drop it in `public/lab`,
 run `pnpm blurs`, and add it to the `videos` map in `src/registry-data.ts`.
 
@@ -68,7 +68,7 @@ drops it into a Next.js Server Component (the scaffolder adds this by default).
 
 ### Gotchas learned porting
 
-0. **`blur-0` does not exist in Tailwind v4** — it silently compiles to nothing,
+0. **`blur-0` does not exist in Tailwind v4** - it silently compiles to nothing,
    so a `hover:blur-0` "un-blur" end state never applies and the element stays
    blurred. Use `blur-[0px]` (interpolates cleanly in filter transitions).
 
@@ -80,10 +80,10 @@ drops it into a Next.js Server Component (the scaffolder adds this by default).
    `[transform:translate(-50%,-50%)_scale(0.88)]` +
    `group-hover/x:[transform:translate(-50%,-50%)_scale(1)]` +
    `[transition:transform_300ms_var(--ease-smooth-out)]`.
-   (A bare `rotate-180` on a static toggle is fine — transition `rotate`.)
+   (A bare `rotate-180` on a static toggle is fine - transition `rotate`.)
 
 2. **Gate hover to hover-capable devices** to match `@media (hover: hover)`.
-   Tailwind's plain `hover:` already does this, but `group-hover` does not — stack
+   Tailwind's plain `hover:` already does this, but `group-hover` does not - stack
    the media variant: `[@media(hover:hover)]:group-hover/card:opacity-100`.
 
 3. **`backdrop-filter` with multiple functions** (blur + saturate) is cleaner as
@@ -101,7 +101,7 @@ a transition). Nothing may be silently skipped.
 ## 3. Base UI
 
 Use `@base-ui-components/react` only where a component maps to a real primitive
-(Popover, Dialog, Menu) — it replaces overlay/positioning/dismiss/focus
+(Popover, Dialog, Menu) - it replaces overlay/positioning/dismiss/focus
 scaffolding while the visual morphing stays custom. Add it to that item's
 `dependencies` in `registry.json`. Most components stay pure React.
 

@@ -25,7 +25,7 @@ npx shadcn@latest add https://lab.moumen.dev/r/hover-expand-icon-strip.json
 
 ## Environment
 
-- `MOUMENLAB_REGISTRY` — override the registry origin (defaults to
+- `MOUMENLAB_REGISTRY` - override the registry origin (defaults to
   `https://lab.moumen.dev`). Useful for testing against a local build.
 
 ## License

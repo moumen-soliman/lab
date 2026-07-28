@@ -1,8 +1,8 @@
 # moumenlab
 
-> A lab of polished React interface components — Tailwind CSS + motion/react, installable with the shadcn CLI. Every component ships as one self-contained file.
+> A lab of polished React interface components - Tailwind CSS + motion/react, installable with the shadcn CLI. Every component ships as one self-contained file.
 
-Each component has a single-file markdown doc — description, install command, usage example and full source — at /r/<name>.md. Fetch that one file for complete context on a component.
+Each component has a single-file markdown doc - description, install command, usage example and full source - at /r/<name>.md. Fetch that one file for complete context on a component.
 
 ## Components
 

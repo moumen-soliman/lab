@@ -4,7 +4,7 @@ import { useEffect, useId, useState, type ReactNode } from "react";
 import { CopyIcon, CheckIcon, ChevronDownIcon } from "../lib/icons";
 
 /* ─────────────────────────────────────────────────────────
- * CODE SECTION — the base layout every component page gets
+ * CODE SECTION - the base layout every component page gets
  *
  *  Install   manager tabs · command line · copy
  *  Usage     the example.tsx beside the component, always open
@@ -113,7 +113,7 @@ export function CodeSection({
   highlightedHtml: string;
   usage: string | null;
   usageHtml: string | null;
-  /** The generated /r/<slug>.md — the whole component as one AI-ready document. */
+  /** The generated /r/<slug>.md - the whole component as one AI-ready document. */
   markdown?: string | null;
 }) {
   const [manager, setManager] = useState<Manager>("moumenlab");
@@ -167,7 +167,7 @@ export function CodeSection({
       </section>
 
       {/* For AI: the generated /r/<slug>.md bundles description, install,
-          usage and full source into one document — copy it into a chat, or
+          usage and full source into one document - copy it into a chat, or
           point an agent at the URL. */}
       {markdown && (
         <section className="flex items-center justify-between gap-4">

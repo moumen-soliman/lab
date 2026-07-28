@@ -18,7 +18,7 @@ export interface ClipItem {
   blur?: string | null;
 }
 
-// The blur-up reveal, converted from `.crafted-clip` — a clip resolves from
+// The blur-up reveal, converted from `.crafted-clip` - a clip resolves from
 // soft to crisp. It starts scaled-up and blurred (hiding the coarse first-frame
 // decode), then settles once `data-ready` flips. Only opacity/transform/filter
 // animate, so the reveal stays on the compositor.

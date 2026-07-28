@@ -14,7 +14,7 @@ const PR_ORDER: PrStatus[] = ["open", "draft", "merged", "closed"];
 
 // Presets that walk through every behaviour: a plain number that runs up, a
 // real-feeling dashed ticket, a NO-NUMBER id (discover: it's a name), then a
-// long number and a long slug typed WITH SPACES — both normalise and
+// long number and a long slug typed WITH SPACES - both normalise and
 // middle-truncate to start…end. Picking one bumps runKey so numeric presets run.
 const PRESETS = [
   "#232323",
@@ -120,7 +120,7 @@ export function TicketNumberShowcase() {
       >
         {/* Presentation-only 1.5× scale: the wrapper is 100%/1.5 wide so the
             scaled pill fills the stage exactly. The installed component is NOT
-            scaled — it ships at the compact dashboard size. */}
+            scaled - it ships at the compact dashboard size. */}
         <div className="flex justify-center w-[calc(100%/1.5)] scale-150">
           <TicketNumber
             value={ticketValue}

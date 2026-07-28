@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { MotionConfig, motion } from "motion/react";
 
-// Schedule builder — a recurrence rule assembled as a live English sentence,
+// Schedule builder - a recurrence rule assembled as a live English sentence,
 // with the next N REAL occurrences underneath.
 //
 // The domain is the hard part: recurrence looks like dropdowns but is full of
@@ -14,14 +14,14 @@ import { MotionConfig, motion } from "motion/react";
 //     so); the `clamp` prop switches to the other real-world policy, where
 //     day 31 becomes Sep 30.
 //   · DST. Runs are built from local wall-clock components (year, month,
-//     day, hour), so "9:00 AM" stays 9:00 AM across a daylight-saving jump —
+//     day, hour), so "9:00 AM" stays 9:00 AM across a daylight-saving jump -
 //     the UTC offset is printed on every row and flagged when it differs
 //     from the first run's.
 //   · Nth-weekday math. "The 2nd Tuesday" and "the last Friday" are computed
 //     from the month's first/last day, never by scanning.
 //
 // The sentence morphs word-by-word: words are keyed by text + occurrence and
-// carry motion's `layout` — surviving words glide to their new positions while
+// carry motion's `layout` - surviving words glide to their new positions while
 // new words blur in. Change "week" to "month" and "at 9:00 AM" slides left
 // instead of re-rendering; the sentence reads as one object being edited, not
 // a string being replaced.
@@ -70,7 +70,7 @@ const DEFAULT_RULE: ScheduleRule = {
   interval: 1,
   weekdays: [2, 4], // Tue + Thu
   monthMode: "date",
-  monthDay: 31, // deliberately the gnarly default — skips appear immediately
+  monthDay: 31, // deliberately the gnarly default - skips appear immediately
   ordinal: 2,
   weekday: 2,
   hour: 9,
@@ -94,7 +94,7 @@ function timeLabel(hour: number, minute: number) {
   return `${h12}:${String(minute).padStart(2, "0")}`;
 }
 
-// "2nd Tuesday of month m" — computed from the month's first day; "last"
+// "2nd Tuesday of month m" - computed from the month's first day; "last"
 // walks back from the month's last day. A 1st-4th always exists.
 function nthWeekdayOf(year: number, month: number, ordinal: number | "last", weekday: number, hour: number, minute: number) {
   if (ordinal === "last") {
@@ -151,7 +151,7 @@ function computeRuns(rule: ScheduleRule, now: Date, count: number, clamp: boolea
               runs += 1;
             }
           } else if (new Date(year, month + 1, 0, 23, 59) > now) {
-            // RRULE semantics: the month simply has no day 31 — say so.
+            // RRULE semantics: the month simply has no day 31 - say so.
             out.push({
               kind: "skip",
               key: `skip-${year}-${month}`,
@@ -178,7 +178,7 @@ function computeRuns(rule: ScheduleRule, now: Date, count: number, clamp: boolea
   return out;
 }
 
-// The sentence as a word list. Punctuation rides on its word — keys are
+// The sentence as a word list. Punctuation rides on its word - keys are
 // text + occurrence, so a surviving "at" keeps its identity and glides
 // instead of re-entering.
 function sentenceWords(rule: ScheduleRule) {
@@ -235,7 +235,7 @@ export default function ScheduleBuilder({
   onStateChange?: (state: ScheduleBuilderState) => void;
 }) {
   const [rule, setRule] = useState<ScheduleRule>({ ...DEFAULT_RULE, ...defaultRule });
-  // Entrances are gated behind the first paint — on mount the sentence just is.
+  // Entrances are gated behind the first paint - on mount the sentence just is.
   const mountedRef = useRef(false);
   useEffect(() => {
     mountedRef.current = true;
@@ -285,7 +285,7 @@ export default function ScheduleBuilder({
   return (
     <MotionConfig reducedMotion="user">
       <div className="relative w-full max-w-[22rem] flex flex-col gap-3.5">
-        {/* The sentence — words are the animated unit, not the string. Real
+        {/* The sentence - words are the animated unit, not the string. Real
             spaces between the spans, so selection, copy and screen readers get
             "Every week…", not "Everyweek…". Surviving keys glide via layout;
             new keys blur in. */}

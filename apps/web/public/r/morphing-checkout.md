@@ -3,7 +3,7 @@
 A three-step card payment with a height:auto illusion, caret-safe masking, a 3D flip, and a FLIP pay button.
 
 - Demo: https://lab.moumen.dev/components/morphing-checkout
-- Install: `npx moumenlab add morphing-checkout` — or `npx shadcn@latest add https://lab.moumen.dev/r/morphing-checkout.json`
+- Install: `npx moumenlab add morphing-checkout` - or `npx shadcn@latest add https://lab.moumen.dev/r/morphing-checkout.json`
 - Dependencies: motion
 - Installs to: `components/lab/morphing-checkout.tsx`
 
@@ -17,7 +17,7 @@ import MorphingCheckout from "./morphing-checkout";
 export default function MorphingCheckoutExample() {
   return (
     <div className="flex flex-col items-center gap-10">
-      {/* Wire onPay to your real charge — return "decline" to fail, anything
+      {/* Wire onPay to your real charge - return "decline" to fail, anything
           else to succeed. Async is fine (the button spins while it resolves). */}
       <MorphingCheckout
         price="$149.00"
@@ -35,7 +35,7 @@ export default function MorphingCheckoutExample() {
 }
 ```
 
-## Source — `components/lab/morphing-checkout.tsx`
+## Source - `components/lab/morphing-checkout.tsx`
 
 ```tsx
 "use client";
@@ -43,7 +43,7 @@ export default function MorphingCheckoutExample() {
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { MotionConfig, motion, useReducedMotion } from "motion/react";
 
-// Morphing checkout flow — a three-step card payment (card → billing → confirm)
+// Morphing checkout flow - a three-step card payment (card → billing → confirm)
 // where ONE container appears to animate `height: auto` between steps.
 //
 // The body's height is always an explicit px measured off the active panel
@@ -54,17 +54,17 @@ import { MotionConfig, motion, useReducedMotion } from "motion/react";
 //   · CARET-PRESERVING MASK. The number re-formats every keystroke (4-4-4-4, or
 //     4-6-5 for an Amex); the caret is put back by counting the DIGITS before it
 //     (the only characters the user owns), so it never jumps.
-//   · LUHN. The checksum validated live — a full number that fails shakes; one
+//   · LUHN. The checksum validated live - a full number that fails shakes; one
 //     that passes gets a quiet green check.
 //   · 3D FLIP. Two stacked faces under perspective/preserve-3d/backface-hidden;
 //     focusing the CVC rotates the card 180° (Amex prints its code on the FRONT,
-//     so an Amex never flips — the detection is real).
+//     so an Amex never flips - the detection is real).
 //   · PAY MORPH. Paying FLIPs the button's width to a circle (measured px → rem,
 //     imperative) while label → spinner → drawn check cross-fade. A decline
 //     lands a red drawn ✕ with one shake, then eases back for another try.
 //
 // Pass `onPay` to run the real charge. Animation via motion/react; honours
-// prefers-reduced-motion. Plain Tailwind only — no theme tokens or custom
+// prefers-reduced-motion. Plain Tailwind only - no theme tokens or custom
 // classes required.
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -155,7 +155,7 @@ export default function MorphingCheckout({
   morph?: boolean;
   inspect?: boolean;
   prefill?: { key: number; number: string } | null;
-  /** "success" | "decline" — or return it from onPay. */
+  /** "success" | "decline" - or return it from onPay. */
   outcome?: "success" | "decline";
   indicator?: "tabs" | "bar";
   /** Your real charge. Return "decline" to fail; anything else succeeds. */
@@ -520,7 +520,7 @@ export default function MorphingCheckout({
     <MotionConfig reducedMotion="user">
       <div className="w-full max-w-[22rem] relative">
         <div className="relative p-4 rounded-3xl bg-card shadow-[0_0_0_1px_rgba(0,0,0,0.06),0_1px_2px_-1px_rgba(0,0,0,0.06),0_2px_4px_0_rgba(0,0,0,0.04)]">
-          {/* Live preview — presentational, hidden from AT. */}
+          {/* Live preview - presentational, hidden from AT. */}
           <div className="relative [perspective:62.5rem] mb-4">
             <motion.div className="relative aspect-[1.586] [transform-style:preserve-3d]" animate={{ rotateY: flipped ? 180 : 0 }} transition={{ duration: 0.6, ease: EASE }} aria-hidden="true">
               <div className="absolute inset-0 flex flex-col [backface-visibility:hidden] rounded-lg overflow-hidden text-[#111] bg-[linear-gradient(135deg,#f9fafb,#f0f1f3_55%,#f6f7f8)] shadow-[0_0_0_1px_rgba(0,0,0,0.08),0_2px_6px_-3px_rgba(0,0,0,0.08)] p-[1.125rem] justify-between">
@@ -668,7 +668,7 @@ export default function MorphingCheckout({
 }
 
 // Direction-aware field cascade. Motion when animating, plain otherwise.
-// Module-level so its identity is stable across renders — nesting it inside the
+// Module-level so its identity is stable across renders - nesting it inside the
 // component would create a new function every keystroke, remounting the inputs
 // and stealing focus.
 function StepChild({

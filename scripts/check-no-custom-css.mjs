@@ -1,7 +1,7 @@
 // Enforce the hard rule: zero custom CSS classes anywhere.
 //
 //   1. Exactly one .css file exists (apps/web/src/styles.css).
-//   2. That file contains no class selectors and no @utility/@apply — only
+//   2. That file contains no class selectors and no @utility/@apply - only
 //      @import / @source / @theme / @layer base with element selectors.
 //   3. No .tsx/.ts references a leftover bespoke class name.
 //
@@ -28,7 +28,7 @@ function walk(dir, out = []) {
 const files = walk(repoRoot);
 const rel = (p) => relative(repoRoot, p);
 
-// 1 + 2 — the single stylesheet.
+// 1 + 2 - the single stylesheet.
 const cssFiles = files.filter((f) => extname(f) === ".css");
 const allowed = resolve(repoRoot, "apps/web/app/globals.css");
 for (const css of cssFiles) {
@@ -57,7 +57,7 @@ if (cssFiles.includes(allowed)) {
   });
 }
 
-// 3 — leftover bespoke class names in JS/TS sources.
+// 3 - leftover bespoke class names in JS/TS sources.
 const BANNED = [
   "t-strip", "t-spec", "t-nm", "t-cmdk", "t-checkout", "t-share", "t-booking",
   "t-otp", "t-mention", "t-navsearch", "t-sched", "t-upload", "t-ticket",

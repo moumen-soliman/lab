@@ -16,7 +16,7 @@ export default function TicketNumberExample() {
       {/* GitHub PR status badge, driven by your data ("open" | "draft" | "merged" | "closed"). */}
       <TicketNumber value="#1042" status="merged" />
 
-      {/* width="fixed": every pill shares one footprint — steady columns in lists. */}
+      {/* width="fixed": every pill shares one footprint - steady columns in lists. */}
       <TicketNumber value="#7" width="fixed" status="open" />
 
       {/* Text ids work too: spaces become dashes, long ones truncate to start…end

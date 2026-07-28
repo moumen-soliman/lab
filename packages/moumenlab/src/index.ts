@@ -8,7 +8,7 @@ const pkg = require("../package.json") as { version: string };
 
 function help(): void {
   console.log(`
-moumenlab — interaction components you can copy or install.
+moumenlab - interaction components you can copy or install.
 
 Usage
   npx moumenlab add <component...> [options]   Install one or more components

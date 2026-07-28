@@ -10,7 +10,7 @@ const SITE = "https://lab.moumen.dev";
 const DEFAULT_OG = `${SITE}/og-lab.png`;
 
 // Matches the static og-lab.png: white field, mono brand kicker, medium
-// headline, quiet gray description — same composition as the landing.
+// headline, quiet gray description - same composition as the landing.
 function ComponentOGImage(title: string, description: string) {
   return (
     <div

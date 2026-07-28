@@ -3,24 +3,24 @@
 import { useEffect, useId, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { MotionConfig, motion } from "motion/react";
 
-// Mention composer — a caret-anchored @mention popover.
+// Mention composer - a caret-anchored @mention popover.
 //
-// A textarea won't tell you where its caret is — the only API is selectionStart,
+// A textarea won't tell you where its caret is - the only API is selectionStart,
 // a character index, no x/y. So most popovers anchor to the FIELD (bottom-left,
 // like a dropdown), which feels detached from what you're typing. This one
 // anchors to the CARET, with three stacked layers sharing one typography class
 // so their metrics can never drift:
 //
-//   · input    — the real textarea (transparent background, visible text).
-//   · backdrop — behind it, same box, text painted TRANSPARENT; only the
+//   · input    - the real textarea (transparent background, visible text).
+//   · backdrop - behind it, same box, text painted TRANSPARENT; only the
 //     highlight boxes show through (inserted mentions as pills, the live @query
 //     as a lighter chip). The spans add zero advance (box-shadow fakes the
 //     inset), so the backdrop's glyph grid matches the textarea exactly.
-//   · mirror   — invisible. value.slice(0, caret) is re-typeset into it plus a
+//   · mirror   - invisible. value.slice(0, caret) is re-typeset into it plus a
 //     marker <span>; the marker's offsetLeft/offsetTop IS the caret's x/y.
 //
 // The popover is positioned with `translate` (left/top stay 0), so following the
-// caret is one retargetable transition — it glides, and a fresh open snaps. It
+// caret is one retargetable transition - it glides, and a fresh open snaps. It
 // clamps horizontally and flips above when the viewport runs out. Focus never
 // leaves the textarea: ↑↓/Enter/Tab drive the list via aria-activedescendant.
 //
@@ -155,7 +155,7 @@ function initials(name: string) {
   return name.split(" ").map((w) => w[0]).slice(0, 2).join("").toUpperCase();
 }
 
-// Underline (not bold) for the matched range — a weight change would reflow.
+// Underline (not bold) for the matched range - a weight change would reflow.
 function Highlight({ text, range }: { text: string; range: [number, number] | null }) {
   if (!range) return <>{text}</>;
   return (

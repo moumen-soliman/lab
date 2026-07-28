@@ -1,9 +1,9 @@
 // ── Connection-aware, non-blocking clip loading ──────────────────────────
 // Ported from moumen.dev. Two knobs let the clips adapt to the visitor's link
 // without ever blocking the main thread:
-//   1. readConnection() buckets the link into a policy — 'eager' (autoplay, a
+//   1. readConnection() buckets the link into a policy - 'eager' (autoplay, a
 //      few at once), 'throttled' (autoplay, one at a time) or 'manual' (data
-//      saver: wait for a tap) — plus the number of clips allowed to decode at once.
+//      saver: wait for a tap) - plus the number of clips allowed to decode at once.
 //   2. loadGate caps those concurrent decodes; requestIdleCallback keeps the
 //      fetch/decode off the paint path.
 
@@ -110,6 +110,6 @@ export const cancelIdle = (handle: number | undefined) => {
 export function playSafely(video: HTMLVideoElement) {
   if (prefersReducedMotion()) return;
   const played = video.play();
-  // Autoplay can reject (backgrounded tab, policy); ignore — looping resumes.
+  // Autoplay can reject (backgrounded tab, policy); ignore - looping resumes.
   if (played && typeof played.catch === "function") played.catch(() => {});
 }

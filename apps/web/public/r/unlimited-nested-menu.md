@@ -3,7 +3,7 @@
 A dropdown where each branch morphs into a stacked sub-panel, no depth limit, fully keyboard driven.
 
 - Demo: https://lab.moumen.dev/components/unlimited-nested-menu
-- Install: `npx moumenlab add unlimited-nested-menu` — or `npx shadcn@latest add https://lab.moumen.dev/r/unlimited-nested-menu.json`
+- Install: `npx moumenlab add unlimited-nested-menu` - or `npx shadcn@latest add https://lab.moumen.dev/r/unlimited-nested-menu.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/unlimited-nested-menu.tsx`
@@ -32,7 +32,7 @@ export default function NestedMenuExample() {
       <NestedMenu items={MENU_ITEMS} align="end" dim={false} triggerLabel="Options" />
 
       {/* animate={false}: instant open/drill/close, for dense tooling UIs. It can
-          also be controlled — pass `open` + `onOpenChange`. */}
+          also be controlled - pass `open` + `onOpenChange`. */}
       <NestedMenu items={MENU_ITEMS} animate={false} triggerLabel="Quick menu" />
     </div>
   );
@@ -130,7 +130,7 @@ function MonitorIcon() { return <Svg><rect x="2" y="3" width="20" height="14" rx
 function DatabaseIcon() { return <Svg><ellipse cx="12" cy="5" rx="9" ry="3" /><path d="M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5" /><path d="M3 12c0 1.7 4 3 9 3s9-1.3 9-3" /></Svg>; }
 ```
 
-## Source — `components/lab/unlimited-nested-menu.tsx`
+## Source - `components/lab/unlimited-nested-menu.tsx`
 
 ```tsx
 "use client";
@@ -322,7 +322,7 @@ export default function NestedMenu({
   }, []);
 
   // Pop back to a given depth (default: one level). AnimatePresence fades the
-  // removed panel out on its own — no exit snapshot to manage.
+  // removed panel out on its own - no exit snapshot to manage.
   const popTo = useCallback(
     (target = depth - 1) => {
       if (target < 0 || target >= depth) return;
@@ -615,7 +615,7 @@ function Panel({
 }) {
   const panelRef = useRef<HTMLDivElement>(null);
   const reduced = useReducedMotion();
-  // False while AnimatePresence fades this panel out after a pop — it is a
+  // False while AnimatePresence fades this panel out after a pop - it is a
   // frozen snapshot then: no pointer events, hidden from the tree.
   const present = useIsPresent();
 
@@ -640,7 +640,7 @@ function Panel({
     const clip = Math.max(0, p.height - headEl.getBoundingClientRect().height);
     const opts = { duration: POP_S, ease: EASE } as const;
     // -48px (not 0): a clip-path clips the element's OWN box-shadow, and
-    // inset(0) sits exactly on the border box — it would slice the ring off.
+    // inset(0) sits exactly on the border box - it would slice the ring off.
     animate(
       el,
       { clipPath: [`inset(0px 0px ${clip}px 0px round 12px)`, "inset(-48px -48px -48px -48px round 12px)"] },
@@ -752,7 +752,7 @@ function Panel({
           className="relative min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-sm text-foreground"
         >
           {/* Two stacked copies: the bold one is the real header text, the plain
-              one matches the row label. The morph crossfades them — smoother
+              one matches the row label. The morph crossfades them - smoother
               than animating font-weight, which steps without a variable font. */}
           <span data-nm-title-plain className="absolute inset-0 font-normal opacity-0 pointer-events-none" aria-hidden="true">
             {title}

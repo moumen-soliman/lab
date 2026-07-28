@@ -49,7 +49,7 @@ function parseAddArgs(args: string[]): { names: string[]; flags: string[] } {
     }
 
     if (arg.startsWith("-")) {
-      // Unknown flag — still forward so shadcn can error with its own help.
+      // Unknown flag - still forward so shadcn can error with its own help.
       flags.push(arg);
       continue;
     }
@@ -61,7 +61,7 @@ function parseAddArgs(args: string[]): { names: string[]; flags: string[] } {
 }
 
 // `moumenlab add <name...>` validates the names against the live registry, then
-// delegates to `shadcn add <url>` — which handles dependency install, cssVars
+// delegates to `shadcn add <url>` - which handles dependency install, cssVars
 // merging, path aliases and overwrite prompts. Thin on purpose.
 export async function add(args: string[], origin: string): Promise<void> {
   const { names, flags } = parseAddArgs(args);

@@ -3,7 +3,7 @@
 A reorderable list where siblings glide one slot and the drop plays a FLIP, keyboard included.
 
 - Demo: https://lab.moumen.dev/components/drag-to-reorder-list
-- Install: `npx moumenlab add drag-to-reorder-list` — or `npx shadcn@latest add https://lab.moumen.dev/r/drag-to-reorder-list.json`
+- Install: `npx moumenlab add drag-to-reorder-list` - or `npx shadcn@latest add https://lab.moumen.dev/r/drag-to-reorder-list.json`
 - Dependencies: motion
 - Registry dependencies: https://lab.moumen.dev/r/lab-theme.json
 - Installs to: `components/lab/drag-to-reorder-list.tsx`
@@ -31,14 +31,14 @@ export default function DragReorderListExample() {
     <div className="flex flex-col items-center gap-6">
       <DragReorderList items={items} onReorder={setItems} />
 
-      {/* flip={false} is the hard-snap comparison — same math, no glides. */}
+      {/* flip={false} is the hard-snap comparison - same math, no glides. */}
       <DragReorderList defaultItems={TASKS.slice(0, 3)} flip={false} />
     </div>
   );
 }
 ```
 
-## Source — `components/lab/drag-to-reorder-list.tsx`
+## Source - `components/lab/drag-to-reorder-list.tsx`
 
 ```tsx
 "use client";
@@ -51,11 +51,11 @@ import { MotionConfig, animate, motion, useReducedMotion, type MotionValue, moti
 // Three motion systems working together without fighting, all driven through
 // motion/react's motion values:
 //
-//   1. The dragged card follows the pointer RAW — its y motion value is
+//   1. The dragged card follows the pointer RAW - its y motion value is
 //      `jump()`ed straight from the pointermove handler (no easing: any easing
 //      between hand and card reads as lag; no React render on the hot path).
 //   2. Siblings glide out of the way: as the dragged card crosses slot
-//      boundaries each displaced sibling's y is `animate()`d exactly one slot —
+//      boundaries each displaced sibling's y is `animate()`d exactly one slot -
 //      retargetable, so reversing mid-glide just works.
 //   3. The drop is a FLIP: capture First rects before the commit, let React
 //      reflow, then Invert each card back to its old screen pixels and
@@ -133,7 +133,7 @@ export default function DragReorderList({
   const dragRef = useRef<DragData | null>(null);
   const grabSnapshotRef = useRef<ReorderItem[] | null>(null);
   const justDraggedRef = useRef(false);
-  // One y motion value per row id — the single writing channel for all three
+  // One y motion value per row id - the single writing channel for all three
   // motion systems, so they can never fight over a transform.
   const yMapRef = useRef(new Map<string, MotionValue<number>>());
   const slotYRef = useRef(motionValue(0));

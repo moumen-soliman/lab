@@ -13,7 +13,7 @@ export const STRIP_ITEMS: IconStripItem[] = [
 export default function ExpandingIconStripExample() {
   return (
     <div className="flex flex-col items-center gap-6">
-      {/* Default: 320px box — hover or Tab a panel and the others squeeze. */}
+      {/* Default: 320px box - hover or Tab a panel and the others squeeze. */}
       <ExpandingIconStrip items={STRIP_ITEMS} onSelect={(item) => console.log(item.label)} />
 
       {/* Any fixed width; the panels share whatever box you give them. */}
