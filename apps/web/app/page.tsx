@@ -11,6 +11,18 @@ import { ArrowRightIcon } from "@/src/lib/icons";
  *  200ms   CTA arrives
  * ───────────────────────────────────────────────────────── */
 
+// One beat between each element, so the five arrivals read as a single settling
+// motion rather than five separate ones. Retime the whole entrance by changing
+// BEAT; the storyboard above stays the running order.
+const BEAT = 50;
+const ENTRANCE = {
+  mark: 0,
+  wordmark: BEAT,
+  headline: BEAT * 2,
+  paragraph: BEAT * 3,
+  cta: BEAT * 4,
+} as const;
+
 // The landing: one quiet statement, dead-center in the window. The lab itself
 // lives at /components.
 export default function HomePage() {
@@ -21,33 +33,35 @@ export default function HomePage() {
             registry point at, so the identity has one source. Empty alt: the
             wordmark directly under it already says the name, and announcing it
             twice would only add noise. */}
-        <div className="animate-fade-in flex justify-center">
+        <div className="animate-fade-in flex justify-center" style={{ animationDelay: `${ENTRANCE.mark}ms` }}>
           <img src="/logo-black.svg" alt="" width={32} height={32} className="block w-8 h-8" />
         </div>
 
         <p
           className="animate-fade-in mt-4 font-mono text-xs tracking-wide text-gray-500 select-none"
-          style={{ animationDelay: "50ms" }}
+          style={{ animationDelay: `${ENTRANCE.wordmark}ms` }}
         >
           moumenlab
         </p>
 
         <h1
           className="animate-fade-in mt-3 text-2xl font-medium tracking-tight leading-[1.1] text-[#111] text-balance"
-          style={{ animationDelay: "100ms" }}
+          style={{ animationDelay: `${ENTRANCE.headline}ms` }}
         >
           Less is more
         </h1>
 
         <p
           className="animate-fade-in mt-4 text-gray-500 text-[0.9375rem] leading-relaxed text-pretty"
-          style={{ animationDelay: "150ms" }}
+          style={{ animationDelay: `${ENTRANCE.paragraph}ms` }}
         >
           A small lab of <span className="font-medium text-[#111]">the components we build every day</span>,{" "}
-          <span className="font-medium text-[#111]">rethought for better feel</span>. Each one does{" "}
-          <span className="font-medium text-[#111]">one thing well</span>, built in React and fully Tailwind, and
-          available in the <span className="font-medium text-[#111]">shadcn registry</span> - copy the source, install
-          it with <code className="whitespace-nowrap text-[#111]">npx moumenlab add</code>, or star it on{" "}
+          <span className="font-medium text-[#111]">rethought for better feel</span>. Copy the source if that’s all you
+          need. Stay for <span className="font-medium text-[#111]">how each one was built</span>, dead ends included,
+          written for <span className="font-medium text-[#111]">frontend and design engineers</span> who want the{" "}
+          <span className="font-mono text-[#111]">why</span>. In React, fully Tailwind, on the{" "}
+          <span className="font-medium text-[#111]">shadcn registry</span>:{" "}
+          <code className="whitespace-nowrap text-[#111]">npx moumenlab add</code>, or star it on{" "}
           {/* The GitHub link hides a meme: hover reveals a gif popover guilt-
               tripping you about our very humble star count.
               ── HOVER STORYBOARD ──────────────────────────────────────────
@@ -79,14 +93,14 @@ export default function HomePage() {
                 className="block aspect-square w-full rounded-lg object-cover outline outline-1 -outline-offset-1 outline-black/10"
               />
               <span className="mt-2 block text-center text-xs leading-snug text-gray-500">
-                be the <span className="font-medium text-[#111]">⭐</span> we&apos;ve been waiting for.
+                be the <span className="font-medium text-[#111]">⭐</span> we’ve been waiting for.
               </span>
             </span>
           </span>
           .
         </p>
 
-        <div className="animate-fade-in mt-8" style={{ animationDelay: "200ms" }}>
+        <div className="animate-fade-in mt-8" style={{ animationDelay: `${ENTRANCE.cta}ms` }}>
           <Link
             href="/components"
             className="group inline-flex items-center gap-2 rounded-full bg-[#111] py-2.5 pl-5 pr-4 text-sm font-medium text-white select-none transition-[background-color,scale] hover:bg-[#333] active:scale-[0.96]"

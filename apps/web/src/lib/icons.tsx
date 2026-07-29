@@ -57,6 +57,30 @@ export function CopyIcon({ className = "w-3.5 h-3.5" }: { className?: string }) 
   );
 }
 
+/* The two star states for the "Star on GitHub" swap. Same 5-point geometry in
+ * both, mirror-symmetric about x=12, so the filled one lands exactly on top of
+ * the outline with no drift during the cross-fade. All coordinates absolute:
+ * an implicit relative continuation after an `L` silently flips to absolute,
+ * which is how hand-written star paths usually break. */
+const STAR_PATH =
+  "M12 2.75 L14.83 8.49 L21.17 9.41 L16.58 13.88 L17.67 20.19 L12 17.2 L6.33 20.19 L7.42 13.88 L2.83 9.41 L9.17 8.49 Z";
+
+export function StarIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <Icon className={className} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={STAR_PATH} />
+    </Icon>
+  );
+}
+
+export function StarFilledIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <Icon className={className} fill="currentColor" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={STAR_PATH} />
+    </Icon>
+  );
+}
+
 export function PlayIcon() {
   return (
     <svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">

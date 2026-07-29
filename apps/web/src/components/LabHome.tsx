@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { LabClipCard } from "./LabClipCard";
 import { Divider } from "./navigation";
-import { ArrowLeftIcon, GitHubIcon } from "../lib/icons";
+import { ArrowLeftIcon, StarIcon, StarFilledIcon } from "../lib/icons";
 import type { LabComponent } from "../registry-data";
 
 const GITHUB_URL = "https://github.com/moumen-soliman/lab";
@@ -32,14 +32,32 @@ export function LabHome({ bento }: { bento: LabComponent[] }) {
               <ArrowLeftIcon />
               lab.moumen.dev
             </Link>
+            {/* ── STAR HOVER STORYBOARD ─────────────────────────────────
+                  idle    hollow star, grey label, hairline surface
+                  hover   over 300ms the hollow star cross-fades into a
+                          filled one (scale 0.25 → 1, blur 4px → 0) while
+                          the label and the surface darken
+                  press   the whole pill dips to 0.96
+                Both stars stay mounted, the filled one stacked on the
+                hollow one, so the swap is interruptible and reverses
+                cleanly on leave. @media(hover:hover) keeps it off touch,
+                where group-hover would stick after a tap. The scale and
+                blur are gated behind motion-safe rather than undone by a
+                motion-reduce override, so under a reduced-motion setting
+                they are never declared and only opacity moves; overriding
+                would have left two rules of equal specificity deciding it
+                on source order. */}
             <a
               href={GITHUB_URL}
               target="_blank"
               rel="noreferrer"
-              aria-label="GitHub repository"
-              className="inline-flex items-center text-gray-500 hover:text-[#111] transition-colors"
+              className="group/star inline-flex items-center gap-2 rounded-full py-2.5 pl-3.5 pr-4 text-sm text-gray-600 shadow-[var(--shadow-border)] transition-[color,scale,box-shadow] duration-200 ease-smooth-out hover:text-[#111] hover:shadow-[var(--shadow-border-hover)] motion-safe:active:scale-[0.96]"
             >
-              <GitHubIcon />
+              <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
+                <StarIcon className="absolute size-4 transition-[opacity,scale,filter] duration-300 ease-icon [@media(hover:hover)]:group-hover/star:opacity-0 motion-safe:[@media(hover:hover)]:group-hover/star:scale-[0.25] motion-safe:[@media(hover:hover)]:group-hover/star:blur-[4px]" />
+                <StarFilledIcon className="absolute size-4 opacity-0 transition-[opacity,scale,filter] duration-300 ease-icon motion-safe:scale-[0.25] motion-safe:blur-[4px] [@media(hover:hover)]:group-hover/star:opacity-100 motion-safe:[@media(hover:hover)]:group-hover/star:scale-100 motion-safe:[@media(hover:hover)]:group-hover/star:blur-[0px]" />
+              </span>
+              Star on GitHub
             </a>
           </div>
           <h1 className="text-xl font-medium tracking-tight text-[#111] leading-snug text-balance">Component Lab</h1>
