@@ -11,17 +11,17 @@ export type StoryStep = {
 };
 
 export type StoryReference = {
-  /** Omit while the link is still being tracked down — the label renders as plain text until then. */
+  /** Omit while the link is still being tracked down; the label renders as plain text until then. */
   href?: string;
   label: string;
-  /** What the reference is and why it matters — including a pointer to the exact part (e.g. a video timestamp). */
+  /** What the reference is and why it matters, including a pointer to the exact part (e.g. a video timestamp). */
   note?: ReactNode;
   /** A screenshot of the referenced work, shown under the note. */
   image?: { src: string; alt: string; width: number; height: number };
 };
 
 /* ─────────────────────────────────────────────────────────
- * STORY — how the component came to be, told as milestones
+ * STORY: how the component came to be, told as milestones
  *
  * Same grammar as the rest of the page: an uppercase section
  * label, a See more fold (0fr → 1fr accordion, open on the
@@ -126,7 +126,7 @@ export function StorySection({
                     ) : (
                       <span className="font-medium text-[#111]">{reference.label}</span>
                     )}
-                    {reference.note && <> — {reference.note}</>}
+                    {reference.note && <>: {reference.note}</>}
                     {reference.image && (
                       <img
                         src={reference.image.src}
