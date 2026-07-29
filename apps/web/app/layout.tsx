@@ -25,7 +25,16 @@ export const metadata: Metadata = {
     "ui",
     "interaction design",
   ],
-  icons: { icon: "/favicon.png" },
+  // The SVG carries a prefers-color-scheme rule so the mark stays visible on a
+  // dark tab strip; the PNG is the opaque fallback for Safari, which ignores
+  // SVG favicons.
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: { url: "/apple-icon.png", sizes: "180x180" },
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

@@ -4,10 +4,11 @@ import { ArrowRightIcon } from "@/src/lib/icons";
 /* ─────────────────────────────────────────────────────────
  * ENTRANCE STORYBOARD
  *
- *    0ms   wordmark kicker fades in
- *   50ms   headline lands
- *  100ms   paragraph settles
- *  150ms   CTA arrives
+ *    0ms   mark fades in
+ *   50ms   wordmark kicker follows
+ *  100ms   headline lands
+ *  150ms   paragraph settles
+ *  200ms   CTA arrives
  * ───────────────────────────────────────────────────────── */
 
 // The landing: one quiet statement, dead-center in the window. The lab itself
@@ -16,18 +17,31 @@ export default function HomePage() {
   return (
     <div className="min-h-screen flex items-center justify-center px-6 selection:bg-[#111] selection:text-white">
       <main className="max-w-md text-center">
-        <p className="animate-fade-in font-mono text-xs tracking-wide text-gray-500 select-none">moumenlab</p>
+        {/* The mark is served from /logo.svg, the same file the README and the
+            registry point at, so the identity has one source. Empty alt: the
+            wordmark directly under it already says the name, and announcing it
+            twice would only add noise. */}
+        <div className="animate-fade-in flex justify-center">
+          <img src="/logo-black.svg" alt="" width={32} height={32} className="block w-8 h-8" />
+        </div>
+
+        <p
+          className="animate-fade-in mt-4 font-mono text-xs tracking-wide text-gray-500 select-none"
+          style={{ animationDelay: "50ms" }}
+        >
+          moumenlab
+        </p>
 
         <h1
           className="animate-fade-in mt-3 text-2xl font-medium tracking-tight leading-[1.1] text-[#111] text-balance"
-          style={{ animationDelay: "50ms" }}
+          style={{ animationDelay: "100ms" }}
         >
           Less is more
         </h1>
 
         <p
           className="animate-fade-in mt-4 text-gray-500 text-[0.9375rem] leading-relaxed text-pretty"
-          style={{ animationDelay: "100ms" }}
+          style={{ animationDelay: "150ms" }}
         >
           A small lab of <span className="font-medium text-[#111]">the components we build every day</span>,{" "}
           <span className="font-medium text-[#111]">rethought for better feel</span>. Each one does{" "}
@@ -72,7 +86,7 @@ export default function HomePage() {
           .
         </p>
 
-        <div className="animate-fade-in mt-8" style={{ animationDelay: "150ms" }}>
+        <div className="animate-fade-in mt-8" style={{ animationDelay: "200ms" }}>
           <Link
             href="/components"
             className="group inline-flex items-center gap-2 rounded-full bg-[#111] py-2.5 pl-5 pr-4 text-sm font-medium text-white select-none transition-[background-color,scale] hover:bg-[#333] active:scale-[0.96]"

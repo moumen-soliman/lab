@@ -1,6 +1,9 @@
 <p align="center">
   <a href="https://lab.moumen.dev">
-    <img width="120" alt="moumenlab" src="https://lab.moumen.dev/favicon.png" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="./apps/web/public/logo-white.svg" />
+      <img width="80" alt="moumenlab" src="./apps/web/public/logo-black.svg" />
+    </picture>
   </a>
 </p>
 

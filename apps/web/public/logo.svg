@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" fill="none">
+  <!-- Favicon form of the mark. Same geometry as logo.svg, but the ink follows
+       the browser chrome: #111 on a light tab strip, white on a dark one, so it
+       never sinks into the background. Safari ignores SVG favicons and falls
+       back to the PNG declared beside this in the metadata. -->
+  <style>
+    .ink { stroke: #111111; }
+    .fill { fill: #111111; }
+    @media (prefers-color-scheme: dark) {
+      .ink { stroke: #ffffff; }
+      .fill { fill: #ffffff; }
+    }
+  </style>
+  <rect class="ink" x="7" y="7" width="18" height="18" rx="4.5" stroke-width="2"/>
+  <circle class="fill" cx="7" cy="7" r="3.5"/>
+  <circle class="fill" cx="25" cy="25" r="3.5"/>
+</svg>

@@ -65,6 +65,22 @@ export function PlayIcon() {
   );
 }
 
+// The moumenlab mark, inlined for surfaces that need it to inherit the text
+// colour or animate. The homepage instead points at /logo.svg so the identity
+// has one source; keep this in step with that file if the mark changes.
+export function LabMark({ className = "w-5 h-5" }: { className?: string }) {
+  return (
+    <svg className={className} width="20" height="20" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <g fill="currentColor">
+        <path d="M16 25C12.2 21 12.2 14.5 16 11C19.8 14.5 19.8 21 16 25Z" transform="rotate(-52 16 25)" />
+        <path d="M16 25C11.5 20 11.5 11.5 16 7C20.5 11.5 20.5 20 16 25Z" />
+        <path d="M16 25C12.2 21 12.2 14.5 16 11C19.8 14.5 19.8 21 16 25Z" transform="rotate(52 16 25)" />
+        <circle cx="16" cy="26" r="2.5" />
+      </g>
+    </svg>
+  );
+}
+
 export function GitHubIcon({ className = "w-4 h-4" }: { className?: string }) {
   return (
     <svg className={className} width="16" height="16" fill="currentColor" viewBox="0 0 24 24">
