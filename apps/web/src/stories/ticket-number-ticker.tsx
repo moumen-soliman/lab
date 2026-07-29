@@ -16,6 +16,19 @@ export const ticketNumberTickerStory: Story = {
     {
       title: "A Jira itch, not a spec",
       figure: <FigTicketCopyMiss />,
+      video: {
+        src: "/stories/copy-ticket-number.mov",
+        alt: "Trying to copy the ticket number BP-2591 out of a Jira breadcrumb: hovering the id underlines it as a link, the button beside it offers Copy link, the next one offers Change work type, and the number ends up selected by hand.",
+        aspectRatio: "384 / 144",
+        maxWidth: 384,
+        caption: (
+          <>
+            The itch itself: hovering <span className={em}>BP-2591</span> turns it into a link, the button beside it
+            offers <span className={em}>Copy link</span>, the next one changes the work type, and the number ends up{" "}
+            <span className={em}>selected by hand</span>.
+          </>
+        ),
+      },
       body: (
         <>
           This one came from using <span className={em}>Jira</span> every day. Grabbing a ticket number was weirdly

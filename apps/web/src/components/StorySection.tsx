@@ -2,12 +2,25 @@
 
 import { useId, useState, type ReactNode } from "react";
 import { ChevronDownIcon } from "../lib/icons";
+import { CraftedVideo } from "./CraftedVideo";
 
 export type StoryStep = {
   title: string;
   body: ReactNode;
   /** A little wireframe sketch of this milestone, drawn beside the text. */
   figure?: ReactNode;
+  /** A short screen recording of the real thing, shown under the figure:
+   *  the figure is the schematic, this is the evidence it came from. */
+  video?: {
+    src: string;
+    /** Describes the recording for anyone who can't watch it. */
+    alt: string;
+    /** "W / H" from the source file, so the box never reflows on load. */
+    aspectRatio: string;
+    /** Native pixel width, so the clip is never upscaled past its resolution. */
+    maxWidth: number;
+    caption?: ReactNode;
+  };
 };
 
 export type StoryReference = {
@@ -90,6 +103,18 @@ export function StorySection({
                   <div className="mt-3" aria-hidden="true">
                     {step.figure}
                   </div>
+                )}
+                {step.video && (
+                  <figure className="mt-3 m-0" style={{ maxWidth: `${step.video.maxWidth}px` }}>
+                    <CraftedVideo
+                      item={{ title: step.video.alt, src: step.video.src, aspectRatio: step.video.aspectRatio }}
+                    />
+                    {step.video.caption && (
+                      <figcaption className="mt-1.5 text-xs leading-relaxed text-gray-500 text-pretty">
+                        {step.video.caption}
+                      </figcaption>
+                    )}
+                  </figure>
                 )}
               </li>
             ))}
