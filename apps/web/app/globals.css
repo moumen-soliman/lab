@@ -55,6 +55,10 @@
      components animate via motion/react, not keyframes. */
   --animate-fade-in: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
   --animate-shimmer: shimmer 1.6s linear infinite;
+  /* One pass, never a loop: a glint that repeats stops reading as light and
+     starts reading as a spinner. Eases in a little and settles out, so the
+     highlight leaves the far edge instead of stopping dead on it. */
+  --animate-glint: glint 0.85s cubic-bezier(0.32, 0, 0.24, 1);
 
   @keyframes fade-in {
     from {
@@ -65,6 +69,16 @@
   @keyframes shimmer {
     to {
       background-position: -200% 0;
+    }
+  }
+  /* Travels its own width either side of the element it sits in, so the bars
+     are already clear of both edges at the ends of the pass. */
+  @keyframes glint {
+    from {
+      translate: -100% 0;
+    }
+    to {
+      translate: 100% 0;
     }
   }
 }
