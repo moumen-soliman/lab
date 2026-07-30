@@ -25,7 +25,7 @@
   <a href="https://www.npmjs.com/package/moumenlab"><img src="https://img.shields.io/npm/v/moumenlab.svg" alt="npm" /></a>
 </p>
 
-<img width="1580" alt="moumenlab" src="./apps/web/public/og-lab.png" />
+<img width="1580" alt="moumenlab" src="./apps/web/public/og-lab.png?v=2" />
 
 ## Features
 
