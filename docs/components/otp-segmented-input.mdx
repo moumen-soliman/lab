@@ -1,0 +1,87 @@
+---
+title: "OTP Segmented Input"
+description: "Six cells that are secretly one real input, with native selection driving the active cell."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/otp-segmented-input" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add otp-segmented-input
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/otp-segmented-input.json
+```
+
+</CodeGroup>
+
+## Usage
+
+Wire your real check through `verify`. It can be sync or async. Return `true` and
+the cells cascade green; return `false` and the row shakes, drops the digits, and
+hands the caret back.
+
+```tsx
+"use client";
+
+import OtpInput from "@/components/lab/otp-segmented-input";
+
+export default function Example() {
+  return (
+    <OtpInput
+      verify={async (code) => {
+        const res = await fetch("/api/verify-otp", { method: "POST", body: code });
+        return res.ok;
+      }}
+    />
+  );
+}
+```
+
+Variants:
+
+```tsx
+<OtpInput mask />               {/* paints • instead of the digit, the value is untouched */}
+<OtpInput group />              {/* split 3-3, the way SMS codes are read aloud */}
+<OtpInput length={4} group />   {/* any length; the gap lands at the halfway point */}
+```
+
+Because there is one real `<input>` underneath, paste, autofill, arrow keys, and
+selection all work natively. The cells are painted from its value and selection.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `length` | `number` | `6` | How many cells |
+| `verify` | `(value: string) => boolean \| Promise<boolean>` | - | Your check; return whether the code is right |
+| `code` | `string` | `"246810"` | Demo fallback that `verify` defaults to comparing against |
+| `mask` | `boolean` | `false` | Paint a dot instead of the digit |
+| `group` | `boolean` | `false` | Split the cells in half with a gap |
+| `prefill` | `{ key: number; code: string } \| null` | `null` | Simulate an autofill; bump `key` to re-apply |
+| `onStateChange` | `(state: OtpInputState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the cells and the real input |
+
+## Types
+
+```ts
+interface OtpInputState {
+  length: number;
+  caret: { start: number; end: number };
+  state: "idle" | "success" | "error";
+  attempts: number;
+  focused: boolean;
+}
+```
+
+<Tip>
+  Leave `code` alone in production. It only exists so the component demos
+  end-to-end without a backend; the moment you pass `verify`, your function is the
+  only thing deciding.
+</Tip>

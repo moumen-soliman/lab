@@ -1,0 +1,82 @@
+---
+title: "Ticket Number Ticker"
+description: "An odometer that runs digits up on tabular-nums and middle-truncates long ids to start…end, with an optional GitHub PR status badge."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/ticket-number-ticker" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add ticket-number-ticker
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/ticket-number-ticker.json
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+"use client";
+
+import TicketNumber from "@/components/lab/ticket-number-ticker";
+
+export default function Example() {
+  return <TicketNumber value="#1042" status="open" />;
+}
+```
+
+A pure-digit value is treated as numeric and runs up on the odometer. Anything
+else is a slug: spaces become dashes, and a long one middle-truncates to
+`start…end` once it hits `maxWidth`.
+
+Bump `runKey` to replay the run-up without changing the value:
+
+```tsx
+const [runKey, setRunKey] = useState(0);
+
+<TicketNumber value="#1042" runKey={runKey} />
+<button onClick={() => setRunKey((k) => k + 1)}>Replay</button>
+```
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `value` | `string` | `"#0"` | The ticket id: `"#1042"`, `"1042"`, or `"ticket name here"` |
+| `runKey` | `number` | `0` | Increment to play the odometer run-up (numeric values only) |
+| `status` | `PrStatus` | - | Show a GitHub pull-request state badge |
+| `onStatusClick` | `() => void` | - | Makes the badge a button, for cycling states in a demo |
+| `width` | `"max" \| "fixed"` | `"max"` | Hug the value up to the cap, or always take the full cap |
+| `maxWidth` | `string` | `"14rem"` | The cap the pill grows to before middle-truncating |
+| `copyable` | `boolean` | `true` | Show a copy button that puts the full, untruncated id on the clipboard |
+| `onStateChange` | `(state: TicketNumberState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the digit slots and the truncation box |
+
+## Types
+
+```ts
+type PrStatus = "open" | "draft" | "merged" | "closed";
+
+interface TicketNumberState {
+  kind: "numeric" | "text";
+  truncated: boolean;
+  full: string;
+  status: PrStatus | null;
+}
+```
+
+The badge uses GitHub's own state colours, with the icon shape carrying the
+meaning and the colour reinforcing it.
+
+<Tip>
+  Use `width="fixed"` in a table column. Hugging widths are lovely in isolation and
+  make a column of ids look ragged.
+</Tip>

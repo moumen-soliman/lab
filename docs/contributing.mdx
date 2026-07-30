@@ -1,0 +1,85 @@
+---
+title: "Contributing"
+description: "The recipe for adding a component to the lab: scaffold, port, check, ship."
+---
+
+The full guide lives in
+[CONTRIBUTING.md](https://github.com/moumen-soliman/lab/blob/master/CONTRIBUTING.md).
+This page is the short version, and the two rules that CI actually enforces.
+
+## The two rules
+
+<CardGroup cols={2}>
+  <Card title="Fully Tailwind" icon="palette">
+    No CSS files, no custom classes. `apps/web/app/globals.css` is the only
+    stylesheet, and it holds only `@import`, `@source`, `@theme`, and `@layer
+    base` resets. `pnpm check` fails the build if a custom class appears.
+  </Card>
+  <Card title="Motion for anything state-driven" icon="wand-magic-sparkles">
+    Enters and exits, layout glides, measured morphs, scroll-linked visuals: all
+    `motion/react`. CSS transitions stay for pure hover and focus styling only.
+  </Card>
+</CardGroup>
+
+Wrap the component root in `<MotionConfig reducedMotion="user">`, guard imperative
+sequences with `useReducedMotion()`, and list `"motion"` in the registry item's
+dependencies.
+
+## Adding a component
+
+<Steps>
+  <Step title="Scaffold">
+    ```bash
+    cd apps/web
+    pnpm new:component "Radial Dial" radial-dial
+    ```
+
+    You get the installable component, an `example.tsx`, a showcase, and the
+    `registry.json` wiring. No route or config edits: the `/components/[slug]`
+    route picks it up automatically.
+  </Step>
+  <Step title="Split demo data out of the component">
+    `radial-dial.tsx` stays free of demo data. Props, sample data, and one
+    instance per meaningful variant live in `example.tsx`, which is what renders
+    in the page's Usage box.
+  </Step>
+  <Step title="Write the one-line description">
+    Update `description` in `registry.json`. It is what the CLI prints, what the
+    OG tags quote, and what the docs page carries.
+  </Step>
+  <Step title="Check it">
+    ```bash
+    pnpm check       # no custom CSS, registry stays valid
+    pnpm typecheck
+    ```
+  </Step>
+  <Step title="Install it somewhere real">
+    ```bash
+    pnpm --filter web registry:build
+    pnpm --filter web dev
+    MOUMENLAB_REGISTRY=http://localhost:3000 npx moumenlab add radial-dial
+    ```
+
+    A component that renders on the site but will not install cleanly is not
+    finished.
+  </Step>
+</Steps>
+
+## Repo layout
+
+```
+apps/web              Showcase site (Next.js App Router, React 19, Tailwind v4)
+  app/                Routes: / , /components , /components/[slug]
+  registry/lab/*      Installable component sources, one folder each
+  registry.json       Registry source of truth
+  src/showcases/*     Per-component live demos
+  src/stories/*       The blueprint behind each component
+packages/moumenlab    The npx moumenlab CLI
+docs/                 This documentation
+```
+
+## Documenting a component
+
+Add `docs/components/<name>.mdx` and list it in the right group in
+`docs/docs.json`. Keep the frontmatter `description` identical to the one in
+`registry.json` so the CLI, the site, and the docs never drift apart.

@@ -1,0 +1,93 @@
+---
+title: "CLI reference"
+description: "npx moumenlab add, list, and the flags forwarded to shadcn."
+---
+
+The CLI is thin on purpose. It validates component names against the live
+registry, then hands the work to `shadcn add`, which already knows how to install
+dependencies, merge CSS variables, and respect your path aliases.
+
+```bash
+npx moumenlab <command> [options]
+```
+
+There is nothing to install globally, and nothing ends up in your
+`package.json`.
+
+## Commands
+
+<ResponseField name="add <component...>" type="command">
+  Install one or more components into the current project.
+
+  ```bash
+  npx moumenlab add otp-segmented-input
+  npx moumenlab add hover-expand-icon-strip drag-to-reorder-list
+  ```
+
+  Unknown names fail before anything is written, with the list of what was not
+  recognised.
+</ResponseField>
+
+<ResponseField name="list" type="command">
+  Print every available component with its one-line description and demo URL.
+  Aliased as `ls`.
+
+  ```bash
+  npx moumenlab list
+  ```
+</ResponseField>
+
+<ResponseField name="--help, -h" type="flag">
+  Usage, options, and examples.
+</ResponseField>
+
+<ResponseField name="--version, -v" type="flag">
+  The installed CLI version.
+</ResponseField>
+
+## Options for `add`
+
+Everything here is forwarded to `shadcn add` untouched.
+
+| Flag | Takes a value | What it does |
+| --- | --- | --- |
+| `-c`, `--cwd <path>` | yes | The app directory in a monorepo, for example `apps/web` |
+| `-p`, `--path <path>` | yes | Write the files to a specific path instead of the alias |
+| `-y`, `--yes` | no | Skip the confirmation prompt |
+| `-o`, `--overwrite` | no | Overwrite files that already exist |
+| `-s`, `--silent` | no | Mute shadcn's output |
+| `--dry-run` | no | Show what would be written without writing it |
+| `--diff [path]` | optional | Diff the registry version against your copy |
+| `--view [path]` | optional | Print the component source without installing |
+
+Unknown flags are still forwarded, so shadcn reports its own error rather than
+the CLI guessing.
+
+```bash
+npx moumenlab add schedule-builder -c apps/web -y
+npx moumenlab add command-palette --diff
+```
+
+## Environment
+
+<ResponseField name="MOUMENLAB_REGISTRY" type="string" default="https://lab.moumen.dev">
+  The registry origin to read from. Point it at a local build to test changes
+  before they ship:
+
+  ```bash
+  MOUMENLAB_REGISTRY=http://localhost:3000 npx moumenlab add otp-segmented-input
+  ```
+
+  A trailing slash is stripped for you. The CLI reads the index from
+  `<origin>/r/registry.json` and installs from `<origin>/r/<name>.json`.
+</ResponseField>
+
+## Without the CLI
+
+The registry is plain JSON over HTTP, so the shadcn CLI works directly:
+
+```bash
+npx shadcn@latest add https://lab.moumen.dev/r/otp-segmented-input.json
+```
+
+See [Registry](/registry) for the endpoints and what the JSON contains.

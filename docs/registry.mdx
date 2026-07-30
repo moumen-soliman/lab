@@ -1,0 +1,77 @@
+---
+title: "Registry"
+description: "The shadcn registry behind moumenlab: endpoints, item shape, and how to consume it without the CLI."
+---
+
+moumenlab publishes a standard [shadcn registry](https://ui.shadcn.com/docs/registry).
+Anything that speaks that format, including the shadcn CLI, your own scripts, and
+editor tooling, can install from it.
+
+## Endpoints
+
+| URL | What it returns |
+| --- | --- |
+| `https://lab.moumen.dev/r/registry.json` | The index: every item with its name, type, title, and description |
+| `https://lab.moumen.dev/r/<name>.json` | One installable item, with its files inlined |
+| `https://lab.moumen.dev/r/lab-theme.json` | The shared design tokens every component depends on |
+
+```bash
+curl -s https://lab.moumen.dev/r/registry.json | jq '.items[].name'
+```
+
+## Item shape
+
+A component item names its npm dependencies, its registry dependencies, and the
+files to copy with their target paths:
+
+```json
+{
+  "name": "unlimited-nested-menu",
+  "type": "registry:component",
+  "title": "Unlimited Nested Menu",
+  "description": "A dropdown where each branch morphs into a stacked sub-panel, no depth limit, fully keyboard driven.",
+  "dependencies": ["motion"],
+  "registryDependencies": ["https://lab.moumen.dev/r/lab-theme.json"],
+  "files": [
+    {
+      "path": "registry/lab/unlimited-nested-menu/unlimited-nested-menu.tsx",
+      "type": "registry:component",
+      "target": "components/lab/unlimited-nested-menu.tsx"
+    }
+  ]
+}
+```
+
+Two things follow from that shape:
+
+- **`motion` installs itself.** It is a real dependency of every component, so
+  the CLI adds it when it is missing.
+- **`lab-theme` comes along.** It is listed as a registry dependency, which is
+  how the tokens reach your `@theme` block without you copying anything. See
+  [Theme tokens](/theme).
+
+## Item types
+
+| Type | Item | Installs as |
+| --- | --- | --- |
+| `registry:theme` | `lab-theme` | CSS variables and keyframes merged into your stylesheet |
+| `registry:component` | the thirteen components | A `.tsx` file in `components/lab/` |
+
+## Running the registry locally
+
+The registry is built from `apps/web/registry.json` into static JSON under
+`apps/web/public/r`:
+
+```bash
+pnpm --filter web registry:build
+pnpm --filter web dev
+```
+
+Then install from your local build by pointing the CLI at it:
+
+```bash
+MOUMENLAB_REGISTRY=http://localhost:3000 npx moumenlab add otp-segmented-input
+```
+
+This is the fastest way to check a component you are porting actually installs
+cleanly into a real project before opening a pull request.

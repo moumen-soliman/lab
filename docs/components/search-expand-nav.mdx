@@ -1,0 +1,83 @@
+---
+title: "Search-Expand Navigation Bar"
+description: "A nav bar that expands into a search field then grows into a recent-searches card."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/search-expand-nav" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add search-expand-nav
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/search-expand-nav.json
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+"use client";
+
+import SearchExpandNav, { type NavItem } from "@/components/lab/search-expand-nav";
+import { Home, Compass, Bell } from "lucide-react";
+
+const nav: NavItem[] = [
+  { label: "Home", icon: <Home size={18} /> },
+  { label: "Explore", icon: <Compass size={18} /> },
+  { label: "Activity", icon: <Bell size={18} /> },
+];
+
+export default function Example() {
+  return (
+    <SearchExpandNav
+      nav={nav}
+      suggestions={["motion layout", "scroll snap", "focus trap"]}
+      user="Moumen Soliman"
+      handle="@moumensoliman"
+      avatar="/avatar.png"
+      onSearch={(query) => router.push(`/search?q=${query}`)}
+    />
+  );
+}
+```
+
+Three states in one bar: resting nav, expanded search field, and the
+recent-searches card it grows into. `effect` decides how the search icon arrives.
+With `"travel"` it glides right to left as the nav chrome clears out; with
+`"flip"` the first nav icon rises and blurs into the search icon in place.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `nav` | `NavItem[]` | sample nav | The nav items; the first one is the slot the search icon plays against |
+| `suggestions` | `string[]` | sample list | Recent searches shown in the card |
+| `avatar` | `string` | sample image | Avatar image URL |
+| `user` | `string` | `"Moumen Soliman"` | Display name in the account menu |
+| `handle` | `string` | `"@moumensoliman"` | Handle under the name |
+| `effect` | `"travel" \| "flip"` | `"travel"` | The search icon glides in, or the first icon flips into it |
+| `onSearch` | `(query: string) => void` | - | Fires on submit |
+| `inspect` | `boolean` | `false` | Outline the measured slots and travel distances |
+
+## Types
+
+```ts
+interface NavItem {
+  label: string;
+  icon: ReactNode;
+}
+```
+
+<Note>
+  Every prop has a working default, so `<SearchExpandNav />` renders on its own.
+  Icons are plain `ReactNode`, so any icon set works; the import above is only an
+  example, nothing in the component depends on it.
+</Note>

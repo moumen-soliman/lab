@@ -1,0 +1,96 @@
+---
+title: "Unlimited Nested Menu"
+description: "A dropdown where each branch morphs into a stacked sub-panel, no depth limit, fully keyboard driven."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/unlimited-nested-menu" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add unlimited-nested-menu
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/unlimited-nested-menu.json
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+"use client";
+
+import NestedMenu, { type NestedMenuItem } from "@/components/lab/unlimited-nested-menu";
+
+const items: NestedMenuItem[] = [
+  { label: "Rename" },
+  {
+    label: "Move to",
+    items: [
+      { label: "Projects", items: [{ label: "Q3 Launch" }, { label: "Archive" }] },
+      { label: "Drafts" },
+    ],
+  },
+  { label: "Delete", danger: true },
+];
+
+export default function Example() {
+  return (
+    <NestedMenu
+      items={items}
+      rootTitle="Actions"
+      onSelect={(item, path) => console.log(path.join(" / "), item.label)}
+    />
+  );
+}
+```
+
+Nesting has no depth limit: give an item its own `items` array and it becomes a
+branch that pushes a new panel.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `NestedMenuItem[]` | required | The menu tree |
+| `rootTitle` | `string` | `"Actions"` | Title on the first panel |
+| `triggerLabel` | `string` | `"Open menu"` | Label on the trigger button |
+| `dim` | `boolean` | `true` | Dim the panel behind the one in front |
+| `animate` | `boolean` | `true` | `false` snaps every panel change |
+| `align` | `"start" \| "end"` | `"start"` | Which edge the menu aligns to |
+| `open` | `boolean` | - | Controlled open state, pair with `onOpenChange` |
+| `defaultOpen` | `boolean` | `false` | Uncontrolled initial state |
+| `onOpenChange` | `(open: boolean) => void` | - | Fires on every open and close |
+| `onSelect` | `(item: NestedMenuItem, path: string[]) => void` | - | Fires on a leaf pick, with the branch labels that led to it |
+| `onStateChange` | `(state: NestedMenuState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the panel geometry |
+| `className` | `string` | `""` | Extra classes on the root |
+
+## Types
+
+```ts
+interface NestedMenuItem {
+  id?: string;
+  label: string;
+  icon?: ReactNode;
+  hint?: string;
+  danger?: boolean;
+  disabled?: boolean;
+  items?: NestedMenuItem[];
+}
+
+interface NestedMenuState {
+  open: boolean;
+  depth: number;
+  title: string;
+  path: string[];
+  count: number;
+  lastPick: string | null;
+}
+```
