@@ -10,8 +10,7 @@
 <h1 align="center">moumenlab</h1>
 
 <p align="center">
-  <strong>Less is more.</strong> A small lab of the components we build every day,
-  rethought for better feel, React + Tailwind, on the shadcn registry.
+  <strong>Less is more.</strong> A small lab of the components we build every day, rethought for better feel. Copy the source if that’s all you need. Stay for how each one was built, dead ends included, written for frontend and design engineers who want the why. In React, fully Tailwind.
 </p>
 
 <p align="center">
