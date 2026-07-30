@@ -4,11 +4,12 @@ import { GeistMono } from "geist/font/mono";
 import { OpenPanelComponent } from '@openpanel/nextjs';
 import { RegistryPalette } from "@/src/components/RegistryPalette";
 import { components } from "@/src/registry-data";
+import { site } from "@/src/site";
 import "./globals.css";
 
-const title = "moumenlab - Less is more";
-const description =
-  "A small lab of the components we build every day, rethought for better feel. React + Tailwind, on the shadcn registry - copy the source or install with npx moumenlab add.";
+// Both quote the landing page; see src/site.ts.
+const title = site.title;
+const description = site.description;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lab.moumen.dev"),
@@ -19,6 +20,7 @@ export const metadata: Metadata = {
   description,
   authors: [{ name: "Moumen Soliman", url: "https://moumen.dev" }],
   creator: "Moumen Soliman",
+  // The page says who it is written for; the keywords say it too.
   keywords: [
     "moumenlab",
     "shadcn",
@@ -26,6 +28,8 @@ export const metadata: Metadata = {
     "tailwind",
     "ui",
     "interaction design",
+    "design engineers",
+    "frontend engineers",
   ],
   // The SVG carries a prefers-color-scheme rule so the mark stays visible on a
   // dark tab strip; the PNG is the opaque fallback for Safari, which ignores
@@ -44,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "moumenlab",
     title,
     description,
-    images: [{ url: "/og-lab.png?v=2", width: 1200, height: 630, alt: "moumenlab" }],
+    images: [{ url: site.ogImage, width: 1200, height: 630, alt: `${site.name} - ${site.tagline}` }],
   },
   twitter: {
     card: "summary_large_image",
@@ -52,7 +56,7 @@ export const metadata: Metadata = {
     creator: "@moumensoliman",
     title,
     description,
-    images: ["/og-lab.png?v=2"],
+    images: [site.ogImage],
   },
 };
 
