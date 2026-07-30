@@ -1,0 +1,69 @@
+---
+title: "Hover-Expand Icon Strip"
+description: "Icons in a fixed-width box that expand on hover or Tab while the others squeeze to fit."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/hover-expand-icon-strip" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add hover-expand-icon-strip
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/hover-expand-icon-strip.json
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+"use client";
+
+import ExpandingIconStrip, { type IconStripItem } from "@/components/lab/hover-expand-icon-strip";
+
+const items: IconStripItem[] = [
+  { label: "Home", icon: <HomeIcon /> },
+  { label: "Search", icon: <SearchIcon /> },
+  { label: "Profile", icon: <UserIcon /> },
+  { label: "Settings", icon: <CogIcon /> },
+];
+
+export default function Example() {
+  return <ExpandingIconStrip items={items} width={320} onSelect={(item) => console.log(item.label)} />;
+}
+```
+
+The box never changes size. Hovering an icon expands it to show its label while
+the siblings squeeze to make room, so nothing around the strip moves. The same
+expansion happens on focus, which means `Tab` gives keyboard users the labels
+too.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `IconStripItem[]` | required | The icons and their labels |
+| `width` | `number` | `320` | The strip's fixed width in pixels; it also caps at `100%` |
+| `onSelect` | `(item: IconStripItem) => void` | - | Fires when an icon is clicked |
+| `inspect` | `boolean` | `false` | Outline the strip and its slots |
+
+## Types
+
+```ts
+interface IconStripItem {
+  label: string;
+  icon: ReactNode;
+}
+```
+
+<Tip>
+  Keep labels short. The strip divides a fixed width between the items, so a long
+  label costs the siblings room even while it is hidden.
+</Tip>

@@ -1,0 +1,136 @@
+---
+title: "Command Palette with Argument Chips"
+description: "Commands that take inline argument chips, fuzzy ranking, and a measured height morph."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/command-palette" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add command-palette
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/command-palette.json
+```
+
+</CodeGroup>
+
+## Usage
+
+A command is a label plus the slots it needs filled. Picking a command drops you
+into its first slot, and each answer becomes a chip in the input.
+
+```tsx
+"use client";
+
+import CommandPalette, { type Command } from "@/components/lab/command-palette";
+
+const commands: Command[] = [
+  {
+    id: "assign",
+    label: "Assign to",
+    shortcut: "A",
+    slots: [
+      {
+        name: "person",
+        prompt: "Assign to whom?",
+        kind: "person",
+        options: [
+          { value: "Moumen Soliman", hint: "@moumensoliman" },
+          { value: "Alex Rivera", hint: "@alex" },
+        ],
+      },
+    ],
+    message: ([person]) => `Assigned to ${person.value}`,
+  },
+  {
+    id: "label",
+    label: "Add label",
+    slots: [
+      {
+        name: "label",
+        prompt: "Which label?",
+        kind: "dot",
+        options: [
+          { value: "bug", dot: "#ef4444" },
+          { value: "docs", dot: "#3b82f6" },
+        ],
+      },
+    ],
+    message: ([label]) => `Labelled ${label.value}`,
+  },
+];
+
+export default function Example() {
+  return (
+    <CommandPalette
+      commands={commands}
+      onApply={(clauses) => console.log(clauses.map((c) => c.command.id))}
+    />
+  );
+}
+```
+
+`onApply` fires when the staged clauses are committed, with `Cmd + Enter` or the
+Apply button. Each clause carries the command and the option values chosen for
+its slots.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `commands` | `Command[]` | required | The commands and their slots |
+| `matcher` | `"fuzzy" \| "substring"` | `"fuzzy"` | Scored subsequence ranking, or plain `indexOf` |
+| `morph` | `boolean` | `true` | `false` snaps the height instead of measuring and gliding |
+| `onApply` | `(clauses: { command: Command; values: CommandOption[] }[]) => void` | - | Runs when the staged clauses are committed |
+| `onStateChange` | `(state: CommandPaletteState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the measured boxes |
+
+## Types
+
+```ts
+interface CommandOption {
+  value: string;
+  hint?: string;
+  dot?: string;
+}
+
+interface CommandSlot {
+  name: string;
+  prompt: string;
+  kind: "person" | "dot" | "plain";
+  options: CommandOption[];
+}
+
+interface Command {
+  id: string;
+  label: string;
+  icon?: ReactNode;
+  shortcut?: string;
+  danger?: boolean;
+  slots: CommandSlot[];
+  message: (values: CommandOption[]) => string;
+}
+
+interface CommandPaletteState {
+  mode: string;
+  depth: number;
+  staged: number;
+  query: string;
+  matches: number;
+  chips: string[];
+  height: number | null;
+  lastRun: string | null;
+}
+```
+
+<Tip>
+  `message` is the sentence shown after a command runs. It receives the chosen
+  option values in slot order, so it can read back exactly what was staged.
+</Tip>

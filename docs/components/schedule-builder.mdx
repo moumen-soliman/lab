@@ -1,0 +1,100 @@
+---
+title: "Schedule Builder"
+description: "A recurrence rule as a live English sentence over real occurrences, with month-end and DST traps."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/schedule-builder" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add schedule-builder
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/schedule-builder.json
+```
+
+</CodeGroup>
+
+## Usage
+
+The rule is the value. Every edit fires `onRuleChange` with the complete
+`ScheduleRule`, while the component reads it back as a sentence and proves it
+against the next real occurrences.
+
+```tsx
+"use client";
+
+import ScheduleBuilder, { type ScheduleRule } from "@/components/lab/schedule-builder";
+
+export default function Example() {
+  return (
+    <ScheduleBuilder
+      defaultRule={{ freq: "weekly", weekdays: [1, 3, 5], hour: 9 }}
+      occurrences={5}
+      onRuleChange={(rule: ScheduleRule) => console.log(rule)}
+    />
+  );
+}
+```
+
+`defaultRule` is partial: anything you leave out falls back to the default rule.
+
+## Month-end and DST
+
+The default `monthDay` is `31` on purpose, so the awkward case shows up
+immediately rather than in production.
+
+<ResponseField name="clamp" type="boolean" default="false">
+  The month-end policy. `false` follows RRULE and **skips** months without the
+  requested day, so a rule on the 31st simply does not run in February. `true`
+  **clamps** to the last day of the month instead.
+</ResponseField>
+
+The occurrence list marks skipped months and flags the runs where a DST change
+moves the wall-clock time, which is the other trap this component exists to make
+visible.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `defaultRule` | `Partial<ScheduleRule>` | - | Seed the builder; the rest falls back to the default |
+| `onRuleChange` | `(rule: ScheduleRule) => void` | - | Fires with the full rule on every edit |
+| `occurrences` | `number` | `5` | How many upcoming runs to prove the rule with |
+| `clamp` | `boolean` | `false` | Month-end policy: skip (RRULE) or clamp to the last day |
+| `morph` | `boolean` | `true` | `false` snaps the sentence instead of gliding words |
+| `onStateChange` | `(state: ScheduleBuilderState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the sentence words and the run list |
+
+## Types
+
+```ts
+interface ScheduleRule {
+  freq: "daily" | "weekly" | "monthly";
+  interval: number;
+  weekdays: number[];          // 0 = Sunday
+  monthMode: "date" | "nth";
+  monthDay: number;
+  ordinal: number | "last";
+  weekday: number;
+  hour: number;
+  minute: number;
+}
+
+interface ScheduleBuilderState {
+  sentence: string;
+  next: string | null;
+  skips: number;
+  dstChanges: number;
+  freq: ScheduleRule["freq"];
+}
+```
+
+The default rule is weekly, every 1 week, on Tuesday and Thursday at 09:00, with
+`monthDay: 31` waiting behind the monthly tab.

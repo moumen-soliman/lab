@@ -1,0 +1,92 @@
+---
+title: "Caret-Anchored Mention Popover"
+description: "An @-mention popover anchored to the text caret via a hidden mirror, gliding as you type."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/caret-mention-popover" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add caret-mention-popover
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/caret-mention-popover.json
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+"use client";
+
+import MentionComposer, { type Person } from "@/components/lab/caret-mention-popover";
+
+const people: Person[] = [
+  { name: "Sarah Chen", handle: "sarah" },
+  { name: "Omar Farouk", handle: "omar" },
+  { name: "June Park", handle: "june" },
+];
+
+export default function Example() {
+  return (
+    <MentionComposer
+      people={people}
+      onSubmit={(value, mentions) => console.log(value, mentions)}
+    />
+  );
+}
+```
+
+A textarea only reports `selectionStart`, a character index with no x or y. The
+component measures the caret by rendering an invisible mirror at the field's
+exact width and typography, then anchors the popover to the offset it reports.
+
+Only an `@` at a boundary opens the popover: the start of the text, after a
+space, or after an opening bracket. The one in `me@example.com` opens nothing.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `people` | `Person[]` | sample roster | Who can be mentioned |
+| `anchor` | `"caret" \| "field"` | `"caret"` | Anchor to the caret, or to the field's edge |
+| `onSubmit` | `(value: string, mentions: string[]) => void` | - | The composed text and the handles mentioned in it |
+| `onStateChange` | `(state: MentionState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the mirror and the caret box |
+
+Ranking is built in: a word-prefix match on the name beats a handle prefix, which
+beats a plain substring.
+
+## Types
+
+```ts
+interface Person {
+  name: string;
+  handle: string;
+}
+
+interface MentionState {
+  open: boolean;
+  query: string;
+  matches: number;
+  caret: { x: number; y: number } | null;
+  placement: string;
+  anchor: string;
+  mentions: number;
+  lastMention: string | null;
+}
+```
+
+<Note>
+  The popover offers the whole roster. In a real product it should offer three or
+  four people, and only the ones already in the conversation the box belongs to.
+  That relevance pass is not in the component yet, so filter `people` yourself
+  before passing them in.
+</Note>

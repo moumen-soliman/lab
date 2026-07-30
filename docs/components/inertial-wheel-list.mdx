@@ -1,0 +1,76 @@
+---
+title: "Inertial Wheel List"
+description: "An iOS picker drum built on native scroll-snap, with selection derived from scrollTop."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/inertial-wheel-list" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add inertial-wheel-list
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/inertial-wheel-list.json
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+"use client";
+
+import WheelList from "@/components/lab/inertial-wheel-list";
+
+const times = ["09:00", "09:15", "09:30", "09:45", "10:00"];
+
+export default function Example() {
+  return (
+    <WheelList
+      items={times}
+      label="Start time"
+      initialIndex={2}
+      onStateChange={({ value, settled }) => settled && console.log(value)}
+    />
+  );
+}
+```
+
+There is no custom physics here. The drum is a real scroll container with
+scroll-snap, so momentum, rubber-banding, and trackpad feel come from the
+platform. Selection is derived from `scrollTop` against measured item centres,
+and `settled` tells you when the scroll has come to rest.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `string[]` | required | The values on the drum |
+| `label` | `string` | `"Pick a value"` | Accessible label for the picker |
+| `initialIndex` | `number` | `0` | Which item starts centred |
+| `drum` | `boolean` | `true` | `false` drops the 3D curvature for a flat list |
+| `onStateChange` | `(state: WheelState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the item centres and the selection band |
+
+## Types
+
+```ts
+interface WheelState {
+  value: string;
+  index: number;
+  count: number;
+  settled: boolean;
+}
+```
+
+<Tip>
+  Read the value from `onStateChange` and act on it only when `settled` is `true`.
+  Reacting to every intermediate index turns a scroll through a hundred items into
+  a hundred updates.
+</Tip>

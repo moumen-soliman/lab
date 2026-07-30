@@ -1,0 +1,78 @@
+---
+title: "moumenlab"
+description: "A small lab of the components we build every day, rethought for better feel. Copy the source if that is all you need, or install them with one command."
+---
+
+Menus, OTP inputs, upload staging, command palettes. The components every product
+needs, built once with the details usually skipped: interruptible animations,
+keyboard paths, reduced-motion, and the awkward states nobody demos.
+
+Every component is **React 19 + Tailwind v4 + [motion](https://motion.dev)**, shipped through a
+**shadcn registry**. There is no runtime package: the CLI copies the source into your
+repo and you own it from there.
+
+<CardGroup cols={2}>
+  <Card title="Install a component" icon="download" href="/installation">
+    One command, no runtime dependency, tokens merged into your theme.
+  </Card>
+  <Card title="Browse the components" icon="shapes" href="/components/overview">
+    Thirteen components, each with props, types, and a live demo.
+  </Card>
+  <Card title="CLI reference" icon="terminal" href="/cli">
+    `add`, `list`, and the flags forwarded to shadcn.
+  </Card>
+  <Card title="See them running" icon="play" href="https://lab.moumen.dev/components">
+    Live demos, the blueprint behind each one, and the source.
+  </Card>
+</CardGroup>
+
+## Quickstart
+
+```bash
+npx moumenlab add otp-segmented-input
+```
+
+```tsx
+import OtpInput from "@/components/lab/otp-segmented-input";
+
+export default function Verify() {
+  return <OtpInput length={6} verify={(code) => code === "246810"} />;
+}
+```
+
+That is the whole loop: install, import, use. The file lands in
+`components/lab/`, and it is yours to edit.
+
+## What you get
+
+<AccordionGroup>
+  <Accordion title="Source you own, not a dependency" icon="code">
+    The registry copies `.tsx` files into your project. No `moumenlab` import at
+    runtime, no version to keep in step, no wrapper to fight when a design
+    changes. Delete half of a component if you only need the other half.
+  </Accordion>
+  <Accordion title="Fully Tailwind, no stylesheet to import" icon="palette">
+    No CSS files and no custom classes anywhere. Shared design tokens live in a
+    single registry item, [`lab-theme`](/theme), which merges into your `@theme`
+    block on install.
+  </Accordion>
+  <Accordion title="Motion-first, and honest about it" icon="wand-magic-sparkles">
+    Animations use `motion/react` so they stay interruptible and layout-aware.
+    Every component root wraps in `<MotionConfig reducedMotion="user">`, so the
+    system preference is respected without an extra prop.
+  </Accordion>
+  <Accordion title="An inspect mode built in" icon="eye">
+    Every component takes `inspect` and most take `onStateChange`. Turn them on
+    to outline the geometry and stream the internal state, which is how the
+    blueprints on the site are drawn.
+  </Accordion>
+</AccordionGroup>
+
+## Requirements
+
+| Requirement | Version |
+| --- | --- |
+| React | 19 |
+| Tailwind CSS | v4 |
+| motion | latest (installed by the CLI) |
+| Node.js | 18+ (20+ to work on the monorepo) |

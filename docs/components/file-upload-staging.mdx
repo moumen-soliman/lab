@@ -1,0 +1,113 @@
+---
+title: "File Upload Staging Area"
+description: "Per-tile interruptible upload state machines with capped concurrency and a layout-glide grid reflow."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/file-upload-staging" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add file-upload-staging
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/file-upload-staging.json
+```
+
+</CodeGroup>
+
+## Usage
+
+Omit `upload` and the component simulates the network, which is what the demo
+does. Pass it and every tile drives your real transfer.
+
+```tsx
+"use client";
+
+import UploadStaging, { type UploadFn } from "@/components/lab/file-upload-staging";
+
+const upload: UploadFn = async (file, { onProgress, signal }) => {
+  const body = new FormData();
+  body.append("file", file.file!);
+
+  await new Promise<void>((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.upload.onprogress = (e) => onProgress((e.loaded / e.total) * 100);
+    xhr.onload = () => (xhr.status < 400 ? resolve() : reject(new Error(xhr.statusText)));
+    xhr.onerror = () => reject(new Error("Network error"));
+    signal.addEventListener("abort", () => xhr.abort());
+    xhr.open("POST", "/api/upload");
+    xhr.send(body);
+  });
+};
+
+export default function Example() {
+  return <UploadStaging upload={upload} concurrency={3} />;
+}
+```
+
+Three contracts your uploader has to honour: report `0-100` through `onProgress`,
+resolve on success and throw on failure, and listen to `signal` so removing a
+tile actually cancels the transfer.
+
+Only `concurrency` transfers run at once. The rest sit in a visible queue, and
+the grid glides as tiles are added, finish, or are removed.
+
+## Staging files programmatically
+
+```tsx
+import { useRef } from "react";
+import UploadStaging, { type UploadStagingHandle } from "@/components/lab/file-upload-staging";
+
+const ref = useRef<UploadStagingHandle>(null);
+
+ref.current?.addFiles([{ name: "report.pdf", size: 248_000 }]);
+```
+
+The kind is inferred from the extension when you do not pass one.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `upload` | `UploadFn` | - | Your real uploader; omit it to simulate the network |
+| `concurrency` | `number` | `2` | How many transfers run at once |
+| `failRate` | `number` | `0.25` | Simulation only: chance a staged file fails, `0` to `1` |
+| `morph` | `boolean` | `true` | `false` snaps every layout change |
+| `ref` | `Ref<UploadStagingHandle>` | - | Stage files programmatically |
+| `onStateChange` | `(state: UploadStagingState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the grid and tile states |
+
+## Types
+
+```ts
+type FileKind = "image" | "pdf" | "archive" | "doc" | "file";
+
+type UploadFn = (
+  file: { name: string; size: number; kind: FileKind; file?: File },
+  ctx: { onProgress: (percent: number) => void; signal: AbortSignal },
+) => Promise<void>;
+
+interface UploadStagingHandle {
+  addFiles: (files: { name: string; size: number; kind?: FileKind; file?: File }[]) => void;
+}
+
+interface UploadStagingState {
+  total: number;
+  queued: number;
+  uploading: number;
+  done: number;
+  error: number;
+  bytes: number;
+}
+```
+
+<Note>
+  `failRate` only affects the simulation. Once `upload` is provided, failures come
+  from your uploader throwing, and nothing is faked.
+</Note>

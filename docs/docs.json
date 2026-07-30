@@ -1,0 +1,145 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "moumenlab",
+  "description": "A small lab of the components we build every day, rethought for better feel. React, Tailwind, shadcn registry.",
+  "colors": {
+    "primary": "#111111",
+    "light": "#EDEDED"
+  },
+  "favicon": "/favicon.png",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg",
+    "href": "https://lab.moumen.dev"
+  },
+  "appearance": {
+    "default": "system"
+  },
+  "search": {
+    "prompt": "Search moumenlab"
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Guides",
+        "groups": [
+          {
+            "group": "Getting started",
+            "pages": ["index", "installation", "cli"]
+          },
+          {
+            "group": "Foundations",
+            "pages": ["theme", "registry"]
+          },
+          {
+            "group": "Project",
+            "pages": ["contributing"]
+          }
+        ]
+      },
+      {
+        "tab": "Components",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": ["components/overview"]
+          },
+          {
+            "group": "Overlays and menus",
+            "pages": [
+              "components/unlimited-nested-menu",
+              "components/command-palette",
+              "components/share-permissions-popover",
+              "components/caret-mention-popover"
+            ]
+          },
+          {
+            "group": "Inputs and forms",
+            "pages": [
+              "components/otp-segmented-input",
+              "components/schedule-builder",
+              "components/morphing-checkout",
+              "components/file-upload-staging"
+            ]
+          },
+          {
+            "group": "Lists and navigation",
+            "pages": [
+              "components/drag-to-reorder-list",
+              "components/inertial-wheel-list",
+              "components/search-expand-nav",
+              "components/hover-expand-icon-strip",
+              "components/ticket-number-ticker"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "Live demos",
+          "href": "https://lab.moumen.dev/components",
+          "icon": "play"
+        },
+        {
+          "anchor": "GitHub",
+          "href": "https://github.com/moumen-soliman/lab",
+          "icon": "github"
+        },
+        {
+          "anchor": "npm",
+          "href": "https://www.npmjs.com/package/moumenlab",
+          "icon": "npm"
+        }
+      ]
+    }
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Live demos",
+        "href": "https://lab.moumen.dev/components"
+      }
+    ],
+    "primary": {
+      "type": "github",
+      "href": "https://github.com/moumen-soliman/lab"
+    }
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/moumen-soliman/lab",
+      "x": "https://x.com/moumensoliman",
+      "website": "https://lab.moumen.dev"
+    },
+    "links": [
+      {
+        "header": "Lab",
+        "items": [
+          { "label": "Browse components", "href": "https://lab.moumen.dev/components" },
+          { "label": "Registry", "href": "https://lab.moumen.dev/r/lab-theme.json" }
+        ]
+      },
+      {
+        "header": "Project",
+        "items": [
+          { "label": "GitHub", "href": "https://github.com/moumen-soliman/lab" },
+          { "label": "Report a bug", "href": "https://github.com/moumen-soliman/lab/issues/new" },
+          { "label": "License", "href": "https://github.com/moumen-soliman/lab/blob/master/LICENSE" }
+        ]
+      }
+    ]
+  },
+  "contextual": {
+    "options": ["copy", "view", "chatgpt", "claude", "cursor", "vscode"]
+  },
+  "seo": {
+    "metatags": {
+      "og:site_name": "moumenlab",
+      "og:image": "https://lab.moumen.dev/og-lab.png"
+    },
+    "indexing": "navigable"
+  }
+}

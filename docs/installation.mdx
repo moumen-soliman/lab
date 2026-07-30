@@ -1,0 +1,113 @@
+---
+title: "Installation"
+description: "Add a moumenlab component to your app with the CLI or the shadcn registry URL."
+---
+
+## Before you start
+
+<Steps>
+  <Step title="React 19 and Tailwind CSS v4">
+    Components use React 19 features (the `ref` prop without `forwardRef`) and
+    Tailwind v4 `@theme` tokens. Older majors will not compile as-is.
+  </Step>
+  <Step title="A shadcn-ready project">
+    Installation goes through the shadcn CLI, so the project needs a
+    `components.json`. If you do not have one yet:
+
+    ```bash
+    npx shadcn@latest init
+    ```
+  </Step>
+</Steps>
+
+## Install a component
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add otp-segmented-input
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/otp-segmented-input.json
+```
+
+</CodeGroup>
+
+Both do the same work: copy the component into `components/lab/`, install
+`motion` if it is missing, and merge the [`lab-theme`](/theme) tokens into your
+CSS. The moumenlab CLI just saves you the URL and knows every component name.
+
+Install several at once:
+
+```bash
+npx moumenlab add hover-expand-icon-strip drag-to-reorder-list command-palette
+```
+
+### In a monorepo
+
+Point the CLI at the app that owns `components.json`:
+
+```bash
+npx moumenlab add schedule-builder -c apps/web
+```
+
+## What lands in your project
+
+```
+components/lab/otp-segmented-input.tsx   the component, yours to edit
+app/globals.css                          lab-theme tokens merged into @theme
+package.json                             motion added if it was missing
+```
+
+<Note>
+  Paths follow the aliases in your `components.json`. If your components alias is
+  `src/components`, the file lands in `src/components/lab/` instead.
+</Note>
+
+## Use it
+
+Every component is a default export, so you name it on import:
+
+```tsx
+import OtpInput from "@/components/lab/otp-segmented-input";
+import NestedMenu from "@/components/lab/unlimited-nested-menu";
+```
+
+Components that animate on state need to run on the client. In the Next.js App
+Router, put `"use client"` at the top of the file that renders them, or import
+them from a component that already has it.
+
+## Updating
+
+There is no update command, by design. The source is yours the moment it lands,
+and re-running `add` would overwrite your edits. To pull a newer version
+deliberately:
+
+```bash
+npx moumenlab add otp-segmented-input --overwrite
+```
+
+Diff it against your copy first if you have changed anything.
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="The component renders unstyled">
+    The `lab-theme` tokens did not merge. Check that your `globals.css` has a
+    `@theme` block containing `--ease-smooth-out` and `--shadow-border`, then see
+    [Theme tokens](/theme) for the full list to paste in.
+  </Accordion>
+  <Accordion title="`motion` is not installed">
+    Install it manually: `npm i motion`. The CLI adds it from the registry item's
+    dependencies, which some package managers skip in offline mode.
+  </Accordion>
+  <Accordion title="Hydration or `useState` errors in Next.js">
+    The file rendering the component is a server component. Add `"use client"` at
+    the top of it.
+  </Accordion>
+  <Accordion title="Tailwind classes are ignored">
+    Tailwind v4 scans your source for classes. If `components/lab` sits outside
+    the scanned paths, add it: `@source "../components/lab";`
+  </Accordion>
+</AccordionGroup>

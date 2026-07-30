@@ -1,0 +1,100 @@
+---
+title: "Theme tokens"
+description: "lab-theme: the easings, shadows, and keyframes every moumenlab component is built on."
+---
+
+`lab-theme` is a `registry:theme` item that every component lists as a registry
+dependency. Installing any component pulls it in once and merges it into your
+Tailwind `@theme` block, so an installed component keeps the exact easings and
+shadows it had on the site.
+
+There is no stylesheet to import and no custom class anywhere. The tokens become
+Tailwind utilities.
+
+## Easings
+
+| Token | Value | Used for |
+| --- | --- | --- |
+| `--ease-smooth-out` | `cubic-bezier(0.22, 1, 0.36, 1)` | Open, close, and resize |
+| `--ease-icon` | `cubic-bezier(0.2, 0, 0, 1)` | Contextual icon cross-fades |
+
+```tsx
+<div className="transition-transform duration-300 ease-smooth-out" />
+```
+
+## Shadows
+
+The ring is a shadow, not a border, so it never takes up layout space and can
+animate without shifting anything next to it.
+
+| Token | Used for |
+| --- | --- |
+| `--shadow-border` | The resting layered ring in place of a 1px border |
+| `--shadow-border-hover` | The same ring, one step stronger on hover |
+| `--shadow-lift` | The soft lift under a floating surface |
+
+```tsx
+<div className="shadow-border hover:shadow-border-hover" />
+<div className="shadow-lift" />
+```
+
+<Expandable title="the full shadow values">
+```css
+--shadow-border:
+  0px 0px 0px 1px oklch(0 0 0 / 0.06),
+  0px 1px 2px -1px oklch(0 0 0 / 0.06),
+  0px 2px 4px 0px oklch(0 0 0 / 0.04);
+--shadow-border-hover:
+  0px 0px 0px 1px oklch(0 0 0 / 0.08),
+  0px 1px 2px -1px oklch(0 0 0 / 0.08),
+  0px 2px 4px 0px oklch(0 0 0 / 0.06);
+--shadow-lift: 0px 12px 28px -14px oklch(0.178 0 0 / 0.16);
+```
+</Expandable>
+
+## Animations
+
+| Token | Value |
+| --- | --- |
+| `--animate-fade-in` | `fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards` |
+| `--animate-shimmer` | `shimmer 1.6s linear infinite` |
+
+Both ship with their `@keyframes`: `fade-in` moves `10px` up while fading in, and
+`shimmer` slides a background position to `-200% 0`. They exist for chrome around
+the components. The components themselves animate through `motion/react`, where
+motion stays interruptible.
+
+## Colors are yours, not ours
+
+`lab-theme` deliberately ships **no colors**. Components reference the standard
+shadcn semantic tokens only, never a raw gray or hex:
+
+```
+--color-background   --color-foreground
+--color-card         --color-card-foreground
+--color-popover      --color-popover-foreground
+--color-primary      --color-primary-foreground
+--color-muted        --color-muted-foreground
+--color-accent       --color-accent-foreground
+--color-destructive  --color-border  --color-ring
+```
+
+`shadcn init` already defines those, which is why an installed component picks up
+your palette and your dark mode without a single override.
+
+<Note>
+  If a component renders unstyled, the tokens did not merge. Check that your
+  `globals.css` has a `@theme` block containing `--ease-smooth-out`, then install
+  the theme on its own:
+  `npx shadcn@latest add https://lab.moumen.dev/r/lab-theme.json`
+</Note>
+
+## Make Tailwind see the components
+
+Tailwind v4 scans your sources for class names. If `components/lab` sits outside
+the paths it already scans, add it next to your `@import`:
+
+```css
+@import "tailwindcss";
+@source "../components/lab";
+```

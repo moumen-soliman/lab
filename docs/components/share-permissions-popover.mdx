@@ -1,0 +1,96 @@
+---
+title: "Share and Permissions Popover"
+description: "A three-view floating surface that morphs on both axes with a focus trap surviving the swaps."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/share-permissions-popover" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add share-permissions-popover
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/share-permissions-popover.json
+```
+
+</CodeGroup>
+
+## Usage
+
+One surface, three views: the people list, a single person's role, and link
+access. It measures each view and morphs between them on both axes rather than
+swapping content inside a fixed box.
+
+```tsx
+"use client";
+
+import SharePopover, { type Person } from "@/components/lab/share-permissions-popover";
+
+const people: Person[] = [
+  { id: "1", name: "Sarah Chen", email: "sarah@acme.co" },
+  { id: "2", name: "Omar Farouk", email: "omar@acme.co" },
+];
+
+export default function Example() {
+  return (
+    <SharePopover
+      people={people}
+      initialRoles={{ "1": "edit", "2": "view" }}
+      owner={{ name: "Moumen Soliman", email: "moumen@acme.co" }}
+      docTitle="Q3 Launch Plan"
+      onShare={(event) => {
+        // event.type: "invite" | "role" | "remove" | "link"
+        console.log(event.type, event.detail);
+      }}
+    />
+  );
+}
+```
+
+`onShare` is the single wire to your backend. Every mutation reports through it,
+so you do not need a callback per action.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `people` | `Person[]` | sample list | Who already has access |
+| `initialRoles` | `Record<string, string>` | sample roles | Role per person id: `full`, `edit`, `comment`, `view` |
+| `owner` | `{ name: string; email: string }` | sample owner | The row pinned at the top |
+| `docTitle` | `string` | `"Q3 Launch Plan"` | The document being shared |
+| `onShare` | `(event: { type: "invite" \| "role" \| "remove" \| "link"; detail: string }) => void` | - | Fires on any change |
+| `morph` | `boolean` | `true` | `false` snaps between views |
+| `trap` | `boolean` | `true` | Keep focus inside the surface while it is open |
+| `onStateChange` | `(state: SharePopoverState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the measured views |
+
+## Types
+
+```ts
+interface Person {
+  id: string;
+  name: string;
+  email: string;
+}
+
+interface SharePopoverState {
+  open: boolean;
+  view: string;
+  people: number;
+  link: string;
+  size: { w: number; h: number } | null;
+  lastAction: string | null;
+}
+```
+
+<Note>
+  `trap` is on by default because the surface swaps its whole contents. Turning it
+  off is a real accessibility regression, so keep it on unless the popover is
+  nested inside something that already traps focus.
+</Note>

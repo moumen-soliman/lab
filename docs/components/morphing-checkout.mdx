@@ -1,0 +1,88 @@
+---
+title: "Morphing Checkout Flow"
+description: "A three-step card payment with a height:auto illusion, caret-safe masking, a 3D flip, and a FLIP pay button."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/morphing-checkout" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add morphing-checkout
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/morphing-checkout.json
+```
+
+</CodeGroup>
+
+## Usage
+
+```tsx
+"use client";
+
+import MorphingCheckout from "@/components/lab/morphing-checkout";
+
+export default function Example() {
+  return (
+    <MorphingCheckout
+      price="$149.00"
+      onPay={async (details) => {
+        const res = await fetch("/api/charge", {
+          method: "POST",
+          body: JSON.stringify(details),
+        });
+        return res.ok ? "success" : "decline";
+      }}
+    />
+  );
+}
+```
+
+`onPay` receives the card fields and decides the outcome: return `"decline"` to
+fail, anything else succeeds. Without it, the component falls back to the
+`outcome` prop, which is how the demo shows both endings.
+
+The card number masks as you type without ever fighting the caret, the CVC step
+flips the card in 3D, and the pay button plays a FLIP into the confirmation.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `price` | `string` | `"$149.00"` | The amount shown on the button and summary |
+| `onPay` | `(details: { number: string; expiry: string; cvc: string; name: string }) => Promise<"success" \| "decline"> \| void` | - | Your real charge |
+| `outcome` | `"success" \| "decline"` | `"success"` | The ending when `onPay` is not supplied |
+| `indicator` | `"tabs" \| "bar"` | `"tabs"` | How step progress is drawn |
+| `prefill` | `{ key: number; number: string } \| null` | `null` | Simulate an autofilled card; bump `key` to re-apply |
+| `morph` | `boolean` | `true` | `false` snaps every step change |
+| `onStateChange` | `(state: CheckoutState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the measured step boxes |
+
+## Types
+
+```ts
+interface CheckoutState {
+  step: string;
+  brand: string;
+  number: string;
+  side: string;
+  status: string;
+  height: number | null;
+}
+```
+
+Brand detection is built in from the number prefix (Visa, Mastercard, Amex), and
+the number is Luhn-checked before the flow will advance.
+
+<Warning>
+  This is a payment **interface**, not a payment integration. Card fields are held
+  in React state and handed to your `onPay`. If you are taking real cards, mount
+  your processor's hosted fields (Stripe Elements and equivalents) inside these
+  steps rather than posting raw PAN data to your own server.
+</Warning>

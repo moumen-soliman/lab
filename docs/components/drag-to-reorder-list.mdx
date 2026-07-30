@@ -1,0 +1,91 @@
+---
+title: "Drag-to-Reorder List"
+description: "A reorderable list where siblings glide one slot and the drop plays a FLIP, keyboard included."
+---
+
+<Card title="See it running" icon="play" href="https://lab.moumen.dev/components/drag-to-reorder-list" horizontal>
+  Live demo, the blueprint behind it, and the source.
+</Card>
+
+## Install
+
+<CodeGroup>
+
+```bash moumenlab CLI
+npx moumenlab add drag-to-reorder-list
+```
+
+```bash shadcn CLI
+npx shadcn@latest add https://lab.moumen.dev/r/drag-to-reorder-list.json
+```
+
+</CodeGroup>
+
+## Usage
+
+Uncontrolled, with a starting order:
+
+```tsx
+"use client";
+
+import DragReorderList, { type ReorderItem } from "@/components/lab/drag-to-reorder-list";
+
+const items: ReorderItem[] = [
+  { id: "1", label: "Design review", meta: "Today" },
+  { id: "2", label: "Ship the registry", meta: "Tomorrow" },
+  { id: "3", label: "Write the docs", meta: "Friday" },
+];
+
+export default function Example() {
+  return <DragReorderList defaultItems={items} onReorder={(next) => console.log(next)} />;
+}
+```
+
+Controlled, when the order lives in your state:
+
+```tsx
+const [items, setItems] = useState(initial);
+
+<DragReorderList items={items} onReorder={setItems} />
+```
+
+Pass `items` and the list is controlled: it renders exactly what you give it and
+reports every move through `onReorder`. Pass `defaultItems` instead and it keeps
+the order itself.
+
+## Keyboard
+
+The list is reorderable without a pointer. Focus a row's grip, grab it with
+`Space` or `Enter`, move it with `ArrowUp` and `ArrowDown`, then drop it with
+`Space` or cancel with `Escape`. Every grab, move, and drop is narrated through
+an `aria-live` region.
+
+## Props
+
+| Prop | Type | Default | Description |
+| --- | --- | --- | --- |
+| `items` | `ReorderItem[]` | - | Controlled order; pair with `onReorder` |
+| `defaultItems` | `ReorderItem[]` | sample list | Starting order when uncontrolled |
+| `onReorder` | `(items: ReorderItem[]) => void` | - | Fires with the new order after every move |
+| `flip` | `boolean` | `true` | `false` hard-snaps: no glides, no FLIP on drop |
+| `onStateChange` | `(state: ReorderState) => void` | - | Snapshot on every change |
+| `inspect` | `boolean` | `false` | Outline the slots and the drag target |
+
+## Types
+
+```ts
+interface ReorderItem {
+  id: string;
+  label: string;
+  meta?: string;
+}
+
+interface ReorderState {
+  order: string[];
+  dragging: string | null;
+  from: number | null;
+  to: number | null;
+  grabbed: boolean;
+  lastMove: { label: string; from: number; to: number } | null;
+}
+```

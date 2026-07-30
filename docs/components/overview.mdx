@@ -1,0 +1,87 @@
+---
+title: "Components"
+description: "Thirteen interaction components, each built to do one thing well."
+---
+
+Every component installs the same way, ships as a single file you own, and takes
+`inspect` for the outlined geometry plus (mostly) `onStateChange` for its
+internal state.
+
+```bash
+npx moumenlab list
+```
+
+## Overlays and menus
+
+<CardGroup cols={2}>
+  <Card title="Unlimited Nested Menu" icon="sitemap" href="/components/unlimited-nested-menu">
+    Each branch morphs into a stacked sub-panel, no depth limit, fully keyboard driven.
+  </Card>
+  <Card title="Command Palette" icon="terminal" href="/components/command-palette">
+    Commands that take inline argument chips, fuzzy ranking, and a measured height morph.
+  </Card>
+  <Card title="Share and Permissions Popover" icon="users" href="/components/share-permissions-popover">
+    Three views morphing on both axes, with a focus trap that survives the swaps.
+  </Card>
+  <Card title="Caret-Anchored Mention Popover" icon="at" href="/components/caret-mention-popover">
+    An @-mention popover anchored to the text caret via a hidden mirror.
+  </Card>
+</CardGroup>
+
+## Inputs and forms
+
+<CardGroup cols={2}>
+  <Card title="OTP Segmented Input" icon="keyboard" href="/components/otp-segmented-input">
+    Six cells that are secretly one real input, with native selection driving the active cell.
+  </Card>
+  <Card title="Schedule Builder" icon="calendar" href="/components/schedule-builder">
+    A recurrence rule as a live English sentence over real occurrences.
+  </Card>
+  <Card title="Morphing Checkout" icon="credit-card" href="/components/morphing-checkout">
+    Three-step card payment with caret-safe masking and a 3D flip.
+  </Card>
+  <Card title="File Upload Staging" icon="cloud-arrow-up" href="/components/file-upload-staging">
+    Interruptible per-tile uploads with capped concurrency and a gliding grid.
+  </Card>
+</CardGroup>
+
+## Lists and navigation
+
+<CardGroup cols={2}>
+  <Card title="Drag-to-Reorder List" icon="grip-vertical" href="/components/drag-to-reorder-list">
+    Siblings glide one slot and the drop plays a FLIP, keyboard included.
+  </Card>
+  <Card title="Inertial Wheel List" icon="circle-dot" href="/components/inertial-wheel-list">
+    An iOS picker drum built on native scroll-snap.
+  </Card>
+  <Card title="Search-Expand Navigation" icon="magnifying-glass" href="/components/search-expand-nav">
+    A nav bar that expands into a search field, then into a recent-searches card.
+  </Card>
+  <Card title="Hover-Expand Icon Strip" icon="icons" href="/components/hover-expand-icon-strip">
+    Icons in a fixed box that expand on hover or Tab while the others squeeze.
+  </Card>
+  <Card title="Ticket Number Ticker" icon="hashtag" href="/components/ticket-number-ticker">
+    An odometer on tabular-nums that middle-truncates long ids.
+  </Card>
+</CardGroup>
+
+## Conventions
+
+<ResponseField name="inspect" type="boolean" default="false">
+  Available on every component. Outlines the geometry the component is reasoning
+  about: measured boxes, anchors, and slots. This is what draws the blueprints on
+  the site, and it is useful when a layout fights you.
+</ResponseField>
+
+<ResponseField name="onStateChange" type="(state) => void">
+  Available on every component that has internal state worth watching. Fires with
+  a typed snapshot on every change, so you can mirror it in a debug panel or
+  assert against it in tests.
+</ResponseField>
+
+<ResponseField name="morph / animate / flip / drum" type="boolean" default="true">
+  The motion switch, named after what that component actually does. Set it to
+  `false` for a hard snap with no glides. Reduced motion is already handled
+  through `<MotionConfig reducedMotion="user">`, so you do not need this prop for
+  accessibility.
+</ResponseField>
