@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ArrowRightIcon } from "@/src/lib/icons";
+import { Sponsors } from "@/src/components/Sponsors";
 
 /* ─────────────────────────────────────────────────────────
  * ENTRANCE STORYBOARD
@@ -9,6 +10,7 @@ import { ArrowRightIcon } from "@/src/lib/icons";
  *  100ms   headline lands
  *  150ms   paragraph settles
  *  200ms   CTA arrives
+ *  250ms   sponsors close the page
  * ───────────────────────────────────────────────────────── */
 
 // One beat between each element, so the five arrivals read as a single settling
@@ -21,6 +23,7 @@ const ENTRANCE = {
   headline: BEAT * 2,
   paragraph: BEAT * 3,
   cta: BEAT * 4,
+  sponsors: BEAT * 5,
 } as const;
 
 // The landing: one quiet statement, dead-center in the window. The lab itself
@@ -112,6 +115,13 @@ export default function HomePage() {
               <ArrowRightIcon />
             </span>
           </Link>
+        </div>
+
+        {/* Last beat, and deliberately the quietest one: the CTA keeps the page's
+            only filled surface, and the sponsor sits a full 3rem below it so the
+            eye finishes on "Browse components" and finds this on the way out. */}
+        <div className="animate-fade-in mt-12" style={{ animationDelay: `${ENTRANCE.sponsors}ms` }}>
+          <Sponsors />
         </div>
       </main>
     </div>
