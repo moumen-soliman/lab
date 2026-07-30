@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
 import { LabHome } from "@/src/components/LabHome";
 import { bento } from "@/src/registry-data";
+import { site } from "@/src/site";
 
-// The page's own heading and intro, verbatim. It called itself "Component Lab"
-// on screen and "Components" in the tab strip; a title that doesn't match the
-// h1 costs the reader the one confirmation they wanted, that they landed right.
-const title = "Component Lab";
-const description =
-  "Interaction experiments, each a short looping clip. Open any for the live component, its blueprint, and the source you can copy or install with npx moumenlab add.";
+// The page's own heading and intro, from src/site.ts, so the <title>, the card
+// and the <h1> cannot drift apart. The twitter block is spelled out because a
+// segment that declares openGraph/twitter replaces the parent's entirely;
+// without it this page kept advertising the landing page's title.
+const { title, description } = site.lab;
 
 export const metadata: Metadata = {
   title,
   description,
   alternates: { canonical: "/components" },
   openGraph: {
-    title: `${title} | moumenlab`,
+    title: `${title} | ${site.name}`,
     description,
     url: "/components",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${title} | ${site.name}`,
+    description,
   },
 };
 

@@ -48,7 +48,9 @@ export const metadata: Metadata = {
     siteName: "moumenlab",
     title,
     description,
-    images: [{ url: site.ogImage, width: 1200, height: 630, alt: `${site.name} - ${site.tagline}` }],
+    // No `images` here on purpose: app/opengraph-image.tsx supplies them, and
+    // an explicit entry would override the generated one. Same for twitter,
+    // which falls back to og:image when it has no image of its own.
   },
   twitter: {
     card: "summary_large_image",
@@ -56,7 +58,6 @@ export const metadata: Metadata = {
     creator: "@moumensoliman",
     title,
     description,
-    images: [site.ogImage],
   },
 };
 

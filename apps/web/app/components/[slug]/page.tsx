@@ -43,8 +43,10 @@ export async function generateMetadata({
 
   const title = `${component.title} | moumenlab`;
   const description = component.description;
-  const ogImage = `/og?component=${slug}&v=1`;
 
+  // No `images`: opengraph-image.tsx beside this file pre-renders one PNG per
+  // slug at build time and Next injects the tags. Naming an image here would
+  // override that with a URL nothing generates.
   return {
     title: component.title,
     description,
@@ -53,13 +55,11 @@ export async function generateMetadata({
       title,
       description,
       url: `/components/${slug}`,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: title }],
     },
     twitter: {
       card: "summary_large_image",
       title,
       description,
-      images: [ogImage],
     },
   };
 }

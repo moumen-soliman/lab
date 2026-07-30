@@ -7,10 +7,12 @@
 // already drifted apart before this existed; the social image was still
 // promising "each one does one thing well", a sentence the page had dropped.
 //
-// If the landing's pitch changes, edit PITCH_PARTS, then regenerate the card
-// and bump the ?v= on `ogImage` below so crawlers refetch it:
+// The social cards read from here too, and they rebuild themselves: the
+// opengraph-image files bake a PNG per route at build time, and Next fingerprints
+// the URL, so changing a string here is enough for crawlers to refetch. The one
+// copy that does NOT rebuild is the README's hero, which is a checked-in file:
 //   pnpm --filter web build && pnpm --filter web start
-//   curl -s localhost:3000/og > apps/web/public/og-lab.png
+//   curl -s localhost:3000/opengraph-image > apps/web/public/og-lab.png
 
 const NAME = "moumenlab";
 const TAGLINE = "Less is more";
@@ -53,6 +55,16 @@ export const site = {
    *  renders PITCH_PARTS without this tail; a 1200×630 image does not need
    *  keyword freight. */
   description: `${PITCH} React, Tailwind, shadcn registry.`,
-  /** Bump the ?v= when the card art or its copy changes, so crawlers refetch. */
-  ogImage: "/og-lab.png?v=3",
+  /** The /components page's own heading and intro, quoted by both its metadata
+   *  and its card. A <title> that disagrees with the <h1> costs the reader the
+   *  one confirmation they wanted, that they landed in the right place. */
+  lab: {
+    title: "Component Lab",
+    description:
+      "Interaction experiments, each a short looping clip. Open any for the live component, its blueprint, and the source you can copy or install with npx moumenlab add.",
+    /** The card gets its own, shorter line. The full sentence runs 162
+     *  characters and the card truncates at 160, which landed the ellipsis
+     *  inside "npx moumenlab…", turning an install command into a typo. */
+    card: "Interaction experiments, each a short looping clip. Open any for the live component, its blueprint, and its source.",
+  },
 } as const;
