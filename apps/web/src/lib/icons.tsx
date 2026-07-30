@@ -81,6 +81,15 @@ export function StarFilledIcon({ className = "w-4 h-4" }: { className?: string }
   );
 }
 
+export function SearchIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <Icon className={className} aria-hidden="true">
+      <circle cx="11" cy="11" r="7" strokeWidth="2" />
+      <path strokeLinecap="round" strokeWidth="2" d="m20 20-3.9-3.9" />
+    </Icon>
+  );
+}
+
 export function PlayIcon() {
   return (
     <svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">

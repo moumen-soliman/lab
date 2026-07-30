@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { OpenPanelComponent } from '@openpanel/nextjs';
+import { RegistryPalette } from "@/src/components/RegistryPalette";
+import { components } from "@/src/registry-data";
 import "./globals.css";
 
 const title = "moumenlab - Less is more";
@@ -63,7 +65,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           trackScreenViews={true}
           trackAttributes={true}
           trackOutgoingLinks={true}
-        /> {children}</body>
+        /> {children}
+        {/* Mounted at the root so ⌘K (or a bare D) reaches the whole registry
+            from any page, the landing included. The list is plain serializable
+            metadata, so the server hands it straight to the client component. */}
+        <RegistryPalette components={components} />
+      </body>
     </html>
   );
 }

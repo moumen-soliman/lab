@@ -5,6 +5,7 @@ import Link from "next/link";
 import { LabClipCard } from "./LabClipCard";
 import { Divider } from "./navigation";
 import { ArrowLeftIcon, StarIcon, StarFilledIcon } from "../lib/icons";
+import { Kbd, useMetaLabel } from "./RegistryPalette";
 import type { LabComponent } from "../registry-data";
 
 const GITHUB_URL = "https://github.com/moumen-soliman/lab";
@@ -19,6 +20,7 @@ export function LabHome({ bento }: { bento: LabComponent[] }) {
   // wait for the IntersectionObserver, so the chain pauses at the fold and
   // resumes on scroll. Under data saver every card is tap-to-play instead.
   const [unlocked, setUnlocked] = useState(1);
+  const meta = useMetaLabel();
 
   return (
     <div className="min-h-screen flex flex-col items-center py-24 px-6 selection:bg-[#111] selection:text-white">
@@ -64,6 +66,11 @@ export function LabHome({ bento }: { bento: LabComponent[] }) {
           <p className="text-gray-600 text-[0.9375rem] leading-relaxed mt-3 max-w-xl text-pretty">
             Interaction experiments, each a short looping clip. Open any for the live component, its blueprint, and the
             source you can copy or install with <code className="text-[#111]">npx moumenlab add</code>.
+          </p>
+          {/* The palette lives in the root layout and answers everywhere; this
+              line is the only place that says so out loud. */}
+          <p className="mt-3 inline-flex flex-wrap items-center gap-1.5 text-sm text-gray-400">
+            Press <Kbd>{meta}K</Kbd> or <Kbd>D</Kbd> anywhere to jump to one.
           </p>
         </header>
 
