@@ -55,5 +55,18 @@ export const dragToReorderListStory: Story = {
         </>
       ),
     },
+    {
+      href: "https://www.easing.dev",
+      label: "Easing Graphs",
+      note: (
+        <>
+          where the one curve in here got picked. The glide and the FLIP drop both run on{" "}
+          <span className={em}>cubic-bezier(0.22, 1, 0.36, 1)</span>, and its graph is{" "}
+          <span className={em}>nearly flat by the halfway mark</span>, so a row covers most of its slot immediately and
+          then settles. Compare Expo Out and Swift Out against the softer Quad and Cubic curves to see why the gentler
+          ones read as sliding instead.
+        </>
+      ),
+    },
   ],
 };
