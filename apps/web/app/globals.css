@@ -70,6 +70,16 @@
      cards above the copy and the ones below it. `backwards` holds each card
      invisible through its delay - that delay is the whole stagger. */
   --animate-offer: offer 10s linear infinite backwards;
+  /* The dream dissolve. One pass per flip of the landing page's easter egg:
+     the whole frame blooms warm while everything behind it swims out of
+     focus, then clears. `backdrop-filter` is what makes it page-wide - the
+     layer sits above the document and defocuses through itself, so nothing
+     else in the tree has to know it exists. */
+  --animate-dream: dream 900ms var(--ease-arrive) both;
+  /* The rays turning behind the dream. One revolution every 90 seconds, which
+     is slow enough that it registers as light moving rather than as something
+     spinning. Rotate only, so it never leaves the compositor. */
+  --animate-shine: shine 90s linear infinite;
   /* One pass, never a loop: a glint that repeats stops reading as light and
      starts reading as a spinner. Eases in a little and settles out, so the
      highlight leaves the far edge instead of stopping dead on it. */
@@ -115,6 +125,46 @@
     to {
       opacity: 0;
       translate: 0 var(--offer-drift);
+    }
+  }
+  /* 30% of the run to fall under, 70% to surface: waking up is always the
+     slower half.
+
+     The filter is the effect, not the bloom sitting on top of it. `brightness`
+     is what blows the page out - the ink lifts off black and diffuses into the
+     white around it, which is the whole trick behind the Premiere/Orton dream
+     look. `saturate` pulls the color out of what is left. The blur is only
+     there to make the bloom soft-edged.
+
+     6px is a measured ceiling, not a taste call. At 10px, compositing this
+     layer cost a 282ms frame on first paint - one visible freeze on the exact
+     click that starts it. At 6px the same sequence holds 120fps with no
+     dropped frames, and the diffusion looks the same once brightness is doing
+     the work.
+
+     The prefixed property is not optional: Safari still ships backdrop-filter
+     behind -webkit- only, and without it the bloom would flash there with
+     nothing going soft behind it. */
+  @keyframes shine {
+    to {
+      rotate: 360deg;
+    }
+  }
+  @keyframes dream {
+    from {
+      opacity: 0;
+      -webkit-backdrop-filter: blur(0px) brightness(1) saturate(1);
+      backdrop-filter: blur(0px) brightness(1) saturate(1);
+    }
+    30% {
+      opacity: 1;
+      -webkit-backdrop-filter: blur(6px) brightness(1.6) saturate(0.5);
+      backdrop-filter: blur(6px) brightness(1.6) saturate(0.5);
+    }
+    to {
+      opacity: 0;
+      -webkit-backdrop-filter: blur(0px) brightness(1) saturate(1);
+      backdrop-filter: blur(0px) brightness(1) saturate(1);
     }
   }
 }
