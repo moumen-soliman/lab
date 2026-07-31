@@ -80,6 +80,9 @@
      is slow enough that it registers as light moving rather than as something
      spinning. Rotate only, so it never leaves the compositor. */
   --animate-shine: shine 90s linear infinite;
+  /* The tracking band crawling up the dream's tape. Translate only, so it is
+     a compositor job and not a repaint. */
+  --animate-tracking: tracking 7s linear infinite;
   /* One pass, never a loop: a glint that repeats stops reading as light and
      starts reading as a spinner. Eases in a little and settles out, so the
      highlight leaves the far edge instead of stopping dead on it. */
@@ -148,6 +151,16 @@
   @keyframes shine {
     to {
       rotate: 360deg;
+    }
+  }
+  /* Starts a full band below the fold and leaves a full band above it, so the
+     bar is never seen entering or leaving - it is simply crossing. */
+  @keyframes tracking {
+    from {
+      translate: 0 110vh;
+    }
+    to {
+      translate: 0 -30vh;
     }
   }
   @keyframes dream {
