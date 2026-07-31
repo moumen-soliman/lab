@@ -10,6 +10,7 @@ import { CodeSection } from "@/src/components/CodeSection";
 import { StorySection } from "@/src/components/StorySection";
 import { getStory } from "@/src/stories";
 import { BackLink, Divider } from "@/src/components/navigation";
+import { SearchTrigger } from "@/src/components/RegistryPalette";
 
 /* ─────────────────────────────────────────────────────────
  * ENTRANCE STORYBOARD (every component page shares this)
@@ -95,8 +96,11 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-24 px-6 selection:bg-[#111] selection:text-white">
       <main className="w-full max-w-md">
-        <header className="mb-8 animate-fade-in">
+        {/* Back on the left, search on the right: the two ways out of a
+            component page, and on touch the search button is the only one. */}
+        <header className="mb-8 flex animate-fade-in items-center justify-between gap-4">
           <BackLink href="/components" label="Components" />
+          <SearchTrigger />
         </header>
 
         <Showcase />

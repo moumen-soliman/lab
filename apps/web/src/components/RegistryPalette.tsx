@@ -18,6 +18,8 @@ import type { LabComponent } from "../registry-data";
  *                 a "d" (the Raycast reflex: one finger, no
  *                 modifier, when your hands are off the form)
  *   ↑ ↓ ↵ esc     move, open, dismiss
+ *   <SearchTrigger/>  the same palette for the half of the
+ *                 audience that has no keyboard at all
  *
  * The palette owns exactly ONE tab stop, the input. Rows are
  * <li>s the input drives through aria-activedescendant, so
@@ -209,6 +211,32 @@ export function useMetaLabel() {
   return label;
 }
 
+/* ── The trigger ───────────────────────────────────────────────────────
+ * A phone has neither ⌘K nor a bare D, so on touch the registry search
+ * simply did not exist. This button is the same palette with a surface to
+ * tap: 40px tall, the height of the star pill it sits beside.
+ *
+ * It talks to the palette through a window event rather than a context.
+ * The palette is mounted once, in the root layout, while the triggers sit
+ * in page headers that are server components; an event keeps both of those
+ * true without wrapping the tree in a provider whose only job is one
+ * boolean. */
+const OPEN_EVENT = "moumenlab:open-palette";
+
+export function SearchTrigger({ className = "" }: { className?: string }) {
+  return (
+    <button
+      type="button"
+      aria-label="Search components"
+      aria-keyshortcuts="Meta+K Control+K"
+      onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
+      className={`inline-flex size-10 flex-none items-center justify-center rounded-full text-gray-500 shadow-[var(--shadow-border)] transition-[color,scale,box-shadow] duration-200 ease-smooth-out hover:text-[#111] hover:shadow-[var(--shadow-border-hover)] motion-safe:active:scale-[0.96] ${className}`}
+    >
+      <SearchIcon />
+    </button>
+  );
+}
+
 export function Kbd({ children }: { children: ReactNode }) {
   return (
     // A single pure-black ring, not --shadow-border: that token's lift layers
@@ -268,6 +296,13 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [open, close, show]);
+
+  // The tap path. Open only, never toggle: a trigger sits behind the scrim
+  // once the panel is up, so there is nothing to tap twice.
+  useEffect(() => {
+    window.addEventListener(OPEN_EVENT, show);
+    return () => window.removeEventListener(OPEN_EVENT, show);
+  }, [show]);
 
   // Drive the transition a frame after the node exists (a class applied in the
   // same paint as the mount would have nothing to ease from), and hold the node
@@ -367,7 +402,10 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
 
   return (
     <div
-      className={`fixed inset-0 z-50 flex items-start justify-center px-6 pt-[14vh] ${open ? "" : "pointer-events-none"}`}
+      // Higher up the screen on a phone: the software keyboard arrives with the
+      // panel and eats the bottom half, so 14vh of headroom would push the list
+      // straight under it.
+      className={`fixed inset-0 z-50 flex items-start justify-center px-4 pt-[8vh] sm:px-6 sm:pt-[14vh] ${open ? "" : "pointer-events-none"}`}
     >
       <button
         type="button"
@@ -396,8 +434,13 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
           </span>
           <input
             ref={inputRef}
-            className="min-w-0 flex-1 border-0 bg-transparent text-[0.9375rem] text-[#111] outline-none placeholder:text-gray-400"
+            // 16px on phones, and only there: iOS zooms the whole page into any
+            // field it finds smaller than that, and it does not zoom back out.
+            className="min-w-0 flex-1 border-0 bg-transparent text-base text-[#111] outline-none placeholder:text-gray-400 sm:text-[0.9375rem]"
             type="text"
+            inputMode="search"
+            // The phone's return key reads "go", and Enter opens the top hit.
+            enterKeyHint="go"
             value={query}
             placeholder="Search the registry"
             aria-label="Search the registry"
@@ -425,7 +468,8 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
             // Rows are a fixed 54px (both lines truncate), so the cap is tuned
             // to land HALF way through a row. A list that ends on a whole row
             // looks finished; a cut row is the only honest "keep scrolling".
-            className="m-0 max-h-[min(19rem,46vh)] list-none overflow-y-auto p-2"
+            // The tighter phone cap keeps the last row clear of the keyboard.
+            className="m-0 max-h-[min(19rem,38vh)] list-none overflow-y-auto p-2 sm:max-h-[min(19rem,46vh)]"
           >
             {hits.map((hit, index) => (
               <li
@@ -436,10 +480,12 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
                 className="group/row flex cursor-pointer items-center gap-3 rounded-lg px-2.5 py-2 data-[active=true]:bg-[#f4f4f5]"
                 data-active={index === safe ? "true" : undefined}
                 onMouseMove={() => setActive(index)}
-                onMouseDown={(event) => {
-                  event.preventDefault();
-                  go(hit.entry, event.metaKey || event.ctrlKey);
-                }}
+                // mousedown only holds the focus in the input; the navigation
+                // waits for the click. Firing on mousedown was a beat snappier
+                // with a mouse, but a finger's press is also the start of a
+                // scroll, and a list that navigates as you flick it is broken.
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={(event) => go(hit.entry, event.metaKey || event.ctrlKey)}
               >
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm text-[#111]">
@@ -463,7 +509,10 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
           <span className="tabular-nums">
             {query ? `${hits.length} of ${components.length}` : `${components.length} components`}
           </span>
-          <span className="inline-flex items-center gap-2.5">
+          {/* Keys, for the people who have keys. On touch the row is three
+              instructions for hardware that isn't there, and the height it
+              costs is height the keyboard wanted. */}
+          <span className="hidden items-center gap-2.5 sm:inline-flex">
             <span className="inline-flex items-center gap-1">
               <Kbd>↑</Kbd>
               <Kbd>↓</Kbd>

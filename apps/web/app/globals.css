@@ -39,6 +39,14 @@
   /* Easings */
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1); /* open + close, resize */
   --ease-icon: cubic-bezier(0.2, 0, 0, 1); /* contextual icon cross-fade */
+  /* The page's arrival curve. Named rather than inlined because the entrance
+     keyframe is no longer its only user: anything that re-plays an arrival
+     later has to be on the same curve or the second one reads as a stranger. */
+  --ease-arrive: cubic-bezier(0.16, 1, 0.3, 1);
+  /* Its exact mirror, (x1, y1, x2, y2) reflected through (1-x2, 1-y2, 1-x1,
+     1-y1). Copy that leaves on this retraces its own arrival backwards instead
+     of easing out on a different curve pointed the other way. */
+  --ease-leave: cubic-bezier(0.7, 0, 0.84, 0);
 
   /* Shadow-as-border: a layered ring in place of a solid 1px border. */
   --shadow-border:
@@ -53,8 +61,15 @@
 
   /* Named animations → `animate-*` utilities. Site-chrome only - the lab
      components animate via motion/react, not keyframes. */
-  --animate-fade-in: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  --animate-fade-in: fade-in 0.5s var(--ease-arrive) backwards;
   --animate-shimmer: shimmer 1.6s linear infinite;
+  /* An incoming message, looping. It lands on the page's own arrival curve,
+     then drifts for the rest of its life at a constant rate, which is what
+     makes it read as float rather than as motion. Direction and distance
+     belong to the card, via --offer-drift, so one set of keyframes serves the
+     cards above the copy and the ones below it. `backwards` holds each card
+     invisible through its delay - that delay is the whole stagger. */
+  --animate-offer: offer 10s linear infinite backwards;
   /* One pass, never a loop: a glint that repeats stops reading as light and
      starts reading as a spinner. Eases in a little and settles out, so the
      highlight leaves the far edge instead of stopping dead on it. */
@@ -79,6 +94,27 @@
     }
     to {
       translate: 100% 0;
+    }
+  }
+  /* Only the arrival is eased; every later segment falls back to the shorthand's
+     `linear`. Translate is declared at 0%, 14% and 100% only, so the drift is
+     one uninterrupted move from the moment the card lands. */
+  @keyframes offer {
+    from {
+      opacity: 0;
+      translate: 0 calc(var(--offer-drift) * -0.3);
+      animation-timing-function: var(--ease-arrive);
+    }
+    14% {
+      opacity: 1;
+      translate: 0 0;
+    }
+    72% {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+      translate: 0 var(--offer-drift);
     }
   }
 }
