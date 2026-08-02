@@ -1,0 +1,260 @@
+{
+  "schemaVersion": 1,
+  "toolVersion": "0.1.0",
+  "buildId": "16b32e8c9214b7cd",
+  "createdAt": "2026-08-02T01:45:59.151Z",
+  "gitSha": "5c60db9ca6e6de2fb47646b375fd28670998e03d",
+  "committedAt": "2026-07-31T16:29:37+03:00",
+  "parentSha": "13cd85fccd67fab37fb2a5636441577fff627e2d",
+  "branch": "master",
+  "dirty": true,
+  "nextVersion": "15.5.21",
+  "nodeMajor": 25,
+  "bundler": "webpack",
+  "sourceSignature": "491660e5aa3bb3bc",
+  "routes": [
+    {
+      "id": "apps/web/app/page.tsx",
+      "pattern": "/",
+      "filePath": "apps/web/app/page.tsx",
+      "renderingMode": "STATIC",
+      "renderingModeReason": null,
+      "firstLoadBytes": 484482,
+      "routeBytes": 12871,
+      "sharedBytes": 8535,
+      "unattributedBytes": 484482,
+      "modules": {},
+      "dependencies": {},
+      "dynamicReasons": [],
+      "clientBoundaryRoots": [
+        "apps/web/src/components/HomeStatement.tsx",
+        "apps/web/src/components/RegistryPalette.tsx"
+      ],
+      "shell": {
+        "predictedStatic": [
+          "ArrowRightIcon",
+          "HomePage",
+          "HomeStatement",
+          "Icon",
+          "RegistryPalette",
+          "RootLayout",
+          "Sponsors"
+        ],
+        "predictedHoles": [],
+        "actual": {
+          "htmlPath": "server/app/index.html",
+          "bytes": 77406,
+          "holes": 0,
+          "boundaryIds": [],
+          "shellRatio": 1
+        },
+        "agreement": 1,
+        "unknown": [
+          "Icon at apps/web/src/lib/icons.tsx renders a component it receives rather than names"
+        ]
+      },
+      "warnings": [
+        "static/chunks/165-4b39406911df6976.js: no source map emitted for this chunk",
+        "static/chunks/app/page-a2695382405f1884.js: no source map emitted for this chunk"
+      ]
+    },
+    {
+      "id": "apps/web/app/components/page.tsx",
+      "pattern": "/components",
+      "filePath": "apps/web/app/components/page.tsx",
+      "renderingMode": "STATIC",
+      "renderingModeReason": null,
+      "firstLoadBytes": 494372,
+      "routeBytes": 11467,
+      "sharedBytes": 19829,
+      "unattributedBytes": 494372,
+      "modules": {},
+      "dependencies": {},
+      "dynamicReasons": [],
+      "clientBoundaryRoots": [
+        "apps/web/src/components/LabHome.tsx"
+      ],
+      "shell": {
+        "predictedStatic": [
+          "ComponentsPage",
+          "LabHome",
+          "RegistryPalette",
+          "RootLayout"
+        ],
+        "predictedHoles": [],
+        "actual": {
+          "htmlPath": "server/app/components.html",
+          "bytes": 83014,
+          "holes": 0,
+          "boundaryIds": [],
+          "shellRatio": 1
+        },
+        "agreement": 1,
+        "unknown": []
+      },
+      "warnings": [
+        "static/chunks/165-4b39406911df6976.js: no source map emitted for this chunk",
+        "static/chunks/709-73f8a1c2bcfdbd8a.js: no source map emitted for this chunk",
+        "static/chunks/app/components/page-868c4df56d1eb4ab.js: no source map emitted for this chunk"
+      ]
+    },
+    {
+      "id": "apps/web/app/components/[slug]/page.tsx",
+      "pattern": "/components/[slug]",
+      "filePath": "apps/web/app/components/[slug]/page.tsx",
+      "renderingMode": "STATIC",
+      "renderingModeReason": "prerendered via generateStaticParams",
+      "firstLoadBytes": 883386,
+      "routeBytes": 247317,
+      "sharedBytes": 172993,
+      "unattributedBytes": 883386,
+      "modules": {},
+      "dependencies": {},
+      "dynamicReasons": [],
+      "clientBoundaryRoots": [
+        "apps/web/src/components/CodeSection.tsx",
+        "apps/web/src/components/StorySection.tsx",
+        "apps/web/src/components/RegistryPalette.tsx",
+        "apps/web/src/showcases/unlimited-nested-menu-showcase.tsx",
+        "apps/web/src/showcases/ticket-number-ticker-showcase.tsx",
+        "apps/web/src/showcases/file-upload-staging-showcase.tsx",
+        "apps/web/src/showcases/schedule-builder-showcase.tsx",
+        "apps/web/src/showcases/otp-segmented-input-showcase.tsx",
+        "apps/web/src/showcases/share-permissions-popover-showcase.tsx",
+        "apps/web/src/showcases/command-palette-showcase.tsx",
+        "apps/web/src/showcases/morphing-checkout-showcase.tsx",
+        "apps/web/src/showcases/search-expand-nav-showcase.tsx",
+        "apps/web/src/showcases/drag-to-reorder-list-showcase.tsx",
+        "apps/web/src/showcases/caret-mention-popover-showcase.tsx",
+        "apps/web/src/showcases/hover-expand-icon-strip-showcase.tsx",
+        "apps/web/src/showcases/inertial-wheel-list-showcase.tsx"
+      ],
+      "shell": {
+        "predictedStatic": [
+          "ArrowLeftIcon",
+          "BackLink",
+          "CodeSection",
+          "ComponentPage",
+          "Divider",
+          "Icon",
+          "RegistryPalette",
+          "RootLayout",
+          "SearchTrigger",
+          "StorySection"
+        ],
+        "predictedHoles": [],
+        "actual": {
+          "htmlPath": "server/app/components/caret-mention-popover.html",
+          "bytes": 536604,
+          "holes": 0,
+          "boundaryIds": [],
+          "shellRatio": 1
+        },
+        "agreement": 1,
+        "unknown": [
+          "Icon at apps/web/src/lib/icons.tsx renders a component it receives rather than names"
+        ]
+      },
+      "warnings": [
+        "static/chunks/165-4b39406911df6976.js: no source map emitted for this chunk",
+        "static/chunks/722-b2ab49d3e60032b1.js: no source map emitted for this chunk",
+        "static/chunks/709-73f8a1c2bcfdbd8a.js: no source map emitted for this chunk",
+        "static/chunks/app/components/[slug]/page-3cfa56400987996d.js: no source map emitted for this chunk"
+      ]
+    },
+    {
+      "id": "apps/web/app/components/[slug]/opengraph-image.tsx",
+      "pattern": "/components/[slug]/opengraph-image",
+      "filePath": "apps/web/app/components/[slug]/opengraph-image.tsx",
+      "renderingMode": "STATIC",
+      "renderingModeReason": "prerendered via generateStaticParams",
+      "firstLoadBytes": 463076,
+      "routeBytes": 0,
+      "sharedBytes": 0,
+      "unattributedBytes": 463076,
+      "modules": {},
+      "dependencies": {},
+      "dynamicReasons": [],
+      "clientBoundaryRoots": [
+        "apps/web/src/components/RegistryPalette.tsx"
+      ],
+      "shell": {
+        "predictedStatic": [],
+        "predictedHoles": [],
+        "actual": null,
+        "agreement": null,
+        "unknown": [
+          "apps/web/app/components/[slug]/opengraph-image.tsx has no statically resolvable default export"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "apps/web/app/components/opengraph-image.tsx",
+      "pattern": "/components/opengraph-image",
+      "filePath": "apps/web/app/components/opengraph-image.tsx",
+      "renderingMode": "STATIC",
+      "renderingModeReason": null,
+      "firstLoadBytes": 463076,
+      "routeBytes": 0,
+      "sharedBytes": 0,
+      "unattributedBytes": 463076,
+      "modules": {},
+      "dependencies": {},
+      "dynamicReasons": [],
+      "clientBoundaryRoots": [
+        "apps/web/src/components/RegistryPalette.tsx"
+      ],
+      "shell": {
+        "predictedStatic": [],
+        "predictedHoles": [],
+        "actual": null,
+        "agreement": null,
+        "unknown": [
+          "apps/web/app/components/opengraph-image.tsx has no statically resolvable default export"
+        ]
+      },
+      "warnings": []
+    },
+    {
+      "id": "apps/web/app/opengraph-image.tsx",
+      "pattern": "/opengraph-image",
+      "filePath": "apps/web/app/opengraph-image.tsx",
+      "renderingMode": "STATIC",
+      "renderingModeReason": null,
+      "firstLoadBytes": 463076,
+      "routeBytes": 0,
+      "sharedBytes": 0,
+      "unattributedBytes": 463076,
+      "modules": {},
+      "dependencies": {},
+      "dynamicReasons": [],
+      "clientBoundaryRoots": [
+        "apps/web/src/components/RegistryPalette.tsx"
+      ],
+      "shell": {
+        "predictedStatic": [],
+        "predictedHoles": [],
+        "actual": null,
+        "agreement": null,
+        "unknown": [
+          "apps/web/app/opengraph-image.tsx has no statically resolvable default export"
+        ]
+      },
+      "warnings": []
+    }
+  ],
+  "modules": {},
+  "warnings": [
+    "/: static/chunks/165-4b39406911df6976.js: no source map emitted for this chunk",
+    "/: static/chunks/app/page-a2695382405f1884.js: no source map emitted for this chunk",
+    "/components: static/chunks/165-4b39406911df6976.js: no source map emitted for this chunk",
+    "/components: static/chunks/709-73f8a1c2bcfdbd8a.js: no source map emitted for this chunk",
+    "/components: static/chunks/app/components/page-868c4df56d1eb4ab.js: no source map emitted for this chunk",
+    "/components/[slug]: static/chunks/165-4b39406911df6976.js: no source map emitted for this chunk",
+    "/components/[slug]: static/chunks/722-b2ab49d3e60032b1.js: no source map emitted for this chunk",
+    "/components/[slug]: static/chunks/709-73f8a1c2bcfdbd8a.js: no source map emitted for this chunk",
+    "/components/[slug]: static/chunks/app/components/[slug]/page-3cfa56400987996d.js: no source map emitted for this chunk"
+  ],
+  "modulesRef": "44136fa355b3678a"
+}
