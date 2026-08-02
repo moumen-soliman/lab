@@ -80,7 +80,7 @@ function CopyAction({ copied, onCopy, label = "Copy" }: { copied: boolean; onCop
     <button
       type="button"
       onClick={onCopy}
-      className="relative inline-flex items-center gap-1.5 text-xs font-medium text-gray-500 select-none transition-colors hover:text-[#111] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
+      className="relative inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground select-none transition-colors hover:text-foreground after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
     >
       <CopySwapIcon copied={copied} />
       {copied ? "Copied" : label}
@@ -91,7 +91,7 @@ function CopyAction({ copied, onCopy, label = "Copy" }: { copied: boolean; onCop
 // Small uppercase section kicker; gray-500 keeps AA contrast at this size.
 function SectionLabel({ children }: { children: ReactNode }) {
   return (
-    <h2 className="text-[0.6875rem] font-medium uppercase tracking-wide text-gray-500 select-none">{children}</h2>
+    <h2 className="text-[0.6875rem] font-medium uppercase tracking-wide text-muted-foreground select-none">{children}</h2>
   );
 }
 
@@ -139,7 +139,7 @@ export function CodeSection({
                 onClick={() => setManager(m.id)}
                 aria-pressed={manager === m.id}
                 className={`relative rounded-full px-2.5 py-1 text-xs font-medium select-none transition-[color,background-color,scale] active:scale-[0.96] after:absolute after:inset-x-0 after:-inset-y-2 after:content-[''] ${
-                  manager === m.id ? "bg-[#111] text-white" : "text-gray-500 hover:text-[#111] hover:bg-gray-100"
+                  manager === m.id ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground hover:bg-accent"
                 }`}
               >
                 {m.label}
@@ -150,7 +150,7 @@ export function CodeSection({
 
         <div className="flex items-stretch gap-2">
           <code className="flex-1 min-w-0 overflow-x-auto rounded-lg bg-gray-950 px-3.5 py-2.5 text-[0.8125rem] text-gray-100 shadow-border whitespace-pre">
-            <span aria-hidden="true" className="select-none text-gray-500">
+            <span aria-hidden="true" className="select-none text-muted-foreground">
               ${" "}
             </span>
             {command}
@@ -158,7 +158,7 @@ export function CodeSection({
           <button
             type="button"
             onClick={() => install.copy(command)}
-            className="grid w-10 shrink-0 place-items-center rounded-lg bg-white text-gray-500 shadow-border transition-[color,box-shadow,scale] hover:text-[#111] hover:shadow-border-hover active:scale-[0.96]"
+            className="grid w-10 shrink-0 place-items-center rounded-lg bg-card text-muted-foreground shadow-border transition-[color,box-shadow,scale] hover:text-foreground hover:shadow-border-hover active:scale-[0.96]"
             aria-label="Copy install command"
           >
             <CopySwapIcon copied={install.copied} />
@@ -177,7 +177,7 @@ export function CodeSection({
               href={`/r/${slug}.md`}
               target="_blank"
               rel="noreferrer"
-              className="relative text-xs font-medium text-gray-500 select-none transition-colors hover:text-[#111] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
+              className="relative text-xs font-medium text-muted-foreground select-none transition-colors hover:text-foreground after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
             >
               Open .md
             </a>
@@ -209,7 +209,7 @@ export function CodeSection({
               onClick={() => setOpen((value) => !value)}
               aria-expanded={open}
               aria-controls={sourceId}
-              className="relative inline-flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-wide text-gray-500 transition-colors hover:text-[#111] after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
+              className="relative inline-flex items-center gap-1.5 text-[0.6875rem] font-medium uppercase tracking-wide text-muted-foreground transition-colors hover:text-foreground after:absolute after:-inset-x-2 after:-inset-y-3 after:content-['']"
             >
               <span
                 className={`inline-flex [transition:rotate_250ms_var(--ease-smooth-out)] ${open ? "rotate-180" : "rotate-0"}`}

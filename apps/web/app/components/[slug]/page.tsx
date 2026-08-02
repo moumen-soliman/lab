@@ -94,7 +94,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
   const usageHtml = usage ? await highlight(usage) : null;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center py-24 px-6 selection:bg-[#111] selection:text-white">
+    <div className="min-h-screen flex flex-col items-center justify-center py-24 px-6 selection:bg-foreground selection:text-background">
       <main className="w-full max-w-md">
         {/* Back on the left, search on the right: the two ways out of a
             component page, and on touch the search button is the only one. */}
@@ -118,8 +118,8 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
           <StorySection steps={story.steps} references={story.references} legend={story.legend} delay={110} />
         ) : (
           <section className="animate-fade-in mt-10" style={{ animationDelay: "110ms" }}>
-            <h2 className="text-[0.6875rem] font-medium uppercase tracking-wide text-gray-500 select-none">Story</h2>
-            <p className="mt-2 text-sm leading-relaxed text-gray-400">
+            <h2 className="text-[0.6875rem] font-medium uppercase tracking-wide text-muted-foreground select-none">Story</h2>
+            <p className="mt-2 text-sm leading-relaxed text-subtle-foreground">
               Coming soon — the how and why behind this component.
             </p>
           </section>
@@ -128,9 +128,9 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
         <Divider delay={120} className="mt-10 mb-8" />
 
         <footer className="animate-fade-in text-center" style={{ animationDelay: "140ms" }}>
-          <p className="text-gray-400 text-sm">
+          <p className="text-subtle-foreground text-sm">
             By{" "}
-            <Link href="https://moumen.dev" className="hover:text-[#111] transition-colors">
+            <Link href="https://moumen.dev" className="hover:text-foreground transition-colors">
               Moumen Soliman
             </Link>
           </p>

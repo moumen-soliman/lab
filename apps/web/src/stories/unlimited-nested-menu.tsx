@@ -70,7 +70,7 @@ export const unlimitedNestedMenuStory: Story = {
           The first working version shipped as the{" "}
           <a
             href="https://ui.tripled.work/components/native-action-dropdown"
-            className={`${em} underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-[#111]`}
+            className={`${em} underline decoration-subtle-foreground/70 underline-offset-2 transition-colors hover:decoration-foreground`}
             target="_blank"
             rel="noreferrer"
           >
@@ -140,7 +140,7 @@ export const unlimitedNestedMenuStory: Story = {
       label: "Jhey Tompkins, Design Engineering at Config 2024 (video, from 15:03)",
       note: (
         <>
-          the part on <span className={em}>CSS anchor positioning</span>: <code className="text-[#111]">position-anchor</code>{" "}
+          the part on <span className={em}>CSS anchor positioning</span>: <code className="text-foreground">position-anchor</code>{" "}
           letting a dropdown place itself and flip to either side of its trigger based on the viewport.
         </>
       ),

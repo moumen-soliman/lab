@@ -128,8 +128,8 @@ export function CraftedVideo({
       ref={containerRef}
       className={
         fill
-          ? "shadow-border absolute inset-0 select-none overflow-hidden bg-gray-50 rounded-2xl will-change-transform"
-          : "shadow-border relative select-none overflow-hidden bg-white w-full rounded-xl will-change-transform p-5"
+          ? "shadow-border absolute inset-0 select-none overflow-hidden bg-muted rounded-2xl will-change-transform"
+          : "shadow-border relative select-none overflow-hidden bg-card w-full rounded-xl will-change-transform p-5"
       }
       style={fill ? undefined : { aspectRatio: item.aspectRatio || CRAFTED_ASPECT_RATIO }}
     >
@@ -142,8 +142,15 @@ export function CraftedVideo({
           data-hide={ready}
         />
       ) : (
+        /* The skeleton, as a sheen travelling over the surface rather than as
+           three fixed grays. Two backgrounds on one element: `bg-muted` is the
+           color, the gradient is the image, and they compose without fighting.
+           The band has to be a translucent white in both themes, because
+           "lighter than whatever is underneath" is the only description of a
+           highlight that survives inverting the page - a literal #fafafa is a
+           highlight on paper and a blown-out hole on ink. */
         <div
-          className="pointer-events-none absolute inset-0 z-10 rounded-xl bg-[linear-gradient(110deg,#f4f4f5_8%,#fafafa_18%,#f4f4f5_33%)] bg-[length:200%_100%] animate-shimmer opacity-100 transition-opacity duration-[350ms] ease-smooth-out data-[hide=true]:opacity-0 motion-reduce:animate-none"
+          className="pointer-events-none absolute inset-0 z-10 rounded-xl bg-muted bg-[linear-gradient(110deg,transparent_8%,var(--color-sheen)_18%,transparent_33%)] bg-[length:200%_100%] animate-shimmer opacity-100 transition-opacity duration-[350ms] ease-smooth-out data-[hide=true]:opacity-0 motion-reduce:animate-none"
           data-hide={ready}
         />
       )}
@@ -169,17 +176,17 @@ export function CraftedVideo({
         <button
           type="button"
           onClick={() => setArmed(true)}
-          className="absolute inset-0 z-20 grid place-items-center bg-white/30 backdrop-blur-sm text-gray-600 hover:text-[#111] transition-colors"
+          className="absolute inset-0 z-20 grid place-items-center bg-background/30 backdrop-blur-sm text-body-foreground hover:text-foreground transition-colors"
           aria-label={`Load ${item.title}`}
         >
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-gray-200 bg-white/90 px-3 py-1.5 text-xs font-medium shadow-sm">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card/90 px-3 py-1.5 text-xs font-medium shadow-sm">
             <PlayIcon /> Tap to play
           </span>
         </button>
       )}
 
       {failed && !waitingForTap && (
-        <div className="absolute inset-0 z-20 grid place-items-center text-xs text-gray-400">
+        <div className="absolute inset-0 z-20 grid place-items-center text-xs text-subtle-foreground">
           Couldn&rsquo;t load clip
         </div>
       )}

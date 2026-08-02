@@ -90,6 +90,36 @@ export function SearchIcon({ className = "w-4 h-4" }: { className?: string }) {
   );
 }
 
+/* The theme pair, drawn to the same optical weight so the cross-fade between
+ * them is a change of shape and never a change of density. The sun's rays stop
+ * at 24 like every other icon's extents, and the moon is a crescent cut from a
+ * disc rather than a filled arc, so both read at 16px. */
+export function SunIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <Icon className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="4.25" strokeWidth="2" />
+      <path
+        strokeLinecap="round"
+        strokeWidth="2"
+        d="M12 2.5v2.25M12 19.25v2.25M21.5 12h-2.25M4.75 12H2.5M18.72 5.28l-1.59 1.59M6.87 17.13l-1.59 1.59M18.72 18.72l-1.59-1.59M6.87 6.87 5.28 5.28"
+      />
+    </Icon>
+  );
+}
+
+export function MoonIcon({ className = "w-4 h-4" }: { className?: string }) {
+  return (
+    <Icon className={className} aria-hidden="true">
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
+        d="M20.25 14.32A8.5 8.5 0 0 1 9.68 3.75a8.5 8.5 0 1 0 10.57 10.57Z"
+      />
+    </Icon>
+  );
+}
+
 export function PlayIcon() {
   return (
     <svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="currentColor">

@@ -31,7 +31,7 @@ const ENTRANCE = {
 // lives at /components.
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-6 selection:bg-[#111] selection:text-white">
+    <div className="min-h-screen flex items-center justify-center px-6 selection:bg-foreground selection:text-background">
       <main className="max-w-md text-center">
         {/* The mark is served from /logo.svg, the same file the README and the
             registry point at, so the identity has one source. Empty alt: the
@@ -42,7 +42,7 @@ export default function HomePage() {
         </div>
 
         <p
-          className="animate-fade-in mt-4 font-mono text-xs tracking-wide text-gray-500 select-none"
+          className="animate-fade-in mt-4 font-mono text-xs tracking-wide text-muted-foreground select-none"
           style={{ animationDelay: `${ENTRANCE.wordmark}ms` }}
         >
           moumenlab
@@ -59,7 +59,7 @@ export default function HomePage() {
         <div className="animate-fade-in mt-8" style={{ animationDelay: `${ENTRANCE.cta}ms` }}>
           <Link
             href="/components"
-            className="group inline-flex items-center gap-2 rounded-full bg-[#111] py-2.5 pl-5 pr-4 text-sm font-medium text-white select-none transition-[background-color,scale] hover:bg-[#333] active:scale-[0.96]"
+            className="group inline-flex items-center gap-2 rounded-full bg-primary py-2.5 pl-5 pr-4 text-sm font-medium text-primary-foreground select-none transition-[background-color,scale] hover:bg-primary/85 active:scale-[0.96]"
           >
             Browse components
             {/* The arrow leans into the journey on hover; translate only, so the

@@ -20,8 +20,8 @@ export function ExpandingIconStripShowcase() {
     <>
       <ShowcaseIntro title="Hover-Expand Icon Strip" delay={40} defaultOpen>
         Four icons share a fixed-width box. Hover one and it expands while the others squeeze to make room - the row
-        never changes width, and <span className="font-medium text-[#111]">Tab</span> expands panels exactly like hover.
-        The label <span className="font-medium text-[#111]">waits ~90ms</span> for its panel to open before it lands
+        never changes width, and <span className="font-medium text-foreground">Tab</span> expands panels exactly like hover.
+        The label <span className="font-medium text-foreground">waits ~90ms</span> for its panel to open before it lands
         (opacity, rise, blur), then ducks out fast on the way back so the shrinking panel never crushes it.
       </ShowcaseIntro>
 
@@ -35,22 +35,22 @@ export function ExpandingIconStripShowcase() {
 
       <section
         className={`animate-fade-in relative flex items-center justify-center rounded-2xl border px-6 py-12 min-h-[160px] transition-colors ${
-          inspectStrip ? `${SPEC_GRID} bg-white border-blue-200` : "bg-gray-50/60 border-gray-200"
+          inspectStrip ? `${SPEC_GRID} bg-card border-blue-200` : "bg-muted/40 border-border"
         }`}
         style={{ animationDelay: "70ms" }}
       >
         <ExpandingIconStrip items={STRIP_ITEMS} inspect={inspectStrip} onSelect={handleIconSelect} />
       </section>
 
-      <p className="animate-fade-in mt-4 text-center text-sm text-gray-500" style={{ animationDelay: "90ms" }}>
+      <p className="animate-fade-in mt-4 text-center text-sm text-muted-foreground" style={{ animationDelay: "90ms" }}>
         {inspectStrip ? (
           <>
-            Hover or focus → <code className="text-[#111]">flex-grow</code> 1 → 5 · others squeeze within the fixed
+            Hover or focus → <code className="text-foreground">flex-grow</code> 1 → 5 · others squeeze within the fixed
             width · label enter +90ms, exit 150ms
           </>
         ) : (
           <>
-            Last opened: <span className="font-medium text-[#111]">{lastIcon ?? "none"}</span>
+            Last opened: <span className="font-medium text-foreground">{lastIcon ?? "none"}</span>
           </>
         )}
       </p>

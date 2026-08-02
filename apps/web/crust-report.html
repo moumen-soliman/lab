@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>crust · 54064132f94b8e75</title>
+<style>
+body { margin: 0; padding: 40px 32px; background: #fff; }
+@media (prefers-color-scheme: dark) { body { background: #000; } }
+:host, :root { color-scheme: light dark; }
+
+.crust {
+  /* Achromatic by design: every neutral is C=0, so nothing carries a hue cast
+     and the four status colors are the only chroma on the surface. OKLCH keeps
+     equal L steps reading as equal brightness across the light/dark pair. */
+  --bg: oklch(1 0 0);
+  --surface: oklch(0.985 0 0);
+  --fg: oklch(0.205 0 0);
+  --muted: oklch(0.556 0 0);
+  --faint: oklch(0.708 0 0);
+  --border: oklch(0.922 0 0);
+
+  --blue: oklch(0.58 0.22 254);
+  --green: oklch(0.62 0.17 149);
+  --amber: oklch(0.68 0.15 72);
+  --red: oklch(0.58 0.24 27);
+
+  /* Shadows are reserved for surfaces that genuinely float. Structure inside the
+     page is hairlines — a shadow between a table row and its neighbour would be
+     depth that doesn't exist. */
+  --shadow: 0 2px 4px oklch(0 0 0 / 0.04), 0 12px 32px oklch(0 0 0 / 0.10);
+
+  /* 11 / 12 / 13 / 14 / 22 — five steps, no one-off sizes. */
+  --t-label: 11px;
+  --t-meta: 12px;
+  --t-body: 13px;
+  --t-lead: 14px;
+  --t-title: 22px;
+
+  font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  font-size: var(--t-body);
+  line-height: 1.5;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--fg);
+  background: var(--bg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .crust {
+    --bg: oklch(0 0 0);
+    --surface: oklch(0.145 0 0);
+    --fg: oklch(0.94 0 0);
+    --muted: oklch(0.708 0 0);
+    --faint: oklch(0.556 0 0);
+    --border: oklch(0.269 0 0);
+
+    --blue: oklch(0.65 0.19 254);
+    --green: oklch(0.74 0.18 150);
+    --amber: oklch(0.79 0.15 78);
+    --red: oklch(0.68 0.21 25);
+
+    --shadow: 0 2px 4px oklch(0 0 0 / 0.5), 0 12px 32px oklch(0 0 0 / 0.45);
+  }
+}
+
+.crust * { box-sizing: border-box; }
+
+/* ── header ─────────────────────────────────────────────── */
+
+.crust .head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.crust h1 {
+  font-size: var(--t-lead);
+  font-weight: 550;
+  line-height: 1.2;
+  letter-spacing: -0.011em;
+  text-wrap: balance;
+  margin: 0;
+}
+.crust .id { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--t-meta);
+  color: var(--muted); }
+.crust .sub { color: var(--muted); font-size: var(--t-meta); margin: 4px 0 0; text-wrap: pretty; }
+
+/* Figures sit on hairlines rather than in cards: at five across, five bordered
+   boxes read as five buttons. */
+.crust .stats { display: flex; flex-wrap: wrap; gap: 0 32px;
+  border-block: 1px solid var(--border); padding: 16px 0; margin: 20px 0 0; }
+.crust .stat { min-width: 84px; }
+.crust .stat b { display: block; font-size: var(--t-title); font-weight: 550; line-height: 1.15;
+  font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.crust .stat span { display: block; color: var(--muted); font-size: var(--t-meta); margin-top: 3px; }
+
+/* ── table ──────────────────────────────────────────────── */
+
+.crust table { width: 100%; border-collapse: collapse; margin-top: 4px; }
+.crust th { text-align: start; font-weight: 500; color: var(--muted); font-size: var(--t-meta);
+  padding: 14px 10px 8px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+.crust td { padding: 10px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+/* First-load figures change every build; tabular digits stop the column reflowing. */
+.crust td.num { text-align: end; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.crust tr.route { cursor: pointer; }
+.crust tr.route td { transition-property: background-color; transition-duration: 100ms;
+  transition-timing-function: cubic-bezier(0.2, 0, 0, 1); }
+.crust tr.route:hover td { background: var(--surface); }
+.crust tr.route:focus-visible { outline: 2px solid var(--blue); outline-offset: -2px; }
+
+.crust code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--t-meta); }
+.crust .path { display: block; max-width: 52ch; overflow: hidden; text-overflow: ellipsis;
+  white-space: nowrap; }
+
+/* Status as a dot plus a word, not a filled chip: a row of chips competes with
+   the numbers for attention, and the numbers are the point. */
+.crust .mode { display: inline-flex; align-items: center; gap: 6px; font-size: var(--t-meta);
+  color: var(--muted); white-space: nowrap; }
+.crust .mode::before { content: ""; width: 6px; height: 6px; border-radius: 999px;
+  background: currentColor; flex: none; }
+.crust .m-STATIC::before { background: var(--green); }
+.crust .m-PARTIALLY_STATIC::before { background: var(--blue); }
+.crust .m-DYNAMIC::before { background: var(--amber); }
+.crust .m-ISR::before { background: var(--blue); }
+.crust .m-ROUTE_HANDLER::before, .crust .m-unknown::before { background: var(--faint); }
+
+.crust .bar { height: 4px; border-radius: 2px; background: var(--border); overflow: hidden;
+  min-width: 56px; }
+.crust .bar i { display: block; height: 100%; border-radius: 2px; background: var(--fg); }
+.crust .bar.low i { background: var(--red); }
+
+/* ── detail ─────────────────────────────────────────────── */
+
+.crust .detail { display: none; }
+.crust .detail.open { display: table-row; }
+.crust .detail td { padding: 4px 10px 20px; background: var(--surface); }
+
+.crust .hole { color: var(--red); margin: 4px 0; text-wrap: pretty; }
+.crust .mod { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding: 3px 0; }
+.crust .mod span { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+.crust .sec { margin-top: 16px; }
+.crust .sec > b { display: block; font-size: var(--t-meta); font-weight: 500;
+  color: var(--muted); margin-bottom: 6px; }
+
+.crust .note { border: 1px solid var(--border); border-radius: 8px; background: var(--surface);
+  padding: 12px 14px; margin: 20px 0 0; color: var(--muted); text-wrap: pretty; }
+.crust .note b { color: var(--fg); font-weight: 550; }
+
+.crust .empty { color: var(--faint); }
+
+/* ── entrance ───────────────────────────────────────────── */
+
+@keyframes crust-rise { from { opacity: 0; translate: 0 4px; } to { opacity: 1; translate: 0 0; } }
+
+.crust .head, .crust .sub, .crust .stats, .crust .note {
+  animation: crust-rise 260ms cubic-bezier(0.2, 0, 0, 1) 40ms backwards;
+}
+.crust tr.route {
+  animation: crust-rise 260ms cubic-bezier(0.2, 0, 0, 1) backwards;
+  animation-delay: calc(100ms + min(var(--i), 12) * 18ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .crust *, .crust *::before, .crust *::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+<div class="crust">
+  <div class="head">
+    <h1>crust</h1>
+    <span class="id">54064132f94b8e75</span>
+  </div>
+  <p class="sub">
+    next 15.5.21 · webpack ·
+    5c60db9c · dirty tree ·
+    8/2/2026, 6:48:38 PM
+  </p>
+
+  <div class="stats">
+    <div class="stat"><b>6</b><span>routes</span></div>
+    <div class="stat"><b>462.7 kB</b><span>median first load</span></div>
+    <div class="stat"><b>100%</b><span>mean shell</span></div>
+    <div class="stat"><b>0</b><span>dynamic</span></div>
+    <div class="stat"><b>0</b><span>holes</span></div>
+  </div>
+
+  <div class="note"><b>Per-file attribution unavailable.</b> This build shipped without browser source maps, so bytes cannot be traced to a source file. Set <code>productionBrowserSourceMaps: true</code> in next.config and rebuild. Route sizes and shell analysis below are unaffected.</div>
+
+  <table>
+    <thead><tr>
+      <th>Route</th><th class="num">First load</th><th>Trend</th><th>Shell</th><th>Mode</th>
+    </tr></thead>
+    <tbody>
+      <tr class="route" style="--i:0" tabindex="0" role="button" aria-expanded="false" aria-controls="crust-detail-0" data-crust-toggle="0">
+  <td><code>/components/[slug]</code></td>
+  <td class="num">862.7 kB</td>
+  <td><span class="empty">—</span></td>
+  <td><div class="bar" title="100% static"><i style="width:100.0%"></i></div></td>
+  <td><span class="mode m-STATIC">static</span></td>
+</tr>
+<tr class="detail" id="crust-detail-0"><td colspan="5"><div><code class="path" title="apps/web/app/components/[slug]/page.tsx">apps/web/app/components/[slug]/page.tsx</code></div><div class="sec"><b>Why</b>prerendered via generateStaticParams</div><div class="sec"><b>Client boundaries</b><div><code class="path" title="apps/web/src/components/CodeSection.tsx">apps/web/src/components/CodeSection.tsx</code></div><div><code class="path" title="apps/web/src/components/StorySection.tsx">apps/web/src/components/StorySection.tsx</code></div><div><code class="path" title="apps/web/src/components/RegistryPalette.tsx">apps/web/src/components/RegistryPalette.tsx</code></div><div><code class="path" title="apps/web/src/showcases/unlimited-nested-menu-showcase.tsx">apps/web/src/showcases/unlimited-nested-menu-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/ticket-number-ticker-showcase.tsx">apps/web/src/showcases/ticket-number-ticker-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/file-upload-staging-showcase.tsx">apps/web/src/showcases/file-upload-staging-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/schedule-builder-showcase.tsx">apps/web/src/showcases/schedule-builder-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/otp-segmented-input-showcase.tsx">apps/web/src/showcases/otp-segmented-input-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/share-permissions-popover-showcase.tsx">apps/web/src/showcases/share-permissions-popover-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/command-palette-showcase.tsx">apps/web/src/showcases/command-palette-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/morphing-checkout-showcase.tsx">apps/web/src/showcases/morphing-checkout-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/search-expand-nav-showcase.tsx">apps/web/src/showcases/search-expand-nav-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/drag-to-reorder-list-showcase.tsx">apps/web/src/showcases/drag-to-reorder-list-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/caret-mention-popover-showcase.tsx">apps/web/src/showcases/caret-mention-popover-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/hover-expand-icon-strip-showcase.tsx">apps/web/src/showcases/hover-expand-icon-strip-showcase.tsx</code></div><div><code class="path" title="apps/web/src/showcases/inertial-wheel-list-showcase.tsx">apps/web/src/showcases/inertial-wheel-list-showcase.tsx</code></div></div><div class="sec"><b>Unattributed</b>862.7 kB — no mapping covers these bytes</div></td></tr>
+<tr class="route" style="--i:1" tabindex="0" role="button" aria-expanded="false" aria-controls="crust-detail-1" data-crust-toggle="1">
+  <td><code>/components</code></td>
+  <td class="num">482.8 kB</td>
+  <td><span class="empty">—</span></td>
+  <td><div class="bar" title="100% static"><i style="width:100.0%"></i></div></td>
+  <td><span class="mode m-STATIC">static</span></td>
+</tr>
+<tr class="detail" id="crust-detail-1"><td colspan="5"><div><code class="path" title="apps/web/app/components/page.tsx">apps/web/app/components/page.tsx</code></div><div class="sec"><b>Client boundaries</b><div><code class="path" title="apps/web/src/components/LabHome.tsx">apps/web/src/components/LabHome.tsx</code></div></div><div class="sec"><b>Unattributed</b>482.8 kB — no mapping covers these bytes</div></td></tr>
+<tr class="route" style="--i:2" tabindex="0" role="button" aria-expanded="false" aria-controls="crust-detail-2" data-crust-toggle="2">
+  <td><code>/</code></td>
+  <td class="num">473.1 kB</td>
+  <td><span class="empty">—</span></td>
+  <td><div class="bar" title="100% static"><i style="width:100.0%"></i></div></td>
+  <td><span class="mode m-STATIC">static</span></td>
+</tr>
+<tr class="detail" id="crust-detail-2"><td colspan="5"><div><code class="path" title="apps/web/app/page.tsx">apps/web/app/page.tsx</code></div><div class="sec"><b>Client boundaries</b><div><code class="path" title="apps/web/src/components/HomeStatement.tsx">apps/web/src/components/HomeStatement.tsx</code></div><div><code class="path" title="apps/web/src/components/RegistryPalette.tsx">apps/web/src/components/RegistryPalette.tsx</code></div></div><div class="sec"><b>Unattributed</b>473.1 kB — no mapping covers these bytes</div></td></tr>
+<tr class="route" style="--i:3" tabindex="0" role="button" aria-expanded="false" aria-controls="crust-detail-3" data-crust-toggle="3">
+  <td><code>/components/[slug]/opengraph-image</code></td>
+  <td class="num">452.2 kB</td>
+  <td><span class="empty">—</span></td>
+  <td><span class="empty">—</span></td>
+  <td><span class="mode m-STATIC">static</span></td>
+</tr>
+<tr class="detail" id="crust-detail-3"><td colspan="5"><div><code class="path" title="apps/web/app/components/[slug]/opengraph-image.tsx">apps/web/app/components/[slug]/opengraph-image.tsx</code></div><div class="sec"><b>Why</b>prerendered via generateStaticParams</div><div class="sec"><b>Client boundaries</b><div><code class="path" title="apps/web/src/components/RegistryPalette.tsx">apps/web/src/components/RegistryPalette.tsx</code></div></div><div class="sec"><b>Unattributed</b>452.2 kB — no mapping covers these bytes</div></td></tr>
+<tr class="route" style="--i:4" tabindex="0" role="button" aria-expanded="false" aria-controls="crust-detail-4" data-crust-toggle="4">
+  <td><code>/components/opengraph-image</code></td>
+  <td class="num">452.2 kB</td>
+  <td><span class="empty">—</span></td>
+  <td><span class="empty">—</span></td>
+  <td><span class="mode m-STATIC">static</span></td>
+</tr>
+<tr class="detail" id="crust-detail-4"><td colspan="5"><div><code class="path" title="apps/web/app/components/opengraph-image.tsx">apps/web/app/components/opengraph-image.tsx</code></div><div class="sec"><b>Client boundaries</b><div><code class="path" title="apps/web/src/components/RegistryPalette.tsx">apps/web/src/components/RegistryPalette.tsx</code></div></div><div class="sec"><b>Unattributed</b>452.2 kB — no mapping covers these bytes</div></td></tr>
+<tr class="route" style="--i:5" tabindex="0" role="button" aria-expanded="false" aria-controls="crust-detail-5" data-crust-toggle="5">
+  <td><code>/opengraph-image</code></td>
+  <td class="num">452.2 kB</td>
+  <td><span class="empty">—</span></td>
+  <td><span class="empty">—</span></td>
+  <td><span class="mode m-STATIC">static</span></td>
+</tr>
+<tr class="detail" id="crust-detail-5"><td colspan="5"><div><code class="path" title="apps/web/app/opengraph-image.tsx">apps/web/app/opengraph-image.tsx</code></div><div class="sec"><b>Client boundaries</b><div><code class="path" title="apps/web/src/components/RegistryPalette.tsx">apps/web/src/components/RegistryPalette.tsx</code></div></div><div class="sec"><b>Unattributed</b>452.2 kB — no mapping covers these bytes</div></td></tr>
+    </tbody>
+  </table>
+</div>
+<script>(function () {
+  var root = document.currentScript ? document.currentScript.getRootNode() : document
+  function toggle(row) {
+    var id = 'crust-detail-' + row.getAttribute('data-crust-toggle')
+    var detail = (root.getElementById ? root.getElementById(id) : null) || document.getElementById(id)
+    if (!detail) return
+    var open = detail.classList.toggle('open')
+    row.setAttribute('aria-expanded', String(open))
+  }
+  function rowFrom(event) {
+    return event.target && event.target.closest ? event.target.closest('[data-crust-toggle]') : null
+  }
+  root.addEventListener('click', function (event) {
+    var row = rowFrom(event)
+    if (row) toggle(row)
+  })
+  root.addEventListener('keydown', function (event) {
+    if (event.key !== 'Enter' && event.key !== ' ') return
+    var row = rowFrom(event)
+    if (!row) return
+    event.preventDefault()
+    toggle(row)
+  })
+})();</script>
+</body>
+</html>

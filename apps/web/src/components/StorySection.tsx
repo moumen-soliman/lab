@@ -60,10 +60,10 @@ export function StorySection({
   return (
     <section className="animate-fade-in mt-10" style={{ animationDelay: `${delay}ms` }}>
       <div className="flex items-center justify-between gap-4">
-        <h2 className="text-[0.6875rem] font-medium uppercase tracking-wide text-gray-500 select-none">Story</h2>
+        <h2 className="text-[0.6875rem] font-medium uppercase tracking-wide text-muted-foreground select-none">Story</h2>
         <button
           type="button"
-          className="relative flex-none inline-flex items-center gap-1 px-2 py-1 -mr-2 rounded-full text-xs font-medium text-gray-500 [transition:color_200ms_ease,background-color_200ms_ease,scale_150ms_ease-out] hover:text-[#111] hover:bg-gray-100 active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111] after:content-[''] after:absolute after:-inset-y-2 after:inset-x-0"
+          className="relative flex-none inline-flex items-center gap-1 px-2 py-1 -mr-2 rounded-full text-xs font-medium text-muted-foreground [transition:color_200ms_ease,background-color_200ms_ease,scale_150ms_ease-out] hover:text-foreground hover:bg-accent active:scale-[0.96] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring after:content-[''] after:absolute after:-inset-y-2 after:inset-x-0"
           aria-expanded={open}
           aria-controls={id}
           onClick={() => setOpen((value) => !value)}
@@ -88,17 +88,17 @@ export function StorySection({
                 {index < steps.length - 1 && (
                   <span
                     aria-hidden="true"
-                    className="absolute left-[10px] top-6 bottom-1 w-px bg-[linear-gradient(180deg,#d4d4d8_2px,transparent_2px)] bg-[length:1px_4px]"
+                    className="absolute left-[10px] top-6 bottom-1 w-px bg-[linear-gradient(180deg,var(--color-border)_2px,transparent_2px)] bg-[length:1px_4px]"
                   />
                 )}
                 <span
                   aria-hidden="true"
-                  className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-full border border-gray-200 bg-white text-[0.625rem] font-medium tabular-nums text-gray-500 select-none"
+                  className="absolute left-0 top-0 grid h-5 w-5 place-items-center rounded-full border border-border bg-card text-[0.625rem] font-medium tabular-nums text-muted-foreground select-none"
                 >
                   {index + 1}
                 </span>
-                <h3 className="text-sm font-medium tracking-tight text-[#111]">{step.title}</h3>
-                <p className="mt-1 text-sm leading-relaxed text-gray-500 text-pretty">{step.body}</p>
+                <h3 className="text-sm font-medium tracking-tight text-foreground">{step.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground text-pretty">{step.body}</p>
                 {step.figure && (
                   <div className="mt-3" aria-hidden="true">
                     {step.figure}
@@ -110,7 +110,7 @@ export function StorySection({
                       item={{ title: step.video.alt, src: step.video.src, aspectRatio: step.video.aspectRatio }}
                     />
                     {step.video.caption && (
-                      <figcaption className="mt-1.5 text-xs leading-relaxed text-gray-500 text-pretty">
+                      <figcaption className="mt-1.5 text-xs leading-relaxed text-muted-foreground text-pretty">
                         {step.video.caption}
                       </figcaption>
                     )}
@@ -133,23 +133,23 @@ export function StorySection({
               className="mt-5 pl-8 opacity-0 [transform:translateY(-0.25rem)] blur-[2px] [transition:opacity_350ms_var(--ease-smooth-out),transform_350ms_var(--ease-smooth-out),filter_350ms_var(--ease-smooth-out)] group-data-[open=true]/story:opacity-100 group-data-[open=true]/story:[transform:translateY(0)] group-data-[open=true]/story:blur-[0px]"
               style={{ transitionDelay: open ? "120ms" : "0ms" }}
             >
-              <h3 className="text-[0.6875rem] font-medium uppercase tracking-wide text-gray-500 select-none">
+              <h3 className="text-[0.6875rem] font-medium uppercase tracking-wide text-muted-foreground select-none">
                 References
               </h3>
               <ul className="mt-2 space-y-1.5">
                 {references.map((reference) => (
-                  <li key={reference.label} className="text-sm leading-relaxed text-gray-500 text-pretty">
+                  <li key={reference.label} className="text-sm leading-relaxed text-muted-foreground text-pretty">
                     {reference.href ? (
                       <a
                         href={reference.href}
                         target="_blank"
                         rel="noreferrer"
-                        className="font-medium text-[#111] underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-[#111]"
+                        className="font-medium text-foreground underline decoration-subtle-foreground/70 underline-offset-2 transition-colors hover:decoration-foreground"
                       >
                         {reference.label}
                       </a>
                     ) : (
-                      <span className="font-medium text-[#111]">{reference.label}</span>
+                      <span className="font-medium text-foreground">{reference.label}</span>
                     )}
                     {reference.note && <>: {reference.note}</>}
                     {reference.image && (
@@ -159,7 +159,7 @@ export function StorySection({
                         width={reference.image.width}
                         height={reference.image.height}
                         loading="lazy"
-                        className="mt-2.5 w-full max-w-[240px] rounded-xl border border-black/10"
+                        className="mt-2.5 w-full max-w-[240px] rounded-xl border border-black/10 dark:border-white/10"
                       />
                     )}
                   </li>

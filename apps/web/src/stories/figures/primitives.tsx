@@ -27,7 +27,7 @@ export const LABEL_X = 276;
 // owns the band colors. Rendered by StorySection under the timeline.
 export function FigureLegend() {
   return (
-    <div className="flex items-center gap-4 font-mono text-[0.625rem] uppercase tracking-wide text-gray-500 select-none">
+    <div className="flex items-center gap-4 font-mono text-[0.625rem] uppercase tracking-wide text-muted-foreground select-none">
       <span className="inline-flex items-center gap-1.5">
         <span className="h-2.5 w-2.5 rounded-[3px] border border-[rgba(217,119,6,0.35)] bg-[rgba(251,146,60,0.16)]" />
         Where it broke

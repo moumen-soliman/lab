@@ -9,7 +9,7 @@ import { Mintlify, OpenPanel } from "@/src/lib/logos";
 // key, never rendered type. Setting it twice, once as artwork and once in Geist,
 // was the alternative and it reads as a stutter.
 //
-// The wordmarks run on `currentColor` at #111, and the whole link rests at 70%
+// The wordmarks run on `currentColor` at the page's ink, and the link rests at 70%
 // opacity rather than at a gray, so the type and Mintlify's greens come up
 // together on hover instead of one warming while the other sits still.
 const SPONSORS: { name: string; href: string; Logo: (props: SVGProps<SVGSVGElement>) => React.JSX.Element }[] = [
@@ -21,10 +21,18 @@ const SPONSORS: { name: string; href: string; Logo: (props: SVGProps<SVGSVGEleme
    sitting back at 70%, and hovering brings it up to full while a highlight
    passes across it once.
 
-   The highlight is two white bars, wide-and-soft leading, narrow-and-bright
-   trailing, blurred and raked 12°. Nothing is masked to the artwork because it
-   does not need to be: white over a white page is invisible, so the pass only
-   shows where it crosses ink, which is exactly where a reflection would land.
+   The highlight is two bars the color of the page, wide-and-soft leading,
+   narrow-and-bright trailing, blurred and raked 12°. Nothing is masked to the
+   artwork because it does not need to be: the page's own color over the page
+   is invisible, so the pass only shows where it crosses ink, which is exactly
+   where a reflection would land.
+
+   Which is why the bars are `bg-background` and not `bg-white`. The trick was
+   never that they are white, it is that they match the paper - and in dark the
+   paper is near-black, so a white bar would smear across the whole row instead
+   of only over the lockups. Matching the token keeps the one mechanic in both
+   themes; what changes is that the pass reads as a highlight on light and as a
+   wipe on dark, which is what a reflection does when you invert the room.
 
    ── HOVER ────────────────────────────────────────────────
      idle    lockup at 70%, bars parked one full width off the left
@@ -37,7 +45,7 @@ const SPONSORS: { name: string; href: string; Logo: (props: SVGProps<SVGSVGEleme
 export function Sponsors() {
   return (
     <section aria-labelledby="sponsors-heading">
-      <h2 id="sponsors-heading" className="font-mono text-xs tracking-wide text-gray-500 select-none">
+      <h2 id="sponsors-heading" className="font-mono text-xs tracking-wide text-muted-foreground select-none">
         Sponsored by
       </h2>
 
@@ -54,7 +62,7 @@ export function Sponsors() {
               // h-10 keeps the target at 40px even though the lockup reads as
               // ~18px of ink, so the pointer never has to be precise. The radius
               // and overflow are invisible at rest; they exist to clip the pass.
-              className="group relative inline-flex h-10 items-center overflow-hidden rounded-full px-3.5 text-[#111] opacity-70 select-none transition-[opacity,scale] duration-200 ease-smooth-out hover:opacity-100 active:scale-[0.96]"
+              className="group relative inline-flex h-10 items-center overflow-hidden rounded-full px-3.5 text-foreground opacity-70 select-none transition-[opacity,scale] duration-200 ease-smooth-out hover:opacity-100 active:scale-[0.96]"
             >
               {/* Locked to height, never to width: both viewBoxes are framed to
                   the same 95.8% ink ratio, so one height gives both lockups the
@@ -70,8 +78,8 @@ export function Sponsors() {
                 aria-hidden
                 className="pointer-events-none absolute inset-0 -translate-x-full group-hover:animate-glint motion-reduce:hidden"
               >
-                <span className="absolute -inset-y-2 left-0 w-2.5 -skew-x-12 bg-white/70 blur-[5px]" />
-                <span className="absolute -inset-y-2 left-4 w-1 -skew-x-12 bg-white/90 blur-[3px]" />
+                <span className="absolute -inset-y-2 left-0 w-2.5 -skew-x-12 bg-background/70 blur-[5px]" />
+                <span className="absolute -inset-y-2 left-4 w-1 -skew-x-12 bg-background/90 blur-[3px]" />
               </span>
             </a>
           </li>

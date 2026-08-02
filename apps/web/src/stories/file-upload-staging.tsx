@@ -95,7 +95,7 @@ export const fileUploadStagingStory: Story = {
       label: "Layout animations in Motion",
       note: (
         <>
-          the <code className="text-[#111]">layout</code> prop behind the grid: on any list change the surviving
+          the <code className="text-foreground">layout</code> prop behind the grid: on any list change the surviving
           tiles <span className={em}>glide to their new spots</span> instead of jump-cutting.
         </>
       ),

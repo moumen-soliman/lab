@@ -23,13 +23,13 @@ export function LabHome({ bento }: { bento: LabComponent[] }) {
   const meta = useMetaLabel();
 
   return (
-    <div className="min-h-screen flex flex-col items-center py-24 px-6 selection:bg-[#111] selection:text-white">
+    <div className="min-h-screen flex flex-col items-center py-24 px-6 selection:bg-foreground selection:text-background">
       <main className="w-full max-w-5xl">
         <header className="mb-10 animate-fade-in">
           <div className="mb-8 flex items-center justify-between gap-4">
             <Link
               href="/"
-              className="inline-flex items-center gap-2 text-gray-500 hover:text-[#111] transition-colors text-sm"
+              className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
             >
               <ArrowLeftIcon />
               lab.moumen.dev
@@ -58,7 +58,7 @@ export function LabHome({ bento }: { bento: LabComponent[] }) {
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Star on GitHub"
-                className="group/star inline-flex items-center gap-2 rounded-full px-3 py-2.5 text-sm text-gray-600 shadow-[var(--shadow-border)] transition-[color,scale,box-shadow] duration-200 ease-smooth-out hover:text-[#111] hover:shadow-[var(--shadow-border-hover)] motion-safe:active:scale-[0.96] sm:pl-3.5 sm:pr-4"
+                className="group/star inline-flex items-center gap-2 rounded-full px-3 py-2.5 text-sm text-body-foreground shadow-[var(--shadow-border)] transition-[color,scale,box-shadow] duration-200 ease-smooth-out hover:text-foreground hover:shadow-[var(--shadow-border-hover)] motion-safe:active:scale-[0.96] sm:pl-3.5 sm:pr-4"
               >
                 <span className="relative inline-flex size-4 shrink-0 items-center justify-center">
                   <StarIcon className="absolute size-4 transition-[opacity,scale,filter] duration-300 ease-icon [@media(hover:hover)]:group-hover/star:opacity-0 motion-safe:[@media(hover:hover)]:group-hover/star:scale-[0.25] motion-safe:[@media(hover:hover)]:group-hover/star:blur-[4px]" />
@@ -70,16 +70,16 @@ export function LabHome({ bento }: { bento: LabComponent[] }) {
               </a>
             </div>
           </div>
-          <h1 className="text-xl font-medium tracking-tight text-[#111] leading-snug text-balance">Component Lab</h1>
-          <p className="text-gray-600 text-[0.9375rem] leading-relaxed mt-3 max-w-xl text-pretty">
+          <h1 className="text-xl font-medium tracking-tight text-foreground leading-snug text-balance">Component Lab</h1>
+          <p className="text-body-foreground text-[0.9375rem] leading-relaxed mt-3 max-w-xl text-pretty">
             Interaction experiments, each a short looping clip. Open any for the live component, its blueprint, and the
-            source you can copy or install with <code className="text-[#111]">npx moumenlab add</code>.
+            source you can copy or install with <code className="text-foreground">npx moumenlab add</code>.
           </p>
           {/* The palette lives in the root layout and answers everywhere; this
               line is the only place that says so out loud. Only where the keys
               exist, though: on touch the sentence is an instruction you cannot
               follow, and the search button in the header is the answer. */}
-          <p className="mt-3 hidden flex-wrap items-center gap-1.5 text-sm text-gray-400 [@media(hover:hover)]:inline-flex">
+          <p className="mt-3 hidden flex-wrap items-center gap-1.5 text-sm text-subtle-foreground [@media(hover:hover)]:inline-flex">
             Press <Kbd>{meta}K</Kbd> or <Kbd>D</Kbd> anywhere to jump to one.
           </p>
         </header>
@@ -99,15 +99,15 @@ export function LabHome({ bento }: { bento: LabComponent[] }) {
             ))}
           </div>
         ) : (
-          <p className="animate-fade-in text-gray-400 text-sm text-center py-16">More experiments landing soon.</p>
+          <p className="animate-fade-in text-subtle-foreground text-sm text-center py-16">More experiments landing soon.</p>
         )}
 
         <Divider delay={320} className="mt-10 mb-8" />
 
         <footer className="animate-fade-in text-center" style={{ animationDelay: "340ms" }}>
-          <p className="text-gray-400 text-sm">
+          <p className="text-subtle-foreground text-sm">
             By{" "}
-            <Link href="https://moumen.dev" className="hover:text-[#111] transition-colors">
+            <Link href="https://moumen.dev" className="hover:text-foreground transition-colors">
               Moumen Soliman
             </Link>
           </p>

@@ -4,6 +4,21 @@
 @source "../registry";
 @source "../src";
 
+/* ── Dark mode ─────────────────────────────────────────────────────────────
+   Attribute-driven, not media-driven, because the reader gets a say: the
+   inline script in app/layout.tsx stamps `data-theme` on <html> before first
+   paint, seeded from the OS and then from whatever the toggle last stored.
+   `:where()` keeps the variant at zero specificity, so `dark:` utilities still
+   lose to a later utility on the same element the way every other variant does.
+
+   Almost nothing in this repo needs the variant. The theme is a set of token
+   VALUES (below), and every surface reads them through `bg-card`, `text-muted-
+   foreground` and friends - so the whole site turns over from one block of
+   variable overrides. `dark:` is reserved for the handful of places where a
+   value genuinely has no light counterpart, like swapping the black wordmark
+   for the white one. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* ── Design tokens ─────────────────────────────────────────────────────────
    The ONLY sanctioned place for shared values and keyframes. Everything else in
    this repo is expressed as Tailwind utilities in JSX - there are no custom CSS
@@ -19,7 +34,12 @@
   /* Semantic colors - shadcn token names, valued to match this site's design.
      Components reference only these (never raw grays/hexes) so that on a
      consumer's site they pick up the consumer's own shadcn theme, including
-     dark mode. NOT shipped via lab-theme: `shadcn init` defines them. */
+     dark mode. NOT shipped via lab-theme: `shadcn init` defines them.
+
+     These are the LIGHT values. The dark ones live in the base layer at the
+     bottom of this file and are the only thing that changes between themes -
+     nothing on the site names a color any other way, so both themes are
+     rendered by exactly the same utilities. */
   --color-background: oklch(1 0 0);
   --color-foreground: oklch(0.178 0 0);
   --color-card: oklch(1 0 0);
@@ -33,8 +53,38 @@
   --color-accent: oklch(0.967 0.001 286.375);
   --color-accent-foreground: oklch(0.178 0 0);
   --color-destructive: oklch(0.577 0.245 27.325);
-  --color-border: oklch(0.967 0.003 264.542);
+  /* Was 0.967 (gray-100), which is a full step lighter than the hairline the
+     site chrome had actually been drawing with (`border-gray-200`). Raised to
+     gray-200 so the one border token is the border everything already used;
+     it is also what shadcn's own default is. */
+  --color-border: oklch(0.928 0.006 264.531);
   --color-ring: oklch(0.178 0 0);
+
+  /* Two more text tiers, because the site's copy runs four deep and shadcn
+     only names two. Both were hard-coded grays before dark mode: any color
+     left as a literal cannot turn over with the theme, so they had to become
+     tokens to exist in both. Lightness descends, so the tier order is the
+     read order.
+
+       foreground         0.178   headings, links, emphasis
+       body-foreground    0.446   body copy (was text-gray-600)
+       muted-foreground   0.551   labels, captions, secondary lines
+       subtle-foreground  0.707   timestamps, counts, placeholder, hints
+
+     `subtle-foreground` is 2.6:1 on white and does not reach WCAG AA. That is
+     the contrast `text-gray-400` already had everywhere it was used, and it is
+     kept here rather than quietly corrected - see the note in the dark block,
+     where the mirrored value does clear AA. */
+  --color-body-foreground: oklch(0.446 0.03 256.802);
+  --color-subtle-foreground: oklch(0.707 0.022 261.325);
+
+  /* The moving band in a skeleton, and the only color here that is defined by
+     what it sits on rather than by what it is. It is always white and it is
+     always translucent, so it always lightens; what changes between themes is
+     how much room there is above the surface for it to lighten INTO. On paper
+     there is almost none, so it takes 0.7 to register at all; on ink there is
+     the whole range, and 0.7 would be a searchlight. */
+  --color-sheen: oklch(1 0 0 / 0.7);
 
   /* Easings */
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1); /* open + close, resize */
@@ -58,6 +108,34 @@
     0px 1px 2px -1px oklch(0 0 0 / 0.08),
     0px 2px 4px 0px oklch(0 0 0 / 0.06);
   --shadow-lift: 0px 12px 28px -14px oklch(0.178 0 0 / 0.16);
+
+  /* ── The dream's palette ──────────────────────────────────────────────
+     src/components/Dream.tsx builds four layers out of gradients, and every
+     one of them was written against a white page: the wash drives brightness
+     UP to blow the ink out, the glow is white light, and the vignette darkens
+     the edges so the white middle has something to be bright against. On a
+     dark page each of those is the wrong direction, and the wash in
+     particular would be a full-frame white flash - which is precisely what
+     nobody wants fired at them at 1am.
+
+     So the four values that carry the direction live here, and the dark block
+     mirrors them. The layer geometry, the timings and the rays never change:
+     white rays on a dark page were always going to read, they just finally
+     have somewhere dim to be bright against without being faked. */
+  --dream-brightness: 1.6;
+  --dream-saturate: 0.5;
+  --dream-bloom: radial-gradient(
+    70% 60% at 50% 44%,
+    oklch(1 0 0 / 0.97),
+    oklch(1 0 0 / 0.84) 48%,
+    oklch(1 0 0 / 0.52) 100%
+  );
+  --dream-glow:
+    radial-gradient(62% 50% at 50% 42%, oklch(0.995 0.014 250 / 0.95), oklch(0.99 0.01 250 / 0.45) 55%, transparent 78%),
+    radial-gradient(92% 82% at 50% 44%, transparent 40%, oklch(0.855 0.008 250 / 0.62) 100%);
+  /* The luma pass of the tape's three scanlines. The chroma pair either side
+     of it is a tape artefact rather than a tint, so it is the same in both. */
+  --dream-scanline: oklch(0 0 0 / 0.05);
 
   /* Named animations → `animate-*` utilities. Site-chrome only - the lab
      components animate via motion/react, not keyframes. */
@@ -171,8 +249,8 @@
     }
     30% {
       opacity: 1;
-      -webkit-backdrop-filter: blur(6px) brightness(1.6) saturate(0.5);
-      backdrop-filter: blur(6px) brightness(1.6) saturate(0.5);
+      -webkit-backdrop-filter: blur(6px) brightness(var(--dream-brightness)) saturate(var(--dream-saturate));
+      backdrop-filter: blur(6px) brightness(var(--dream-brightness)) saturate(var(--dream-saturate));
     }
     to {
       opacity: 0;
@@ -188,6 +266,107 @@
     -webkit-text-size-adjust: 100%;
     /* Missing weights/styles should fail visibly, never render browser-faked. */
     font-synthesis: none;
+  }
+
+  /* Scrollbars, form controls, spellcheck squiggles and the rest of the UA's
+     own furniture. `color-scheme` is the only way to reach any of it, and
+     without it a dark page keeps a bright white scrollbar down its edge. */
+  :root {
+    color-scheme: light;
+  }
+
+  /* ── The dark theme ──────────────────────────────────────────────────────
+     Only values. No selector below names an element or a component, because
+     nothing has to: the site draws every surface through these tokens, so
+     re-pointing them is the entire theme.
+
+     Derived from the light ramp rather than picked by eye, per the usual
+     rule: reverse the lightness mapping, hold the hue, and let chroma follow
+     the surface. The neutrals carry a trace of the same cool hue the light
+     grays already had (264.5), which is what keeps a near-black page reading
+     as ink rather than as switched-off screen.
+
+     Two places where a straight mirror is wrong, and both are about how eyes
+     behave rather than about the math:
+
+     The page does not go to 0. Pure black under light type blooms and smears
+     at small sizes, so the paper is 0.178 - which is the exact lightness the
+     site's ink has always been. The two ends of the light theme simply trade
+     places.
+
+     The text tiers do not travel as far as the surfaces do. Light-on-dark
+     reads heavier than dark-on-light at the same measured contrast, so every
+     tier lands a step short of its mirror. The upshot is that all four clear
+     WCAG AA on the page here, including `subtle-foreground` at 4.7:1, which
+     is the one tier that does not manage it in light. */
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+
+    --color-background: oklch(0.178 0.004 264.5);
+    --color-foreground: oklch(0.967 0.003 264.5);
+    /* Surfaces climb toward the reader: page, card, popover. The steps are
+       small on purpose - separation on a dark page is the ring's job, not the
+       fill's, and fills far enough apart to read on their own would have the
+       page looking like a stack of gray boxes. */
+    --color-card: oklch(0.213 0.005 264.5);
+    --color-card-foreground: oklch(0.967 0.003 264.5);
+    --color-popover: oklch(0.228 0.005 264.5);
+    --color-popover-foreground: oklch(0.967 0.003 264.5);
+    /* The filled button inverts with everything else: the page's ink was its
+       fill in light, and the page's paper is its fill here. */
+    --color-primary: oklch(0.967 0.003 264.5);
+    --color-primary-foreground: oklch(0.178 0.004 264.5);
+    --color-muted: oklch(0.256 0.006 264.5);
+    --color-muted-foreground: oklch(0.694 0.02 261.3);
+    --color-body-foreground: oklch(0.79 0.016 262);
+    --color-subtle-foreground: oklch(0.596 0.022 261);
+    /* Light keeps accent and muted at the same value; here they part, because
+       a hover that lands on the same fill as the resting surface is a hover
+       nobody sees. Two steps up from muted is enough to register. */
+    --color-accent: oklch(0.3 0.007 264.5);
+    --color-accent-foreground: oklch(0.967 0.003 264.5);
+    /* Chroma clamped to 0.187: the usual 0.191 at this lightness and hue is
+       outside sRGB and clips, which costs the red its hue rather than its
+       vividness. */
+    --color-destructive: oklch(0.704 0.187 22.216);
+    --color-border: oklch(0.305 0.007 264.5);
+    --color-ring: oklch(0.79 0.016 262);
+    --color-sheen: oklch(1 0 0 / 0.06);
+
+    /* The ring inverts, the drop does not. A border on a dark page is light
+       spilling over an edge, so the 1px ring goes white and thin; the lift
+       underneath is still a shadow, and shadows are still black - only much
+       deeper, since there is far less room between the surface and the page
+       for a soft one to show up in. */
+    --shadow-border:
+      0px 0px 0px 1px oklch(1 0 0 / 0.1),
+      0px 1px 2px -1px oklch(0 0 0 / 0.5),
+      0px 2px 4px 0px oklch(0 0 0 / 0.35);
+    --shadow-border-hover:
+      0px 0px 0px 1px oklch(1 0 0 / 0.16),
+      0px 1px 2px -1px oklch(0 0 0 / 0.55),
+      0px 2px 4px 0px oklch(0 0 0 / 0.4);
+    --shadow-lift: 0px 12px 28px -14px oklch(0 0 0 / 0.7);
+
+    /* The dream, mirrored. The wash now drives brightness DOWN: the page falls
+       away under you instead of blooming out, which is the same dissolve read
+       from the other side and, at this hour, the only one that is bearable.
+       The glow keeps its cool cast but stops trying to out-shine paper it no
+       longer has to - on a dark page the light finally just is brighter than
+       what surrounds it. The vignette goes to near-black for the same reason
+       it was gray before: it has to be darker than the page it sits on. */
+    --dream-brightness: 0.42;
+    --dream-saturate: 0.45;
+    --dream-bloom: radial-gradient(
+      70% 60% at 50% 44%,
+      oklch(0.145 0.01 264.5 / 0.95),
+      oklch(0.145 0.01 264.5 / 0.8) 48%,
+      oklch(0.145 0.01 264.5 / 0.5) 100%
+    );
+    --dream-glow:
+      radial-gradient(62% 50% at 50% 42%, oklch(0.62 0.05 250 / 0.34), oklch(0.5 0.04 250 / 0.16) 55%, transparent 78%),
+      radial-gradient(92% 82% at 50% 44%, transparent 40%, oklch(0.12 0.01 264.5 / 0.72) 100%);
+    --dream-scanline: oklch(1 0 0 / 0.05);
   }
 
   body {

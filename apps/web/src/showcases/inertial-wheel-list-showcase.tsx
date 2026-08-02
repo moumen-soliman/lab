@@ -23,21 +23,21 @@ export function WheelListShowcase() {
     <>
       <ShowcaseIntro title="Inertial Wheel List" delay={40} defaultOpen>
         The iOS picker drum without scroll-jacking: it is a{" "}
-        <span className="font-medium text-[#111]">plain scrollable list</span>, so the browser owns the momentum - a
-        thumb-fling on a phone included - and <code className="text-[#111]">scroll-snap: y mandatory</code> lands every
-        fling on an item. The selection is <span className="font-medium text-[#111]">derived from the scroll</span> (
-        <code className="text-[#111]">round(scrollTop / itemHeight)</code>), never stored beside it, so the two cannot
-        disagree. Each scroll frame, one rAF pass writes <code className="text-[#111]">rotateX</code>,{" "}
-        <code className="text-[#111]">scale</code> and opacity straight onto the items by their distance from the centre
-        - the <span className="font-medium text-[#111]">middle item is biggest</span> and the rim dissolves through a{" "}
-        <code className="text-[#111]">mask-image</code> fade rather than clipping. It is also a proper{" "}
-        <span className="font-medium text-[#111]">listbox</span>: one tab stop, arrows and Home/End scroll to the
+        <span className="font-medium text-foreground">plain scrollable list</span>, so the browser owns the momentum - a
+        thumb-fling on a phone included - and <code className="text-foreground">scroll-snap: y mandatory</code> lands every
+        fling on an item. The selection is <span className="font-medium text-foreground">derived from the scroll</span> (
+        <code className="text-foreground">round(scrollTop / itemHeight)</code>), never stored beside it, so the two cannot
+        disagree. Each scroll frame, one rAF pass writes <code className="text-foreground">rotateX</code>,{" "}
+        <code className="text-foreground">scale</code> and opacity straight onto the items by their distance from the centre
+        - the <span className="font-medium text-foreground">middle item is biggest</span> and the rim dissolves through a{" "}
+        <code className="text-foreground">mask-image</code> fade rather than clipping. It is also a proper{" "}
+        <span className="font-medium text-foreground">listbox</span>: one tab stop, arrows and Home/End scroll to the
         neighbour, and the live selection is announced.
       </ShowcaseIntro>
 
       <div className="animate-fade-in mb-4 flex flex-col gap-3" style={{ animationDelay: "60ms" }}>
         <CheckToggle checked={wheelFlat} onChange={setWheelFlat}>
-          Flat wheel <span className="text-gray-400">- drop the 3D drum, keep the scale and fade</span>
+          Flat wheel <span className="text-subtle-foreground">- drop the 3D drum, keep the scale and fade</span>
         </CheckToggle>
         <div className="flex items-center justify-between gap-4">
           <InspectToggle checked={inspectWheel} onChange={setInspectWheel} />
@@ -47,7 +47,7 @@ export function WheelListShowcase() {
 
       <section
         className={`animate-fade-in relative flex items-start justify-center rounded-2xl border px-6 py-8 transition-colors ${
-          inspectWheel ? `${SPEC_GRID} bg-white border-blue-200` : "bg-gray-50/60 border-gray-200"
+          inspectWheel ? `${SPEC_GRID} bg-card border-blue-200` : "bg-muted/40 border-border"
         }`}
         style={{ animationDelay: "70ms" }}
       >
@@ -61,28 +61,28 @@ export function WheelListShowcase() {
         />
       </section>
 
-      <p className="animate-fade-in mt-4 text-center text-sm text-gray-500" style={{ animationDelay: "90ms" }}>
+      <p className="animate-fade-in mt-4 text-center text-sm text-muted-foreground" style={{ animationDelay: "90ms" }}>
         {inspectWheel ? (
           <>
-            <code className="text-[#111]">t = distance / half</code> · scale{" "}
-            <code className="text-[#111]">1.14 − 0.34|t|</code>
+            <code className="text-foreground">t = distance / half</code> · scale{" "}
+            <code className="text-foreground">1.14 − 0.34|t|</code>
             {!wheelFlat && (
               <>
                 {" "}
-                · <code className="text-[#111]">rotateX(38° · t)</code>
+                · <code className="text-foreground">rotateX(38° · t)</code>
               </>
             )}{" "}
-            · snap <code className="text-[#111]">mandatory</code>
+            · snap <code className="text-foreground">mandatory</code>
           </>
         ) : (
           <>
-            Selected: <span className="font-medium text-[#111]">{wheelState.value}</span>
+            Selected: <span className="font-medium text-foreground">{wheelState.value}</span>
             {" · "}
-            <span className="font-medium text-[#111] tabular-nums">
+            <span className="font-medium text-foreground tabular-nums">
               {wheelState.index + 1} / {wheelState.count}
             </span>
             {" · "}
-            <span className="font-medium text-[#111]">{wheelState.settled ? "settled" : "coasting"}</span>
+            <span className="font-medium text-foreground">{wheelState.settled ? "settled" : "coasting"}</span>
           </>
         )}
       </p>

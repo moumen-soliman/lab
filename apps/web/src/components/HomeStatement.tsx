@@ -157,7 +157,7 @@ export function HomeStatement({ delays }: { delays: { headline: number; paragrap
           three rows moving together read as the page recomposing once, where
           three staggered resizes would read as the page coming apart. */}
       <h1
-        className="animate-fade-in mt-3 text-2xl font-medium tracking-tight leading-[1.1] text-[#111] text-balance"
+        className="animate-fade-in mt-3 text-2xl font-medium tracking-tight leading-[1.1] text-foreground text-balance"
         style={entrance(delays.headline)}
       >
         <Swap show={!pulled}>Less is more</Swap>
@@ -176,11 +176,11 @@ export function HomeStatement({ delays }: { delays: { headline: number; paragrap
       </h1>
 
       <Swap show={!pulled} clip={clipping}>
-        <p className="animate-fade-in mt-4 text-gray-500 text-[0.9375rem] leading-relaxed text-pretty" style={entrance(delays.paragraph)}>
-          A small lab of <span className="font-medium text-[#111]">the components we build every day</span>,{" "}
-          <span className="font-medium text-[#111]">rethought for better feel</span>. Copy the source if that’s all you
-          need. Stay for <span className="font-medium text-[#111]">how each one was built</span>, dead ends included,
-          written for <span className="font-medium text-[#111]">frontend and design engineers</span> who want the{" "}
+        <p className="animate-fade-in mt-4 text-muted-foreground text-[0.9375rem] leading-relaxed text-pretty" style={entrance(delays.paragraph)}>
+          A small lab of <span className="font-medium text-foreground">the components we build every day</span>,{" "}
+          <span className="font-medium text-foreground">rethought for better feel</span>. Copy the source if that’s all you
+          need. Stay for <span className="font-medium text-foreground">how each one was built</span>, dead ends included,
+          written for <span className="font-medium text-foreground">frontend and design engineers</span> who want the{" "}
           {/* The egg's one door. A dotted underline is the whole invitation:
               enough to say the word is not merely set in mono, quiet enough
               that the sentence still reads as a sentence.
@@ -193,12 +193,12 @@ export function HomeStatement({ delays }: { delays: { headline: number; paragrap
           <button
             type="button"
             onClick={() => flip(true)}
-            className="relative inline-block font-mono text-[#111] underline decoration-dotted decoration-gray-300 underline-offset-4 transition-[text-decoration-color,scale] duration-200 ease-smooth-out after:absolute after:-inset-x-1.5 after:-inset-y-[7px] hover:decoration-[#111] active:scale-[0.96] motion-reduce:transition-[text-decoration-color]"
+            className="relative inline-block font-mono text-foreground underline decoration-dotted decoration-subtle-foreground/70 underline-offset-4 transition-[text-decoration-color,scale] duration-200 ease-smooth-out after:absolute after:-inset-x-1.5 after:-inset-y-[7px] hover:decoration-foreground active:scale-[0.96] motion-reduce:transition-[text-decoration-color]"
           >
             why
           </button>
-          . In React, fully Tailwind, on the <span className="font-medium text-[#111]">shadcn registry</span>:{" "}
-          <code className="whitespace-nowrap text-[#111]">npx moumenlab add</code>, or star it on{" "}
+          . In React, fully Tailwind, on the <span className="font-medium text-foreground">shadcn registry</span>:{" "}
+          <code className="whitespace-nowrap text-foreground">npx moumenlab add</code>, or star it on{" "}
           {/* The GitHub link hides a meme: hover reveals a gif popover guilt-
               tripping you about our very humble star count.
               ── HOVER STORYBOARD ──────────────────────────────────────────
@@ -214,23 +214,23 @@ export function HomeStatement({ delays }: { delays: { headline: number; paragrap
               href="https://github.com/moumen-soliman/lab"
               target="_blank"
               rel="noreferrer"
-              className="font-medium text-[#111] underline decoration-gray-300 underline-offset-4 transition-colors hover:decoration-[#111]"
+              className="font-medium text-foreground underline decoration-subtle-foreground/70 underline-offset-4 transition-colors hover:decoration-foreground"
             >
               GitHub
             </a>
             <span
               role="tooltip"
-              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-40 origin-bottom -translate-x-1/2 translate-y-1 scale-[0.96] rounded-2xl bg-white p-2 opacity-0 shadow-[var(--shadow-border),var(--shadow-lift)] transition-[opacity,scale,translate] duration-200 ease-smooth-out motion-reduce:transition-none [@media(hover:hover)]:group-hover/gh:translate-y-0 [@media(hover:hover)]:group-hover/gh:scale-100 [@media(hover:hover)]:group-hover/gh:opacity-100"
+              className="pointer-events-none absolute bottom-full left-1/2 z-20 mb-2 w-40 origin-bottom -translate-x-1/2 translate-y-1 scale-[0.96] rounded-2xl bg-popover p-2 opacity-0 shadow-[var(--shadow-border),var(--shadow-lift)] transition-[opacity,scale,translate] duration-200 ease-smooth-out motion-reduce:transition-none [@media(hover:hover)]:group-hover/gh:translate-y-0 [@media(hover:hover)]:group-hover/gh:scale-100 [@media(hover:hover)]:group-hover/gh:opacity-100"
             >
               <img
                 src="/github.gif"
                 alt="A meme reacting to our star count"
                 width={288}
                 height={288}
-                className="block aspect-square w-full rounded-lg object-cover outline outline-1 -outline-offset-1 outline-black/10"
+                className="block aspect-square w-full rounded-lg object-cover outline outline-1 -outline-offset-1 outline-black/10 dark:outline-white/10"
               />
-              <span className="mt-2 block text-center text-xs leading-snug text-gray-500">
-                be the <span className="font-medium text-[#111]">⭐</span> we’ve been waiting for.
+              <span className="mt-2 block text-center text-xs leading-snug text-muted-foreground">
+                be the <span className="font-medium text-foreground">⭐</span> we’ve been waiting for.
               </span>
             </span>
           </span>
@@ -239,11 +239,11 @@ export function HomeStatement({ delays }: { delays: { headline: number; paragrap
       </Swap>
 
       <Swap show={pulled}>
-        <p className="mt-4 text-gray-500 text-[0.9375rem] leading-relaxed text-pretty">
-          In the dream, some of them read it. <span className="font-medium text-[#111]">They keep writing.</span>
+        <p className="mt-4 text-muted-foreground text-[0.9375rem] leading-relaxed text-pretty">
+          In the dream, some of them read it. <span className="font-medium text-foreground">They keep writing.</span>
           {/* Said out loud, because an easter egg that swallows the one
               paragraph explaining the site should name its own exit. */}
-          <span className="mt-2 block font-mono text-xs text-gray-400">esc wakes you up</span>
+          <span className="mt-2 block font-mono text-xs text-subtle-foreground">esc wakes you up</span>
         </p>
       </Swap>
     </>

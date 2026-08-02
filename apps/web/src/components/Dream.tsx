@@ -38,11 +38,18 @@
    still says dream without anything flashing.
    ───────────────────────────────────────────────────────── */
 
-// Pure white, chroma 0 at every stop. An earlier pass ran this warm and it
-// read as a sepia flashback rather than a dream - the reference is cathedral
-// light, which is white going slightly cool, never yellow.
-const BLOOM =
-  "radial-gradient(70% 60% at 50% 44%, oklch(1 0 0 / 0.97), oklch(1 0 0 / 0.84) 48%, oklch(1 0 0 / 0.52) 100%)";
+/* Chroma 0 at every stop. An earlier pass ran this warm and it read as a sepia
+   flashback rather than a dream - the reference is cathedral light, which is
+   white going slightly cool, never yellow.
+
+   The stops themselves live in globals.css, as `--dream-bloom`, because this is
+   the one layer whose DIRECTION depends on the theme. On paper the wash blows
+   the page out, which is the Premiere/Orton move the whole effect is named
+   after; on ink there is nothing above white to blow out to, and firing a full
+   -frame white flash at someone who chose dark mode is not a dissolve, it is
+   an assault. Dark drops the page away instead. Same dissolve, same 900ms,
+   read from the other side. */
+const BLOOM = "var(--dream-bloom)";
 
 /* The lingering glow, and the one genuinely hard part of all of this: white
    light on a white page is invisible. #fff is already the ceiling, so the

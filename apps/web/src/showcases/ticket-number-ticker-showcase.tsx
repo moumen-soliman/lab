@@ -52,23 +52,23 @@ export function TicketNumberShowcase() {
   return (
     <>
       <ShowcaseIntro title="Ticket Number Ticker" delay={40} defaultOpen>
-        Bump <code className="text-[#111]">runKey</code> (the <span className="font-medium text-[#111]">Run</span>{" "}
-        button here) and the digits run up on an odometer - <code className="text-[#111]">tabular-nums</code> keeps
-        every column <code className="text-[#111]">1ch</code> wide so nothing shifts. The pill{" "}
-        <span className="font-medium text-[#111]">grows with the value</span> up to a{" "}
-        <code className="text-[#111]">max-width</code>, then <span className="font-medium text-[#111]">middle-truncates</span>{" "}
-        to <code className="text-[#111]">start…end</code> - the git-SHA idiom - with the full value one hover or copy
-        away. Spaces become <code className="text-[#111]">-</code>; drop the digits entirely and it becomes a plain
-        name (no reels). Tick <span className="font-medium text-[#111]">GitHub PR status</span> for a live PR badge
-        driven by the <code className="text-[#111]">status</code> prop - click it to cycle the lifecycle.{" "}
-        <span className="font-medium text-[#111]">Note:</span> the demo below is scaled{" "}
-        <code className="text-[#111]">1.5×</code> for presentation - the installed component ships at a compact
+        Bump <code className="text-foreground">runKey</code> (the <span className="font-medium text-foreground">Run</span>{" "}
+        button here) and the digits run up on an odometer - <code className="text-foreground">tabular-nums</code> keeps
+        every column <code className="text-foreground">1ch</code> wide so nothing shifts. The pill{" "}
+        <span className="font-medium text-foreground">grows with the value</span> up to a{" "}
+        <code className="text-foreground">max-width</code>, then <span className="font-medium text-foreground">middle-truncates</span>{" "}
+        to <code className="text-foreground">start…end</code> - the git-SHA idiom - with the full value one hover or copy
+        away. Spaces become <code className="text-foreground">-</code>; drop the digits entirely and it becomes a plain
+        name (no reels). Tick <span className="font-medium text-foreground">GitHub PR status</span> for a live PR badge
+        driven by the <code className="text-foreground">status</code> prop - click it to cycle the lifecycle.{" "}
+        <span className="font-medium text-foreground">Note:</span> the demo below is scaled{" "}
+        <code className="text-foreground">1.5×</code> for presentation - the installed component ships at a compact
         dashboard size that sits naturally in list rows and toolbars.
       </ShowcaseIntro>
 
       <div className="animate-fade-in mb-4 flex flex-col gap-3" style={{ animationDelay: "60ms" }}>
         <div className="flex items-center gap-2">
-          <span className="text-gray-400 text-[0.9375rem] font-medium select-none">#</span>
+          <span className="text-subtle-foreground text-[0.9375rem] font-medium select-none">#</span>
           <input
             type="text"
             value={ticketValue.replace(/^#/, "")}
@@ -76,12 +76,12 @@ export function TicketNumberShowcase() {
             placeholder="232323 or ticket-name-here"
             aria-label="Ticket id"
             spellCheck={false}
-            className="flex-1 min-w-0 rounded-lg bg-white px-3 py-2 text-base sm:text-sm text-[#111] shadow-border outline-none transition-shadow focus:shadow-border-hover focus:outline-2 focus:outline-[#111] focus:-outline-offset-1 placeholder:text-gray-400"
+            className="flex-1 min-w-0 rounded-lg bg-card px-3 py-2 text-base sm:text-sm text-foreground shadow-border outline-none transition-shadow focus:shadow-border-hover focus:outline-2 focus:outline-ring focus:-outline-offset-1 placeholder:text-subtle-foreground"
           />
           <button
             type="button"
             onClick={() => setRunKey((key) => key + 1)}
-            className="rounded-lg bg-[#111] px-3 py-2 text-sm font-medium text-white select-none transition-[background-color,scale] hover:bg-[#333] active:scale-[0.96]"
+            className="rounded-lg bg-primary px-3 py-2 text-sm font-medium text-primary-foreground select-none transition-[background-color,scale] hover:bg-primary/85 active:scale-[0.96]"
           >
             Run
           </button>
@@ -93,7 +93,7 @@ export function TicketNumberShowcase() {
               type="button"
               onClick={() => handlePreset(preset)}
               className={`px-2.5 py-1 text-xs rounded-full font-medium font-mono tabular-nums transition-colors ${
-                preset === ticketValue ? "bg-[#111] text-white" : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                preset === ticketValue ? "bg-primary text-primary-foreground" : "bg-muted text-body-foreground hover:bg-accent"
               }`}
             >
               {preset}
@@ -101,10 +101,10 @@ export function TicketNumberShowcase() {
           ))}
         </div>
         <CheckToggle checked={prOn} onChange={setPrOn}>
-          GitHub PR status <span className="text-gray-400">- a live badge driven by the status prop</span>
+          GitHub PR status <span className="text-subtle-foreground">- a live badge driven by the status prop</span>
         </CheckToggle>
         <CheckToggle checked={fixedWidth} onChange={setFixedWidth}>
-          Fixed width <span className="text-gray-400">- one footprint instead of growing to fit</span>
+          Fixed width <span className="text-subtle-foreground">- one footprint instead of growing to fit</span>
         </CheckToggle>
         <div className="flex items-center justify-between gap-4">
           <InspectToggle checked={inspectTicket} onChange={setInspectTicket} />
@@ -114,7 +114,7 @@ export function TicketNumberShowcase() {
 
       <section
         className={`animate-fade-in relative flex items-center justify-center rounded-2xl border px-6 py-12 min-h-[160px] transition-colors ${
-          inspectTicket ? `${SPEC_GRID} bg-white border-blue-200` : "bg-gray-50/60 border-gray-200"
+          inspectTicket ? `${SPEC_GRID} bg-card border-blue-200` : "bg-muted/40 border-border"
         }`}
         style={{ animationDelay: "70ms" }}
       >
@@ -134,25 +134,25 @@ export function TicketNumberShowcase() {
         </div>
       </section>
 
-      <p className="animate-fade-in mt-4 text-center text-sm text-gray-500 break-words" style={{ animationDelay: "90ms" }}>
+      <p className="animate-fade-in mt-4 text-center text-sm text-muted-foreground break-words" style={{ animationDelay: "90ms" }}>
         {inspectTicket ? (
           <>
-            <code className="text-[#111]">font-variant-numeric: tabular-nums</code> · reels roll{" "}
-            <code className="text-[#111]">0 → digit</code> · middle-truncate to{" "}
-            <code className="text-[#111]">start…end</code>
+            <code className="text-foreground">font-variant-numeric: tabular-nums</code> · reels roll{" "}
+            <code className="text-foreground">0 → digit</code> · middle-truncate to{" "}
+            <code className="text-foreground">start…end</code>
           </>
         ) : (
           <>
-            Kind: <span className="font-medium text-[#111]">{ticketState.kind}</span>
+            Kind: <span className="font-medium text-foreground">{ticketState.kind}</span>
             {" · "}
-            <span className="font-medium text-[#111]">
+            <span className="font-medium text-foreground">
               {ticketState.truncated ? "middle-truncated" : "fits in full"}
             </span>
             {ticketState.status && (
               <>
                 {" "}
                 · PR:{" "}
-                <span className="font-medium text-[#111]">
+                <span className="font-medium text-foreground">
                   {ticketState.status.charAt(0).toUpperCase() + ticketState.status.slice(1)}
                 </span>
               </>
@@ -160,7 +160,7 @@ export function TicketNumberShowcase() {
             {ticketState.truncated && (
               <>
                 {" "}
-                · full: <code className="text-[#111] break-all">{ticketState.full}</code>
+                · full: <code className="text-foreground break-all">{ticketState.full}</code>
               </>
             )}
           </>

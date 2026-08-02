@@ -31,17 +31,17 @@ export function OtpInputShowcase() {
   return (
     <>
       <ShowcaseIntro title="OTP Segmented Input" delay={40} defaultOpen>
-        Six boxes that are secretly <span className="font-medium text-[#111]">one real input</span> - the hard version
+        Six boxes that are secretly <span className="font-medium text-foreground">one real input</span> - the hard version
         nobody demos. The input is stretched invisibly over the row (transparent text and caret, never hidden, so{" "}
-        <code className="text-[#111]">autocomplete=&quot;one-time-code&quot;</code> SMS autofill and paste just work),
-        and the cells are <span className="font-medium text-[#111]">painted from its value</span>. The active cell is{" "}
-        <span className="font-medium text-[#111]">derived from the native selection</span>, never stored beside it: ←/→
+        <code className="text-foreground">autocomplete=&quot;one-time-code&quot;</code> SMS autofill and paste just work),
+        and the cells are <span className="font-medium text-foreground">painted from its value</span>. The active cell is{" "}
+        <span className="font-medium text-foreground">derived from the native selection</span>, never stored beside it: ←/→
         move the real caret and the highlight follows, Backspace walks backwards for free, and{" "}
-        <span className="font-medium text-[#111]">select-all paints all six cells</span> because a selection range maps
-        to a cell range. Paste <code className="text-[#111]">246 810</code> or <code className="text-[#111]">246-810</code>{" "}
+        <span className="font-medium text-foreground">select-all paints all six cells</span> because a selection range maps
+        to a cell range. Paste <code className="text-foreground">246 810</code> or <code className="text-foreground">246-810</code>{" "}
         - one normalize pass strips the junk. Six digits verify on their own: the right code{" "}
-        <span className="font-medium text-[#111]">cascades green</span> left to right, a wrong one{" "}
-        <span className="font-medium text-[#111]">shakes once, then the digits drop out one by one</span> before the
+        <span className="font-medium text-foreground">cascades green</span> left to right, a wrong one{" "}
+        <span className="font-medium text-foreground">shakes once, then the digits drop out one by one</span> before the
         caret comes back. The blueprint toggle tints the hidden input&apos;s glyphs red - they are letter-spaced to sit
         exactly under the cells.
       </ShowcaseIntro>
@@ -53,17 +53,17 @@ export function OtpInputShowcase() {
               key={preset.label}
               type="button"
               onClick={() => handleOtpPreset(preset)}
-              className="px-2.5 py-1 text-xs rounded-full font-medium bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors tabular-nums"
+              className="px-2.5 py-1 text-xs rounded-full font-medium bg-muted text-body-foreground hover:bg-accent transition-colors tabular-nums"
             >
               {preset.label}
             </button>
           ))}
         </div>
         <CheckToggle checked={otpMask} onChange={setOtpMask}>
-          Mask digits <span className="text-gray-400">- paint • instead of the number, value untouched</span>
+          Mask digits <span className="text-subtle-foreground">- paint • instead of the number, value untouched</span>
         </CheckToggle>
         <CheckToggle checked={otpGroup} onChange={setOtpGroup}>
-          Split 3-3 <span className="text-gray-400">- grouped the way SMS codes are read aloud</span>
+          Split 3-3 <span className="text-subtle-foreground">- grouped the way SMS codes are read aloud</span>
         </CheckToggle>
         <div className="flex items-center justify-between gap-4">
           <InspectToggle checked={inspectOtp} onChange={setInspectOtp} />
@@ -73,39 +73,39 @@ export function OtpInputShowcase() {
 
       <section
         className={`animate-fade-in relative flex items-center justify-center rounded-2xl border px-6 py-12 min-h-[180px] transition-colors ${
-          inspectOtp ? `${SPEC_GRID} bg-white border-blue-200` : "bg-gray-50/60 border-gray-200"
+          inspectOtp ? `${SPEC_GRID} bg-card border-blue-200` : "bg-muted/40 border-border"
         }`}
         style={{ animationDelay: "70ms" }}
       >
         <OtpInput mask={otpMask} group={otpGroup} prefill={otpPrefill} inspect={inspectOtp} onStateChange={handleOtpState} />
       </section>
 
-      <p className="animate-fade-in mt-4 text-center text-sm text-gray-500 break-words" style={{ animationDelay: "90ms" }}>
+      <p className="animate-fade-in mt-4 text-center text-sm text-muted-foreground break-words" style={{ animationDelay: "90ms" }}>
         {inspectOtp ? (
           <>
-            input <code className="text-[#111]">color: transparent</code> · selection{" "}
-            <code className="text-[#111]">
+            input <code className="text-foreground">color: transparent</code> · selection{" "}
+            <code className="text-foreground">
               {otpState.caret.start}..{otpState.caret.end}
             </code>{" "}
-            · shake <code className="text-[#111]">380ms</code> · clear stagger <code className="text-[#111]">45ms</code>
+            · shake <code className="text-foreground">380ms</code> · clear stagger <code className="text-foreground">45ms</code>
           </>
         ) : (
           <>
-            State: <span className="font-medium text-[#111]">{otpState.state}</span>
+            State: <span className="font-medium text-foreground">{otpState.state}</span>
             {" · "}
-            <span className="font-medium text-[#111] tabular-nums">{otpState.length}/6</span>
+            <span className="font-medium text-foreground tabular-nums">{otpState.length}/6</span>
             {otpState.focused && (
               <>
                 {" "}
                 · caret{" "}
-                <span className="font-medium text-[#111] tabular-nums">
+                <span className="font-medium text-foreground tabular-nums">
                   {otpState.caret.start === otpState.caret.end
                     ? otpState.caret.start
                     : `${otpState.caret.start}..${otpState.caret.end}`}
                 </span>
               </>
             )}
-            {" · "}attempts <span className="font-medium text-[#111] tabular-nums">{otpState.attempts}</span>
+            {" · "}attempts <span className="font-medium text-foreground tabular-nums">{otpState.attempts}</span>
           </>
         )}
       </p>

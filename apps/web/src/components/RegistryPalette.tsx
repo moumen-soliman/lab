@@ -81,7 +81,14 @@ const ENTER_HINT = {
 
 // Scrim: ink low enough that the page reads as backgrounded rather than
 // switched off, with the blur doing the separating.
-const SCRIM = "bg-[#111]/12 backdrop-blur-[3px]";
+//
+// Black in both themes, and one of the few things here that is NOT a token. A
+// scrim is the absence of light, so `bg-foreground/12` would be exactly wrong
+// in dark: the foreground token inverts, and the page would be backgrounded by
+// throwing a white sheet over it. It goes heavier in dark instead, because
+// there is less room between 12% black and a page that is already near-black
+// for the veil to register in at all.
+const SCRIM = "bg-black/12 dark:bg-black/55 backdrop-blur-[3px]";
 
 // ── Matching ───────────────────────────────────────────────────────────
 // A scored subsequence, the same shape the command-palette component uses:
@@ -176,7 +183,7 @@ function Highlight({ text, idx }: { text: string; idx: number[] }) {
       if (run) {
         out.push(
           marked ? (
-            <span key={`m${i}`} className="underline decoration-gray-400 decoration-1 underline-offset-[3px]">
+            <span key={`m${i}`} className="underline decoration-subtle-foreground decoration-1 underline-offset-[3px]">
               {run}
             </span>
           ) : (
@@ -230,7 +237,7 @@ export function SearchTrigger({ className = "" }: { className?: string }) {
       aria-label="Search components"
       aria-keyshortcuts="Meta+K Control+K"
       onClick={() => window.dispatchEvent(new Event(OPEN_EVENT))}
-      className={`inline-flex size-10 flex-none items-center justify-center rounded-full text-gray-500 shadow-[var(--shadow-border)] transition-[color,scale,box-shadow] duration-200 ease-smooth-out hover:text-[#111] hover:shadow-[var(--shadow-border-hover)] motion-safe:active:scale-[0.96] ${className}`}
+      className={`inline-flex size-10 flex-none items-center justify-center rounded-full text-muted-foreground shadow-[var(--shadow-border)] transition-[color,scale,box-shadow] duration-200 ease-smooth-out hover:text-foreground hover:shadow-[var(--shadow-border-hover)] motion-safe:active:scale-[0.96] ${className}`}
     >
       <SearchIcon />
     </button>
@@ -241,7 +248,13 @@ export function Kbd({ children }: { children: ReactNode }) {
   return (
     // A single pure-black ring, not --shadow-border: that token's lift layers
     // read as grime at this size. oklch to match the rest of the tokens.
-    <kbd className="inline-flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded px-1 font-mono text-[0.625rem] leading-none text-gray-500 shadow-[0_0_0_1px_oklch(0_0_0/0.08)]">
+    //
+    // It has to flip by hand for the same reason --shadow-border does: an edge
+    // is light spilling over it, and 8% black over a near-black page is not an
+    // edge, it is nothing. Pure white rather than a light gray, because a
+    // tinted hairline this thin picks up whatever is under it and reads as
+    // dirt on the key.
+    <kbd className="inline-flex h-[1.125rem] min-w-[1.125rem] items-center justify-center rounded px-1 font-mono text-[0.625rem] leading-none text-muted-foreground shadow-[0_0_0_1px_oklch(0_0_0/0.08)] dark:shadow-[0_0_0_1px_oklch(1_0_0/0.14)]">
       {children}
     </kbd>
   );
@@ -421,22 +434,22 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
         role="dialog"
         aria-modal="true"
         aria-label="Search components"
-        className={`relative w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-[var(--shadow-border),var(--shadow-lift)] ${PANEL.eased} ${beat} ${
+        className={`relative w-full max-w-lg overflow-hidden rounded-2xl bg-popover shadow-[var(--shadow-border),var(--shadow-lift)] ${PANEL.eased} ${beat} ${
           shown ? PANEL.resting : PANEL.offset
         }`}
       >
         <div
-          className="flex items-center gap-2.5 border-b border-gray-100 px-4 py-3"
+          className="flex items-center gap-2.5 border-b border-border/60 px-4 py-3"
           onClick={() => inputRef.current?.focus()}
         >
-          <span className="inline-flex flex-none text-gray-400">
+          <span className="inline-flex flex-none text-subtle-foreground">
             <SearchIcon />
           </span>
           <input
             ref={inputRef}
             // 16px on phones, and only there: iOS zooms the whole page into any
             // field it finds smaller than that, and it does not zoom back out.
-            className="min-w-0 flex-1 border-0 bg-transparent text-base text-[#111] outline-none placeholder:text-gray-400 sm:text-[0.9375rem]"
+            className="min-w-0 flex-1 border-0 bg-transparent text-base text-foreground outline-none placeholder:text-subtle-foreground sm:text-[0.9375rem]"
             type="text"
             inputMode="search"
             // The phone's return key reads "go", and Enter opens the top hit.
@@ -477,7 +490,7 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
                 id={`${listboxId}-${index}`}
                 role="option"
                 aria-selected={index === safe}
-                className="group/row flex cursor-pointer items-center gap-3 rounded-lg px-2.5 py-2 data-[active=true]:bg-[#f4f4f5]"
+                className="group/row flex cursor-pointer items-center gap-3 rounded-lg px-2.5 py-2 data-[active=true]:bg-accent"
                 data-active={index === safe ? "true" : undefined}
                 onMouseMove={() => setActive(index)}
                 // mousedown only holds the focus in the input; the navigation
@@ -488,10 +501,10 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
                 onClick={(event) => go(hit.entry, event.metaKey || event.ctrlKey)}
               >
                 <span className="min-w-0 flex-1">
-                  <span className="block truncate text-sm text-[#111]">
+                  <span className="block truncate text-sm text-foreground">
                     <Highlight text={hit.entry.title} idx={hit.idx} />
                   </span>
-                  <span className="mt-0.5 block truncate text-xs text-gray-500">{hit.entry.description}</span>
+                  <span className="mt-0.5 block truncate text-xs text-muted-foreground">{hit.entry.description}</span>
                 </span>
                 <span className={`flex-none ${ENTER_HINT.eased} ${ENTER_HINT.resting} ${ENTER_HINT.active}`}>
                   <Kbd>↵</Kbd>
@@ -500,12 +513,12 @@ export function RegistryPalette({ components }: { components: LabComponent[] }) 
             ))}
           </ul>
         ) : (
-          <div className="px-4 py-10 text-center text-sm text-gray-400">
-            No component matches <span className="text-gray-600">&ldquo;{query}&rdquo;</span>
+          <div className="px-4 py-10 text-center text-sm text-subtle-foreground">
+            No component matches <span className="text-body-foreground">&ldquo;{query}&rdquo;</span>
           </div>
         )}
 
-        <div className="flex items-center justify-between gap-3 border-t border-gray-100 px-4 py-2.5 text-[0.6875rem] text-gray-400">
+        <div className="flex items-center justify-between gap-3 border-t border-border/60 px-4 py-2.5 text-[0.6875rem] text-subtle-foreground">
           <span className="tabular-nums">
             {query ? `${hits.length} of ${components.length}` : `${components.length} components`}
           </span>

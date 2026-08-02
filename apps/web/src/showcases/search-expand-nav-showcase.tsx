@@ -17,10 +17,10 @@ export function SearchExpandNavShowcase() {
     <>
       <ShowcaseIntro title="Search-Expand Navigation Bar" delay={40} defaultOpen>
         Click the search icon and the bar becomes a field, then the box grows upward into a card of recent searches.
-        Hit <span className="font-medium text-[#111]">✕</span> to replay every step in reverse. Click the{" "}
-        <span className="font-medium text-[#111]">avatar</span> for an account dropdown. Two open effects:{" "}
-        <span className="font-medium text-[#111]">travel</span> (the icon glides right → left) or{" "}
-        <span className="font-medium text-[#111]">flip</span> (the home icon rises and blurs into the search icon while
+        Hit <span className="font-medium text-foreground">✕</span> to replay every step in reverse. Click the{" "}
+        <span className="font-medium text-foreground">avatar</span> for an account dropdown. Two open effects:{" "}
+        <span className="font-medium text-foreground">travel</span> (the icon glides right → left) or{" "}
+        <span className="font-medium text-foreground">flip</span> (the home icon rises and blurs into the search icon while
         the rest blur away).
       </ShowcaseIntro>
 
@@ -36,31 +36,31 @@ export function SearchExpandNavShowcase() {
 
       <section
         className={`animate-fade-in relative flex items-end justify-center rounded-2xl border px-6 pt-20 pb-8 min-h-[360px] transition-colors ${
-          inspectNav ? `${SPEC_GRID} bg-white border-blue-200` : "bg-gray-50/60 border-gray-200"
+          inspectNav ? `${SPEC_GRID} bg-card border-blue-200` : "bg-muted/40 border-border"
         }`}
         style={{ animationDelay: "70ms" }}
       >
         <SearchExpandNav inspect={inspectNav} effect={navFlip ? "flip" : "travel"} onSearch={handleNavSearch} />
       </section>
 
-      <p className="animate-fade-in mt-4 text-center text-sm text-gray-500" style={{ animationDelay: "90ms" }}>
+      <p className="animate-fade-in mt-4 text-center text-sm text-muted-foreground" style={{ animationDelay: "90ms" }}>
         {inspectNav ? (
           <>
             {navFlip ? (
               <>
-                <code className="text-[#111]">translateY + blur</code> swap
+                <code className="text-foreground">translateY + blur</code> swap
               </>
             ) : (
               <>
-                fixed-width <code className="text-[#111]">slide ←</code>
+                fixed-width <code className="text-foreground">slide ←</code>
               </>
             )}{" "}
-            then <code className="text-[#111]">height 0→content</code> grow ↑
+            then <code className="text-foreground">height 0→content</code> grow ↑
           </>
         ) : (
           <>
-            Effect: <span className="font-medium text-[#111]">{navFlip ? "flip" : "travel"}</span> · Last search:{" "}
-            <span className="font-medium text-[#111]">{lastSearch ? `"${lastSearch}"` : "none"}</span>
+            Effect: <span className="font-medium text-foreground">{navFlip ? "flip" : "travel"}</span> · Last search:{" "}
+            <span className="font-medium text-foreground">{lastSearch ? `"${lastSearch}"` : "none"}</span>
           </>
         )}
       </p>

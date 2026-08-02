@@ -2,6 +2,24 @@ import Link from "next/link";
 import { CraftedVideo } from "./CraftedVideo";
 import type { LabComponent } from "../registry-data";
 
+/* ── WHY THE GLASS DOES NOT TURN OVER WITH THE THEME ───────────────────────
+   Everything in the two class strings below is a literal white or a literal
+   #111, and none of it is an oversight. The frost and the pill do not sit on
+   the page - they sit on the CLIP, and the clip is a recording. A video is the
+   same pixels at 3pm and at 3am; nothing about switching the site to dark
+   makes the footage darker.
+
+   So this glass is the one surface on the site with a background that is fixed
+   in advance, and a token would only be right for it by coincidence. Point the
+   pill's label at `text-foreground` and it turns white in dark - white type on
+   white glass over a light recording, invisible on the only hover state the
+   home page has. The frost has the same problem in reverse.
+
+   The card's own stage does turn over (see CraftedVideo), and so does the
+   caption under it. Only the two layers actually touching the footage stay
+   put. The rule is the surface underneath, not the theme.
+   ─────────────────────────────────────────────────────────────────────────── */
+
 // Frost veil between the clip and the pill. Blur is transitioned on the
 // backdrop-filter itself (backdrop effects don't fade reliably via opacity), so
 // the clip melts out of focus. Revealed on pointer hover (gated to hover-capable
@@ -55,11 +73,11 @@ export function LabClipCard({ entry, index, load, onSettled }: LabClipCardProps)
             View pill can stay a hover/focus-only affordance (hidden on touch). */}
         <Link
           href={`/components/${slug}`}
-          className="absolute inset-0 z-[4] rounded-[inherit] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#111]"
+          className="absolute inset-0 z-[4] rounded-[inherit] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           aria-label={`View ${title}`}
         />
       </div>
-      <figcaption className="mt-2.5 text-center text-xs font-medium text-gray-700">{title}</figcaption>
+      <figcaption className="mt-2.5 text-center text-xs font-medium text-body-foreground">{title}</figcaption>
     </figure>
   );
 }

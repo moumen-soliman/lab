@@ -46,7 +46,7 @@ export const ticketNumberTickerStory: Story = {
           Right after building{" "}
           <a
             href="https://github.com/moumen-soliman/task-management"
-            className={`${em} underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-[#111]`}
+            className={`${em} underline decoration-subtle-foreground/70 underline-offset-2 transition-colors hover:decoration-foreground`}
             target="_blank"
             rel="noreferrer"
           >
@@ -151,7 +151,7 @@ export const ticketNumberTickerStory: Story = {
         <>
           <a
             href="https://x.com/emilkowalski"
-            className={`${em} underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-[#111]`}
+            className={`${em} underline decoration-subtle-foreground/70 underline-offset-2 transition-colors hover:decoration-foreground`}
             target="_blank"
             rel="noreferrer"
           >

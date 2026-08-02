@@ -319,7 +319,7 @@ export function Offers({ open }: { open: boolean }) {
           // Under reduced motion the stream simply exists - every message
           // landed, nothing drifting. An infinite loop is the one thing that
           // setting is actually asking not to see.
-          className={`animate-offer absolute w-[17rem] max-w-[calc(100vw-3rem)] rounded-[18px] bg-white p-2.5 text-left select-none shadow-[var(--shadow-border),var(--shadow-lift)] motion-reduce:animate-none ${gutter ?? ""}`}
+          className={`animate-offer absolute w-[17rem] max-w-[calc(100vw-3rem)] rounded-[18px] bg-card p-2.5 text-left select-none shadow-[var(--shadow-border),var(--shadow-lift)] motion-reduce:animate-none ${gutter ?? ""}`}
           style={
             {
               ...spot,
@@ -347,10 +347,10 @@ export function Offers({ open }: { open: boolean }) {
                   in Geist - Slack stamps its times in the body face, and the
                   card already carries enough going on without a third. */}
               <p className="flex items-baseline gap-1.5">
-                <span className="truncate text-[0.8125rem] font-semibold text-[#111]">{sender}</span>
-                <span className="shrink-0 text-[0.6875rem] text-gray-400 tabular-nums">{time}</span>
+                <span className="truncate text-[0.8125rem] font-semibold text-foreground">{sender}</span>
+                <span className="shrink-0 text-[0.6875rem] text-subtle-foreground tabular-nums">{time}</span>
               </p>
-              <p className="mt-0.5 text-[0.8125rem] leading-normal text-gray-500 text-pretty">{message}</p>
+              <p className="mt-0.5 text-[0.8125rem] leading-normal text-muted-foreground text-pretty">{message}</p>
 
               {reactions ? (
                 <p className="mt-1 flex flex-wrap gap-1">
@@ -360,7 +360,7 @@ export function Offers({ open }: { open: boolean }) {
                       className="inline-flex items-center gap-1 rounded-full px-1.5 py-px text-[0.6875rem] leading-tight shadow-[var(--shadow-border)]"
                     >
                       <span>{emoji}</span>
-                      <span className="text-gray-500 tabular-nums">{count}</span>
+                      <span className="text-muted-foreground tabular-nums">{count}</span>
                     </span>
                   ))}
                 </p>

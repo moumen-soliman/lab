@@ -12,7 +12,7 @@ export type Story = {
 };
 
 /** Emphasis inside story prose: the phrase that carries the point. */
-export const em = "font-medium text-[#111]";
+export const em = "font-medium text-foreground";
 
 /** An inline link in story prose, underlined in the page's quiet grey. */
-export const storyLink = `${em} underline decoration-gray-300 underline-offset-2 transition-colors hover:decoration-[#111]`;
+export const storyLink = `${em} underline decoration-subtle-foreground/70 underline-offset-2 transition-colors hover:decoration-foreground`;
