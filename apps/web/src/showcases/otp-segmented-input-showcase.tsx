@@ -77,7 +77,9 @@ export function OtpInputShowcase() {
         }`}
         style={{ animationDelay: "70ms" }}
       >
-        <OtpInput mask={otpMask} group={otpGroup} prefill={otpPrefill} inspect={inspectOtp} onStateChange={handleOtpState} />
+        <div className="flex w-full max-w-stage justify-center">
+          <OtpInput mask={otpMask} group={otpGroup} prefill={otpPrefill} inspect={inspectOtp} onStateChange={handleOtpState} />
+        </div>
       </section>
 
       <p className="animate-fade-in mt-4 text-center text-sm text-gray-500 break-words" style={{ animationDelay: "90ms" }}>

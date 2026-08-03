@@ -39,7 +39,9 @@ export function ExpandingIconStripShowcase() {
         }`}
         style={{ animationDelay: "70ms" }}
       >
-        <ExpandingIconStrip items={STRIP_ITEMS} inspect={inspectStrip} onSelect={handleIconSelect} />
+        <div className="flex w-full max-w-stage justify-center">
+          <ExpandingIconStrip items={STRIP_ITEMS} inspect={inspectStrip} onSelect={handleIconSelect} />
+        </div>
       </section>
 
       <p className="animate-fade-in mt-4 text-center text-sm text-gray-500" style={{ animationDelay: "90ms" }}>

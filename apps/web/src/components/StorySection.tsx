@@ -81,7 +81,9 @@ export function StorySection({
         data-open={open ? "true" : "false"}
         id={id}
       >
-        <div className="min-h-0 overflow-hidden">
+        {/* Capped here, not on the <section>, so the header keeps page width and
+            its "See more" stays aligned with the controls above it. */}
+        <div className="min-h-0 max-w-story overflow-hidden">
           <ol className="pt-4 opacity-0 [transform:translateY(-0.25rem)] blur-[2px] [transition:opacity_350ms_var(--ease-smooth-out),transform_350ms_var(--ease-smooth-out),filter_350ms_var(--ease-smooth-out)] group-data-[open=true]/story:opacity-100 group-data-[open=true]/story:[transform:translateY(0)] group-data-[open=true]/story:blur-[0px]">
             {steps.map((step, index) => (
               <li key={step.title} className="relative pl-8 pb-6 last:pb-0">

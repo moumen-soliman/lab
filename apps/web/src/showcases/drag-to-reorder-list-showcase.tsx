@@ -50,7 +50,9 @@ export function DragReorderListShowcase() {
         }`}
         style={{ animationDelay: "70ms" }}
       >
-        <DragReorderList flip={!reorderSnap} inspect={inspectReorder} onStateChange={handleReorderState} />
+        <div className="flex w-full max-w-stage justify-center">
+          <DragReorderList flip={!reorderSnap} inspect={inspectReorder} onStateChange={handleReorderState} />
+        </div>
       </section>
 
       <p className="animate-fade-in mt-4 text-center text-sm text-gray-500" style={{ animationDelay: "90ms" }}>

@@ -95,7 +95,7 @@ export default async function ComponentPage({ params }: { params: Promise<{ slug
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-24 px-6 selection:bg-[#111] selection:text-white">
-      <main className="w-full max-w-md">
+      <main className="w-full max-w-2xl">
         {/* Back on the left, search on the right: the two ways out of a
             component page, and on touch the search button is the only one. */}
         <header className="mb-8 flex animate-fade-in items-center justify-between gap-4">

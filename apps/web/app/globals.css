@@ -36,6 +36,16 @@
   --color-border: oklch(0.967 0.003 264.542);
   --color-ring: oklch(0.178 0 0);
 
+  /* Widths - three measures, because what a component page stacks does not want
+     one. The page (`max-w-2xl`, on the route) is what code blocks and demo
+     surfaces want. `story` is the timeline's read, short of the page so its
+     prose lands near 78 characters. `stage` is every drawing, and it tracks
+     nothing: a figure's labels are 7px inside a 360-unit viewBox, so one that
+     grows scales its own type up with it. Site layout, NOT shipped via
+     lab-theme. */
+  --container-story: 36rem;
+  --container-stage: 25rem;
+
   /* Easings */
   --ease-smooth-out: cubic-bezier(0.22, 1, 0.36, 1); /* open + close, resize */
   --ease-icon: cubic-bezier(0.2, 0, 0, 1); /* contextual icon cross-fade */

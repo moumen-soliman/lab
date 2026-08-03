@@ -43,7 +43,15 @@ export function FigureLegend() {
 /** The grid-paper canvas every figure draws into. `id` namespaces its pattern. */
 export function Figure({ id, height, children }: { id: string; height: number; children: ReactNode }) {
   return (
-    <svg viewBox={`0 0 360 ${height}`} fill="none" strokeLinecap="round" className="w-full h-auto" aria-hidden="true">
+    // Capped, not fluid: every length here is a viewBox unit, so a wider box
+    // scales the 7px labels and the hairlines along with the drawing.
+    <svg
+      viewBox={`0 0 360 ${height}`}
+      fill="none"
+      strokeLinecap="round"
+      className="h-auto w-full max-w-stage"
+      aria-hidden="true"
+    >
       <defs>
         <pattern id={`${id}-grid`} width="8" height="8" patternUnits="userSpaceOnUse">
           <path d="M8 0H0V8" stroke={GRID_STROKE} strokeWidth="1" fill="none" />

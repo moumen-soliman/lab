@@ -118,19 +118,24 @@ export function TicketNumberShowcase() {
         }`}
         style={{ animationDelay: "70ms" }}
       >
-        {/* Presentation-only 1.5× scale: the wrapper is 100%/1.5 wide so the
-            scaled pill fills the stage exactly. The installed component is NOT
-            scaled - it ships at the compact dashboard size. */}
-        <div className="flex justify-center w-[calc(100%/1.5)] scale-150">
-          <TicketNumber
-            value={ticketValue}
-            runKey={runKey}
-            status={prOn ? prStatus : undefined}
-            onStatusClick={prOn ? cyclePr : undefined}
-            width={fixedWidth ? "fixed" : "max"}
-            inspect={inspectTicket}
-            onStateChange={handleTicketState}
-          />
+        {/* The cap goes OUTSIDE the scale wrapper, since 100%/1.5 is a share of
+            its parent, and it has to center it: `scale-150` grows about the
+            child's own box, so a left-aligned one scales past the left edge. */}
+        <div className="flex w-full max-w-stage justify-center">
+          {/* Presentation-only 1.5× scale: the wrapper is 100%/1.5 wide so the
+              scaled pill fills the stage exactly. The installed component is NOT
+              scaled - it ships at the compact dashboard size. */}
+          <div className="flex justify-center w-[calc(100%/1.5)] scale-150">
+            <TicketNumber
+              value={ticketValue}
+              runKey={runKey}
+              status={prOn ? prStatus : undefined}
+              onStatusClick={prOn ? cyclePr : undefined}
+              width={fixedWidth ? "fixed" : "max"}
+              inspect={inspectTicket}
+              onStateChange={handleTicketState}
+            />
+          </div>
         </div>
       </section>
 
